@@ -401,6 +401,7 @@ test('new athletes see clear account creation and existing members can switch to
   await expect(page.locator('#auth-create')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#primary-auth')).toHaveText('Crear cuenta');
   await expect(page.locator('#auth-explainer')).toContainText('confirmación');
+  await expect(page.locator('#account')).toContainText('Crear una cuenta no envía una postulación');
   await expect(page.locator('#recover')).toBeHidden();
   await page.locator('#auth-signin').click();
   await expect(page.locator('#primary-auth')).toHaveText('Iniciar sesión');
