@@ -81,3 +81,16 @@ The bilingual Competir page uses the project’s publishable key and a pinned lo
 - **Review operations:** the protected reviewer RPCs exist, but reviewer accounts must be added explicitly to `rb_intake.reviewers`. Check the review queue regularly; the public website does not automatically email staff for new applications. Configure a tested notification system before depending on instant outreach.
 - **Authentication setup:** enable email/password, email confirmation, and the complete deployed `competir.html` URL in Supabase Auth redirect allow-list. Verify the business inbox can receive confirmation and recovery mail. Enable leaked-password protection in Supabase Auth if supported by your plan.
 - **Regression:** `npm ci && npm test` runs browser smoke coverage in CI. Database role, idempotency and isolation tests run in the separate athlete-intake workflow.
+
+## Staff reviewer console
+
+The private staff UI lives at `equipo.html` (do not add it to the public navigation). Staff sign in with an already confirmed Supabase account. It displays the queue and status transitions through the pre-existing protected `rb_review_queue` and `rb_review_application` RPCs. The page itself never grants reviewer permissions.
+
+A trusted Supabase administrator can approve an existing verified reviewer account with:
+```sql
+insert into rb_intake.reviewers(user_id)
+select id from auth.users
+where email = 'replace-with-verified-staff-email@example.org'
+  and email_confirmed_at is not null;
+```
+Do not approve unconfirmed or disposable QA accounts. Reviewers email applicants manually; changing a status does not notify them automatically. Staff should only mark `invited` after sending an invitation. Remove staff access by deleting that UUID from `rb_intake.reviewers` when necessary.

@@ -425,3 +425,39 @@ test('catalog prices and selected sizes are visible before inquiry', async ({ pa
   expect(selectedBackground).not.toEqual(unselectedBackground);
   await expect(page.locator('#conjunto-urbano .size-selection-status')).toHaveText('Selected size: L');
 });
+
+test('reviewer dashboard denies unauthorised users and only exposes a verified queue', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000099';
+  const user={id,email:'reviewer@example.invalid',aud:'authenticated',role:'authenticated',app_metadata:{},user_metadata:{},identities:[]};
+  const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
+  const record={id:'00000000-0000-4000-8000-000000000100',alias:'Atleta de prueba',city:'Quito',belt:'blue',suggested_realm:'Zaphire Trials',contact_email:'athlete@example.invalid',status:'submitted',interest:'gp',submitted_at:new Date().toISOString()};
+  const rows=[record];
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/token')) data={user,access_token:token,refresh_token:'staff-session',token_type:'bearer',expires_in:3600};
+    else if(path.endsWith('/user')) data=user;
+    else if(path.endsWith('/rb_review_queue')) data=rows;
+    else if(path.endsWith('/rb_review_application')) {
+      const body=route.request().postDataJSON();
+      expect(body.p_expected_status).toBe(record.status);
+      record.status=body.p_new_status;data=record.status;
+    } else if(path.endsWith('/logout')) data={};
+    else throw Error('Unexpected route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.goto('/equipo.html?lang=es');
+  await expect(page.locator('#team-queue')).toBeHidden();
+  await page.locator('#team-email').fill(user.email);
+  await page.locator('#team-password').fill('test-password');
+  await page.locator('#team-signin').click();
+  await expect(page.locator('#team-queue')).toBeVisible();
+  await expect(page.locator('#team-results')).toContainText('Atleta de prueba');
+  await expect(page.locator('#team-results')).toContainText('athlete@example.invalid');
+  await page.locator('#team-results button[data-next="in_review"]').click();
+  await expect(page.locator('#team-results')).toContainText('En revisión');
+  await page.locator('#team-signout').click();
+  await expect(page.locator('#team-queue')).toBeHidden();
+  await expect(page.locator('#team-login')).toBeVisible();
+});

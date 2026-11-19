@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title data-en="Application team — RA’AZ BORG">Equipo de postulaciones — RA’AZ BORG</title>
+<meta name="description" content="Panel privado de revisión de postulaciones de atletas RA’AZ BORG." data-en-content="Private RA’AZ BORG athlete application review console.">
+<link rel="stylesheet" href="css/style.css?v=audit-20261119">
+<style>
+.team-page { padding:clamp(120px,12vw,165px) 0 100px; min-height:75vh }
+.team-page .wrap { max-width:1050px }
+.team-head { max-width:750px; margin-bottom:2rem }
+.team-head p { line-height:1.65 }
+.team-panel { background:var(--carbon); border:1px solid var(--smoke); padding:clamp(18px,3vw,32px); margin:1rem 0; }
+.team-panel[hidden] { display:none }
+.team-form { max-width:480px; display:grid; gap:1rem }
+.team-form label { display:grid; gap:.35rem; color:var(--white) }
+.team-form input { background:var(--void); color:var(--white); border:1px solid var(--smoke); border-radius:3px; font:inherit; padding:.8rem; min-height:44px }
+.team-toolbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem; margin-bottom:1rem }
+.team-toolbar select { background:var(--void); color:var(--white); border:1px solid var(--smoke); font:inherit; padding:.6rem }
+.team-review { border-top:1px solid var(--smoke); padding:1.25rem 0 }
+.team-review h3 { margin:0 0 .5rem; overflow-wrap:anywhere }
+.team-meta { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; color:var(--grey); margin:.5rem 0; font-size:.9rem }
+.team-actions { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem }
+.team-actions a, .team-actions button { border:1px solid var(--smoke); padding:.7rem .9rem; border-radius:3px; font:inherit; font-size:.8rem; color:var(--white); background:var(--void); cursor:pointer; text-decoration:none; min-height:44px; }
+.team-actions a { border-color:var(--acid); color:var(--acid) }
+.team-actions button:hover:not(:disabled), .team-actions button:focus-visible { border-color:var(--cyan) }
+.team-actions button:disabled { opacity:.55; cursor:wait }
+.team-note { font-size:.85rem; line-height:1.6; color:var(--grey) }
+#team-feedback { min-height:1.5em; color:var(--cyan); overflow-wrap:anywhere }
+#team-identity { overflow-wrap:anywhere; color:var(--cyan) }
+</style>
+</head>
+<body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html"><span data-en="Shop">Tienda</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button id="langToggle" class="lang-toggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-ghost nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
+      <button id="burger" class="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
+    </div>
+  </div>
+</nav>
+<main id="contenido" class="team-page">
+  <div class="wrap">
+    <header class="team-head">
+      <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
+      <h1 data-en="Application team">Equipo de postulaciones</h1>
+      <p data-en="Restricted to approved RA’AZ BORG reviewers. Review applications, contact athletes personally, and update their status.">Acceso para revisores autorizados de RA’AZ BORG. Revisa postulaciones, contacta personalmente a los atletas y actualiza su estado.</p>
+    </header>
+    <form id="team-login" class="team-panel team-form">
+      <h2 data-en="Reviewer sign in">Ingreso de revisores</h2>
+      <label><span data-en="Account email">Correo de la cuenta</span><input id="team-email" type="email" autocomplete="username" required></label>
+      <label><span data-en="Password">Contraseña</span><input id="team-password" type="password" autocomplete="current-password" required></label>
+      <button id="team-signin" type="submit" class="btn btn-acid" data-en="Sign in">Iniciar sesión</button>
+      <p class="team-note" data-en="Your account must already be confirmed and approved as a reviewer. To reset your password, use the athlete account page.">Tu cuenta debe estar confirmada y autorizada como revisor. Si necesitas recuperar la contraseña, usa la página de cuentas de atletas.</p>
+      <a class="text-link" href="competir.html" data-en="Athlete account and password recovery">Cuenta de atleta y recuperación de contraseña</a>
+    </form>
+    <section id="team-denied" class="team-panel" hidden>
+      <h2 data-en="Reviewer access required">Acceso de revisor requerido</h2>
+      <p data-en="Your account is signed in but is not authorized to see athlete applications, or the queue could not be loaded. Ask the RA’AZ BORG administrator to approve your account.">Tu cuenta inició sesión, pero no tiene permisos para consultar postulaciones o no fue posible cargar los datos. Solicita autorización al administrador de RA’AZ BORG.</p>
+      <div class="team-actions">
+        <button id="team-retry" type="button" data-en="Try again">Reintentar</button>
+        <button id="team-denied-signout" type="button" data-en="Sign out">Cerrar sesión</button>
+      </div>
+    </section>
+    <section id="team-queue" class="team-panel" hidden>
+      <div class="team-toolbar">
+        <div><strong id="team-identity"></strong><p id="team-count" aria-live="polite"></p></div>
+        <div class="team-actions">
+          <button id="team-refresh" type="button" data-en="Refresh applications">Actualizar postulaciones</button>
+          <button id="team-signout" type="button" data-en="Sign out">Cerrar sesión</button>
+        </div>
+      </div>
+      <div class="team-toolbar">
+        <h2 data-en="Athlete applications">Postulaciones de atletas</h2>
+        <label><span data-en="Status filter">Filtrar estado</span>
+          <select id="team-filter">
+            <option value="all" data-en="All statuses">Todos los estados</option>
+            <option value="submitted" data-en="Received">Recibidas</option>
+            <option value="in_review" data-en="In review">En revisión</option>
+            <option value="invited" data-en="Invited">Invitadas</option>
+            <option value="closed" data-en="Closed">Cerradas</option>
+          </select>
+        </label>
+      </div>
+      <p class="team-note" data-en="Email each athlete personally. Only mark an invitation as sent after you have contacted the athlete. Changing status does not send an automatic email.">Contacta personalmente a cada atleta por correo. Marca una invitación como enviada solo después de escribirle. Cambiar el estado no envía correos automáticos.</p>
+      <div id="team-results"></div>
+    </section>
+    <p id="team-feedback" role="status" aria-live="polite"></p>
+  </div>
+</main>
+<footer><div class="wrap foot">
+  <img src="assets/Isotipo.png" alt="Raaz Borg">
+  <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
+  <ul class="foot-links"><li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li></ul>
+</div></footer>
+<script src="js/main.js?v=archive-1"></script>
+<script src="js/vendor/supabase-2.49.8.js"></script>
+<script src="js/equipo.js?v=20261119"></script>
+</body>
+</html>
