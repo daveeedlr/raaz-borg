@@ -925,9 +925,6 @@ html[lang="en"] [data-heading-outline-en]::before {
 h1[data-heading-outline]::before {
   font-size:clamp(4.7rem,12vw,13rem);
 }
-.street-intro h2[data-heading-outline]::before {
-  inset-inline-end:-1em;
-}
 @media (max-width:650px) {
   [data-heading-outline]::before {
     -webkit-text-stroke-color:rgba(184,160,184,.16);
