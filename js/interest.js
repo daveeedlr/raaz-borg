@@ -78,14 +78,17 @@
   }
   async function load(profile) {
     const seq = ++loadNumber;
-    const [rows, info] = await Promise.all([client.rpc('rb_my_applications'), profile ? client.rpc('rb_my_profile') : null]);
+    const [rows, info] = await Promise.all([client.rpc('rb_my_applications'), profile ? client.rpc('rb_my_profile_v2') : null]);
     if (seq !== loadNumber || !user) return;
     if (rows.error || info?.error) say('No pudimos cargar todos tus datos. Vuelve a actualizar el estado.','Could not load all your details. Try refreshing your status.');
     if (!rows.error) historyRows = rows.data;
     if (info?.data?.[0]) {
       const saved = info.data[0];
-      for (const name of ['alias','city','academy','discipline']) {
+      for (const name of ['alias','city','academy','discipline','first_name','last_name','date_of_birth','weight','height','belt_stripes','country','state_province','username']) {
         if (!form.elements[name].value) form.elements[name].value = saved[name] || '';
+      }
+      for (const unit of ['weight_unit','height_unit']) {
+        if (saved[unit]) form.elements[unit].value = saved[unit];
       }
       if (!belt.value && !initial.searchParams.has('belt')) belt.value = saved.belt;
       showRealm();
@@ -190,12 +193,26 @@
       for (const name of ['alias','city','academy','discipline','footage']) {
         payload[name === 'footage' ? 'p_footage_url' : 'p_'+name] = data.get(name).trim() || null;
       }
+      const profile = {};
+      for (const name of ['first_name','last_name','date_of_birth','country','state_province','username','belt_stripes','weight','height']) {
+        profile[name] = String(data.get(name) || '').trim() || null;
+      }
+      profile.weight_unit = profile.weight ? data.get('weight_unit') : null;
+      profile.height_unit = profile.height ? data.get('height_unit') : null;
+      for (const name of ['first_name','last_name','country']) {
+        if (!profile[name]) {
+          say('Completa tu nombre, apellido y país para continuar.','Enter your first name, last name and country to continue.');
+          form.elements[name].focus();
+          return;
+        }
+      }
+      payload.p_profile = profile;
       const fingerprint = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(payload))))).join('.');
       const storage = 'rb-application-retry-'+owner;
       try { requestKey = JSON.parse(sessionStorage.getItem(storage)) || requestKey; } catch {}
       if (requestKey?.fingerprint !== fingerprint) requestKey = {fingerprint,id:crypto.randomUUID()};
       try { sessionStorage.setItem(storage,JSON.stringify(requestKey)); } catch {}
-      const {data:id,error} = await client.rpc('rb_submit_application',{...payload,p_request_id:requestKey.id});
+      const {data:id,error} = await client.rpc('rb_submit_application_v2',{...payload,p_request_id:requestKey.id});
       if (user?.id !== owner) return;
       if (error || !id) throw error || new Error('Missing receipt');
       form.elements.contact.checked = false;
