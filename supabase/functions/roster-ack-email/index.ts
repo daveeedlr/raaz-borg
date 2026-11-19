@@ -1,3 +1,6 @@
+// Operational pause: keep templates for future reactivation, but do not dispatch email.
+// Essential Supabase Auth verification and password recovery are unaffected.
+const EMAIL_AUTOMATIONS_PAUSED = true;
 // RA'AZ BORG reviewer-triggered registration acknowledgement mail.
 // Only authorized reviewers can trigger it. A registration is not a scheduled fight.
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
@@ -61,6 +64,8 @@ function emailTemplate(data:{alias?:string,realm?:string,belt?:string,preferred_
 Deno.serve(async(req:Request)=>{
   if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
   if(req.method!=="POST")return respond({error:"Method not allowed"},405);
+  // PAUSED: intentionally bypass all email provider calls. Database/in-app alerts continue.
+  if (EMAIL_AUTOMATIONS_PAUSED) return respond({paused:true,delivered:0,queued:true,note:"Custom RA'AZ BORG emails are paused. In-app notifications are still active."});
   if(!url)return respond({error:"Backend not configured"},503);
   const match=(req.headers.get("authorization")||"").match(/^Bearer (.+)$/i);
   if(!match)return respond({error:"Authentication required"},401);

@@ -14,6 +14,9 @@ begin
     (other_user, other_user::text || '@example.invalid',now());
   assert (select count(*)=2 from public.fighter_registrations
     where user_id in (athlete, other_user) and registration_status='account_created');
+  -- Custom email transports are paused, but the application trigger still persists alerts.
+  assert position('net.http_post' in
+      pg_get_functiondef('rb_intake.rb_notify_roster_insert()'::regprocedure))=0;
   assert (select count(*)=2 from public.fighter_registrations
     where first_name is null and payment_option is null);
   update auth.users set email_confirmed_at=null where id=athlete;

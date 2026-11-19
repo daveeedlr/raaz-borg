@@ -1,3 +1,6 @@
+// Operational pause: keep templates for future reactivation, but do not dispatch email.
+// Essential Supabase Auth verification and password recovery are unaffected.
+const EMAIL_AUTOMATIONS_PAUSED = true;
 // RA'AZ BORG: authenticated, account-scoped delivery of queued notification emails.
 // No service role or provider key is ever exposed to browser JavaScript.
 const cors = {
@@ -53,6 +56,8 @@ async function rpc(url:string,key:string,name:string,payload:unknown) {
 Deno.serve(async(req:Request)=>{
   if(req.method==="OPTIONS")return new Response(null,{status:204,headers:cors});
   if(req.method!=="POST")return json({error:"Method not allowed"},405);
+  // PAUSED: intentionally bypass all email provider calls. Database/in-app alerts continue.
+  if (EMAIL_AUTOMATIONS_PAUSED) return json({paused:true,delivered:0,queued:true,note:"Custom RA'AZ BORG emails are paused. In-app notifications are still active."});
   const supabaseUrl=Deno.env.get("SUPABASE_URL");
   const serviceKey=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const resendKey=Deno.env.get("RESEND_API_KEY");

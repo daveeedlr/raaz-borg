@@ -115,7 +115,7 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
   const jwtPart = value => Buffer.from(JSON.stringify(value)).toString('base64url');
   const token = [jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600,session_id:'00000000-0000-4000-8000-000000000009'}),'c2ln'].join('.');
   const rows = [];
-  let signinAlertQueued = false;
+  let signinAlertQueued = false, emailDispatchAttempts = 0;
   await page.route('https://*.supabase.co/**', async route => {
     const path = new URL(route.request().url()).pathname;
     if(path.endsWith('/rb_my_language')) {
@@ -152,7 +152,7 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
       rows.push({id,interest:'gp',suggested_realm:'Zaphire Trials',status:'submitted',submitted_at:new Date().toISOString()});
       data=id;
     }
-    else if(path.endsWith('/athlete-notify')) data={configured:false,delivered:0};
+    else if(path.endsWith('/athlete-notify')) {emailDispatchAttempts++;data={paused:true,delivered:0};}
     else if(path.endsWith('/logout')) data={};
     else throw new Error('Unexpected auth route '+path);
     await route.fulfill({json:data});
@@ -177,6 +177,8 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
   await page.locator('#submit-application').click();
   await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=es&submitted=1$/);
   await expect(page.locator('#portal-content')).toBeVisible();
+  expect(signinAlertQueued).toBe(false);
+  expect(emailDispatchAttempts).toBe(0);
   await expect(page.locator('#fighterDisplayName')).toHaveText('Prueba');
   await expect(page.locator('#application-status')).toHaveText('Registro pendiente de revisión');
   await expect(page.locator('#welcome-copy')).toContainText('¡Bienvenido al universo Börg');
@@ -807,7 +809,7 @@ test('private fighter photo uploads to the owner folder and can be removed from 
 });
 
 
-test('reviewer acknowledgement creates one receipt and reports email as queued if sender is unavailable', async ({page})=>{
+test('reviewer acknowledgement stays in the fighter portal with email automation paused', async ({page})=>{
   const id='00000000-0000-4000-8000-000000000040';
   const user={id,email:'staff@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
   const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -861,9 +863,9 @@ test('reviewer acknowledgement creates one receipt and reports email as queued i
   await expect(page.locator('.team-ack-state')).toContainText('Recepción confirmada');
   await expect(page.locator('#team-feedback')).toContainText('portal');
   await expect(page.locator('button[data-action="acknowledge"]')).toHaveCount(0);
-  await expect(page.locator('button[data-action="send-ack-email"]')).toBeVisible();
+  await expect(page.locator('button[data-action="send-ack-email"]')).toHaveCount(0);
   expect(acknowledgements).toBe(1);
-  expect(mailRequests).toBe(1);
+  expect(mailRequests).toBe(0);
   await page.locator('#team-refresh').click();
   await expect(page.locator('button[data-action="acknowledge"]')).toHaveCount(0);
 });

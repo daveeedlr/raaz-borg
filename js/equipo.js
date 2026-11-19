@@ -70,23 +70,17 @@
              'Receipt confirmed by RA’AZ BORG · ') +
           new Date(row.acknowledged_at).toLocaleDateString(document.documentElement.lang==='en'?'en-US':'es-EC') +
           ' · ' + (row.ack_email_state==='sent'
-            ? tr('Correo enviado','Email sent')
-            : tr('Correo aún pendiente','Email still queued'))
+            ? tr('Correo enviado anteriormente','Email previously sent')
+            : tr('Correos automáticos en pausa','Automated emails paused'))
         : tr('Pendiente de confirmación manual al atleta',
              'Awaiting staff confirmation to athlete');
       const actions=el('div',null,'team-actions');
       if (!row.acknowledged_at) {
-        const acknowledge=el('button',tr('Confirmar recepción y notificar','Confirm receipt & notify'));
+        const acknowledge=el('button',tr('Confirmar recepción en el portal','Confirm receipt in portal'));
         acknowledge.type='button';
         acknowledge.dataset.action='acknowledge';
         acknowledge.addEventListener('click',()=>acknowledgeRegistration(row,acknowledge));
         actions.append(acknowledge);
-      } else if(row.ack_email_state==='pending'||row.ack_email_state==='failed') {
-        const retry=el('button',tr('Enviar correo pendiente','Send queued email'));
-        retry.type='button';
-        retry.dataset.action='send-ack-email';
-        retry.addEventListener('click',()=>sendAcknowledgementEmail(row,retry));
-        actions.append(retry);
       }
       if(row.contact_email) {
         const contact=el('a',tr('Escribir al atleta','Email athlete'));
@@ -137,30 +131,6 @@
     }
     render();
   }
-  async function sendAcknowledgementEmail(row,button) {
-    if(!user||!allowed)return;
-    button.disabled=true;
-    try {
-      const {data,error}=await client.functions.invoke('roster-ack-email',{
-        body:{application_id:row.id}
-      });
-      await loadQueue();
-      if(error || data?.error) {
-        notify('Confirmación guardada en el portal. El correo no se pudo enviar todavía.',
-               'Acknowledgement saved in the portal. Email could not be delivered yet.');
-      } else if(data?.sent) {
-        notify('Recepción confirmada y correo enviado al atleta.',
-               'Receipt confirmed and email sent to the athlete.');
-      } else {
-        notify('Confirmación visible en el portal. El correo está pendiente de configurar el remitente o de envío.',
-               'Acknowledgement is visible in the portal. Email remains queued until delivery is configured.');
-      }
-    } catch {
-      await loadQueue();
-      notify('Confirmación guardada en el portal. No se confirmó el envío por correo.',
-             'Acknowledgement saved in the portal. Email delivery was not confirmed.');
-    } finally {button.disabled=false;}
-  }
   async function acknowledgeRegistration(row,button) {
     if(!user||!allowed||row.acknowledged_at)return;
     button.disabled=true;
@@ -169,8 +139,10 @@
         p_application_id:row.id
       });
       if(error || !data?.acknowledged_at)throw error||new Error('No acknowledgement saved');
-      // Show the acknowledgement in the fighter portal even if email delivery fails.
-      await sendAcknowledgementEmail(row,button);
+      // In-app acknowledgement only; email automations have been explicitly paused.
+      await loadQueue();
+      notify('Confirmación guardada en el portal del atleta. Los correos automáticos están en pausa.',
+             'Acknowledgement saved in the fighter portal. Automated emails are paused.');
     }catch{
       await loadQueue();
       notify('No pudimos guardar la confirmación. Comprueba tus permisos e inténtalo de nuevo.',

@@ -1,5 +1,18 @@
 # RAAZ BORG — Combat Re-Coded
 
+## Operational status — custom email automations paused (19 November 2026)
+
+**Custom transactional emails are intentionally disabled while the Resend account is under review.** This includes automated fighter welcome and successful-sign-in emails, automated new-roster emails to staff, and manual reviewer receipt-acknowledgement emails. This pause is enforced in **all three deployed Supabase Edge Functions**, even if email provider secrets are later entered. The corresponding GitHub source also contains the explicit `EMAIL_AUTOMATIONS_PAUSED = true` guard.
+
+- **Still working:** Auth sign-up and sign-in, Supabase-generated account verification and password-reset messages, fighter roster registration, bilingual profile and language preferences, previous fight record, private photo uploads, staff reviewer inbox, and in-portal team acknowledgement and welcome messages.
+- **Paused:** outward custom email dispatch by `athlete-notify`, `roster-ack-email`, and `roster-admin-notify`. The fighter portal no longer invokes email delivery on load, the signup page no longer queues sign-in email alerts, and the reviewer interface saves acknowledgements **without emailing** the fighter or offering a retry-send button.
+- **DB behavior:** the `rb_notify_roster_insert` trigger still creates a durable `rb_intake.roster_alerts` record, but no longer invokes `pg_net` to initiate email delivery. Existing welcome and acknowledgement records remain in the database; there is no loss of roster information.
+- **Pending emails:** historical pending email records are **not sent** by the paused system. Before intentionally resuming delivery, review/expire any stale queued messages to avoid surprising athletes with old notifications.
+- **How to resume deliberately:** obtain permission from an authorized sending provider and verify the sending domain; remove the paused guards in the three Edge Functions, re-enable explicitly selected website dispatch flows, and review whether to restore the database webhook. Run database and browser tests and confirm email delivery with controlled recipients before enabling production.
+- **Where this code lives:** `https://github.com/jayjayanton/raaz-borg` on `main`. GitHub Pages continues to serve the updated development website. Deployment to the separate `raazborg.com` production hosting is **not** part of this commit.
+
+All existing email templates are preserved in Git for a future authorized provider. Do not store API keys in the repository.
+
 Official website of **Ra'az Undergrounds** — an underground grappling platform from Quito, Ecuador, where traditional martial arts collide with neuro-interface fiction.
 
 ## Pages

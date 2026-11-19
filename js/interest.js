@@ -7,6 +7,7 @@
   const belt = $('belt');
   const interest = $('interest');
   const tr = (es, en) => document.documentElement.lang === 'en' ? en : es;
+  const AUTOMATED_EMAILS_PAUSED = true;
   let user = null;
   let signingUp = true;
   let recovering = false;
@@ -182,7 +183,7 @@
     render();
     // SIGNED_IN may precede resolution of signInWithPassword().
     // Queue once per actual Auth session; the database rejects duplicate session alerts.
-    if (event === 'SIGNED_IN' && next) {
+    if (!AUTOMATED_EMAILS_PAUSED && event === 'SIGNED_IN' && next) {
       setTimeout(() => {
         if (user?.id === next.id) client.rpc('rb_queue_sign_in_alert').catch(() => {});
       }, 0);
@@ -237,7 +238,7 @@
       } else if (!signingUp && result.data?.session) {
         // One security notification per genuine Auth session, queued on the server.
         // An email is only delivered when a verified email provider is configured.
-        await client.rpc('rb_queue_sign_in_alert').catch(() => {});
+        if (!AUTOMATED_EMAILS_PAUSED) await client.rpc('rb_queue_sign_in_alert').catch(() => {});
         say('¡Sesión iniciada! Verificando tu inscripción al roster.','Signed in! Checking your roster registration.','success');
         const {data:applications,error:applicationsError} = await client.rpc('rb_my_applications');
         if (!applicationsError && Array.isArray(applications) && applications.length) {

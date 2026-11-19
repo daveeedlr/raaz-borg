@@ -29,14 +29,14 @@
     },
     in_review: {
       label:['Registro en revisión','Registration under review'],
-      message:['Tu registro está siendo revisado. Te contactaremos por correo cuando haya novedades.',
-               'Your roster registration is being reviewed. We will email you when there is an update.'],
+      message:['Tu registro está siendo revisado. El equipo se pondrá en contacto contigo cuando haya novedades.',
+               'Your roster registration is being reviewed. The team will contact you when there is an update.'],
       step:2
     },
     invited: {
       label:['Invitación enviada','Invitation sent'],
-      message:['El equipo registró una invitación. Revisa tu correo para conocer los detalles y confirmar directamente con ellos.',
-               'The team has marked an invitation as sent. Check your email for details and confirm directly with them.'],
+      message:['El equipo registró una invitación. Contacta al equipo para conocer los detalles y confirmar tu participación.',
+               'The team has marked an invitation as sent. Contact the team for the details and to confirm your participation.'],
       step:3
     },
     closed: {
