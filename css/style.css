@@ -895,3 +895,41 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 .visual-gallery figcaption { padding:.55rem .25rem 0; text-align:center; font-size:.9rem }
 .visual-gallery-controls { display:flex; justify-content:center; gap:.75rem }
 .visual-gallery button { cursor:pointer }
+
+/* Decorative heading typography, inspired by the Visual World masthead. */
+[data-heading-outline] {
+  position:relative;
+  isolation:isolate;
+}
+[data-heading-outline]::before {
+  content:attr(data-heading-outline) / "";
+  position:absolute;
+  z-index:-1;
+  inset-inline:0;
+  top:50%;
+  transform:translateY(-59%);
+  overflow:hidden;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+  font:400 clamp(3.65rem,8vw,8rem)/1.12 var(--display);
+  letter-spacing:.02em;
+  text-align:inherit;
+  text-transform:uppercase;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(184,160,184,.20);
+}
+html[lang="en"] [data-heading-outline-en]::before {
+  content:attr(data-heading-outline-en) / "";
+}
+h1[data-heading-outline]::before {
+  font-size:clamp(4.7rem,12vw,13rem);
+}
+.street-intro h2[data-heading-outline]::before {
+  inset-inline-end:-1em;
+}
+@media (max-width:650px) {
+  [data-heading-outline]::before {
+    -webkit-text-stroke-color:rgba(184,160,184,.16);
+  }
+}
