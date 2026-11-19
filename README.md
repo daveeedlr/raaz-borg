@@ -7,7 +7,7 @@ Official website of **Ra'az Undergrounds** — an underground grappling platform
 | Page | File |
 |---|---|
 | Universe (home) | `index.html` |
-| Athlete interest (email) | `competir.html` |
+| Athlete account and applications | `competir.html` |
 | Fighters | `fighters.html` |
 | Qualification guide | `realm-nexus.html` |
 | Clashes GP | `clashes.html` |
@@ -72,4 +72,4 @@ A project administrator assigns staff by inserting a verified staff account UUID
 
 The SQL checks in `supabase/tests/intake.sql` run in a rollback-only transaction on a test database with Supabase Auth. They cover retry behavior, realm assignment, athlete isolation and staff review. Run with `psql -v ON_ERROR_STOP=1 -f supabase/tests/intake.sql` after applying the migration to a test project.
 
-The public application form currently prepares an email. The next frontend release should add bilingual sign-in, verification and recovery at `competir.html`, restore belt and interest after sign-in, submit using the RPC above, and display the receipt and status. Keep public browsing available to spectators.
+The bilingual Competir page uses the project’s publishable key and a pinned local Supabase JS client. Signed-in athletes can submit and view their own applications. Enable email/password authentication in Supabase and allow the deployed Competir URL with its selection query parameters in Auth redirect URLs (for the fork, `https://jayjayanton.github.io/raaz-borg/competir.html**`). Email confirmation and recovery links depend on these project settings. The public email address remains available for assistance.

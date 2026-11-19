@@ -109,36 +109,47 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await expect(page.locator('#gpArchiveOverlay')).toBeVisible();
 });
 
-test('athlete inquiry validates, prepares a private email draft and supports both languages', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('navigation').getByRole('link', { name: 'Competir', exact: true }).click();
-  await page.getByRole('button', { name: 'Preparar correo' }).click();
-  await expect(page.locator('#email-preview')).toBeHidden();
-  await page.getByLabel('Nombre o alias').fill('Atleta de prueba');
-  await page.getByLabel('Correo electrónico').fill('test@example.com');
-  await page.getByLabel('Ciudad', { exact: true }).fill('Quito');
-  await expect(page.locator('#belt')).toHaveValue('');
-  await page.getByLabel('Cinturón actual').selectOption('blue');
-  await expect(page.locator('#belt-realm')).toHaveText('Zaphire Trials');
-  await page.getByLabel('Disciplina (opcional)').fill('BJJ');
-  await page.getByLabel('Me interesa').selectOption('gp');
+test('athletes sign in, submit, return to their status and sign out in both languages', async ({page}) => {
+  const id = '00000000-0000-4000-8000-000000000001';
+  const user = {id, email:'test@example.invalid', aud:'authenticated', role:'authenticated', app_metadata:{},user_metadata:{}, identities:[]};
+  const jwtPart = value => Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token = [jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}), 'c2ln'].join('.');
+  const rows = [];
+  await page.route('https://*.supabase.co/**', async route => {
+    const path = new URL(route.request().url()).pathname;
+    let data;
+    if (path.endsWith('/token')) data = {user,access_token:token,refresh_token:'test-session',token_type:'bearer',expires_in:3600};
+    else if (path.endsWith('/user')) data = user;
+    else if (path.endsWith('/rb_my_profile')) data = [];
+    else if (path.endsWith('/rb_my_applications')) data = rows;
+    else if (path.endsWith('/rb_submit_application')) {
+      const body = route.request().postDataJSON();
+      expect(body.p_belt).toBe('blue');
+      expect(body.p_interest).toBe('gp');
+      expect(body.p_contact_consent).toBe(true);
+      rows.push({id,interest:'gp',suggested_realm:'Zaphire Trials',status:'submitted',submitted_at:new Date().toISOString()});
+      data = id;
+    } else if (path.endsWith('/logout')) data = {};
+    else throw new Error('Unexpected auth route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.goto('/competir.html?belt=blue&interest=gp&lang=es');
+  await page.getByLabel('Correo electrónico').fill(user.email);
+  await page.getByLabel('Contraseña', {exact:true}).fill('test-password');
+  await page.getByRole('button',{name:'Iniciar sesión'}).click();
+  await page.getByLabel('Nombre o alias').fill('Test');
+  await page.getByLabel('Ciudad',{exact:true}).fill('Quito');
   await page.getByRole('checkbox').check();
-  await page.getByRole('button', { name: 'Preparar correo' }).click();
-  await expect(page.locator('#send-inquiry')).toHaveAttribute('href', /^mailto:raazborgstudios@gmail\.com\?/);
-  await expect(page.locator('#email-body')).toHaveValue(/Cinturón: Cinturón azul\nReino sugerido: Zaphire Trials/);
-  await expect(page.locator('#email-body')).toHaveValue(/Interés: Competir por un cupo en el Grand Prix/);
+  await page.getByRole('button',{name:'Enviar solicitud'}).click();
+  await expect(page.locator('#feedback')).toContainText(id);
+  await page.reload();
+  await expect(page.locator('#receipts')).toContainText('Recibida');
   await page.locator('#langToggle').click();
-  await expect(page.locator('#email-body')).toHaveValue(/Belt: Blue belt\nSuggested realm: Zaphire Trials/);
-  await expect(page.locator('#email-body')).toHaveValue(/Interest: Competing for a Grand Prix spot/);
-  await page.getByLabel('Current belt').selectOption('unranked');
-  await expect(page.locator('#belt-review')).toBeVisible();
-  await expect(page.locator('#email-preview')).toBeHidden();
-  await page.getByRole('button', { name: 'Prepare email' }).click();
-  await expect(page.locator('#email-body')).toHaveValue(/Suggested realm: To be reviewed by the team/);
-  await page.getByLabel('City', { exact: true }).fill('Tumbaco');
-  await expect(page.locator('#email-preview')).toBeHidden();
+  await expect(page.locator('#receipts')).toContainText('Submitted');
+  await page.getByRole('button',{name:'Sign out'}).click();
+  await expect(page.locator('#application')).toBeHidden();
+  await expect(page.locator('#receipts')).toBeEmpty();
 });
-
 
 test('realm cards retain the whole poster and open one accessible reverse at a time', async ({ page }) => {
   await page.goto('/?lang=en#reinos');
