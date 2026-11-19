@@ -1,0 +1,2 @@
+-- Deployed claim function includes u.email::text (Supabase Auth email column is varchar(255)).
+-- Corrected definition is already present in the first migration for new installations.

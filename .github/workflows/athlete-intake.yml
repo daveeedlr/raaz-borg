@@ -33,7 +33,10 @@ jobs:
           create table auth.users(id uuid primary key, email text, email_confirmed_at timestamptz, created_at timestamptz not null default now());
           create function auth.uid() returns uuid language sql stable as $$
             select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
-          $$;
+          $;
+          create function auth.jwt() returns jsonb language sql stable as $
+            select coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb,'{}'::jsonb)
+          $;
           -- The legacy table predates the repository's intake migrations.
           -- Reconstruct only its shape for disposable migration regression tests.
           create table public.fighter_registrations(
@@ -49,6 +52,16 @@ jobs:
             created_at timestamptz not null default now(),
             username text not null, avatar_path text
           );
+          create table public.fighter_fights (
+            id uuid primary key default gen_random_uuid(),
+            fighter_id uuid not null references auth.users(id) on delete cascade,
+            opponent text not null,
+            result text not null check (result in ('win','loss','draw')),
+            method text,
+            fight_date date not null,
+            created_at timestamptz not null default now()
+          );
+          alter table public.fighter_fights enable row level security;
           alter table public.fighter_registrations enable row level security;
           create policy "Fighters can view their own profile"
             on public.fighter_registrations for select to authenticated

@@ -110,3 +110,29 @@ The athlete submits verified identity, first/last name, fighter alias, location,
 Do not confuse **accounts** (`auth.users`) with **applications** (`rb_intake.applications`). The private intake profile and applications remain authoritative, while the legacy table is only a restricted, RLS-protected summary. Browser roles cannot INSERT, UPDATE or TRUNCATE the summary directly; profile changes must go through the protected RPCs. Birth-derived age is recalculated on profile changes (not continuously); the date of birth is canonical. Missing values remain `NULL`.
 
 The migrations `20261119181803_sync_legacy_fighter_registration_on_signup.sql` and `20261119181913_harden_legacy_fighter_sync_triggers.sql` have been applied to Supabase project `iltuwbawjiwvuqqrkyiz`. The standalone CI harness builds a disposable baseline for the older table before applying migrations and testing the Auth, profile and application triggers. All fixture accounts are rolled back; they are not production data.
+
+
+## Private fighter portal and automated notification pipeline
+
+The bilingual private fighter dashboard is at fighter-dashboard.html. After a successful application the athlete is redirected there, and returning athletes who already have an application can open it after signing in. The portal uses the current authenticated session rather than a public user ID.
+
+- rb_intake.applications contains submission, review, invitation, or closed status. Submitting is not a confirmed fight.
+- public.fighter_fights holds recorded wins, losses and draws. With no fights, the donut stays grey and every statistic displays a dash; no scores are invented.
+- rb_intake.athlete_notifications stores a private welcome note once per athlete, created by a database trigger after their first application. The dashboard displays it immediately.
+- public.rb_my_fighter_portal() returns only data belonging to the signed-in athlete. There are no user-selectable IDs.
+- A successful email/password sign-in queues a security alert using public.rb_queue_sign_in_alert() once per JWT session, distinct from Supabase's original signup-confirmation email.
+
+### Transactional email configuration
+
+The authenticated Supabase Edge Function athlete-notify is deployed and implements provider-based delivery. Delivery recipients are derived server-side from verified Supabase Auth users. The provider API key and service-role key never appear in browser code.
+
+Email sending remains disabled until a sender is configured in the project's Edge Function Secrets:
+  RESEND_API_KEY = the authorized Resend provider API key
+  RAAZ_EMAIL_FROM = RA'AZ BORG <notificaciones@verified-domain.com>
+Use an actual domain that has been verified for sending. The public raazborgstudios@gmail.com inbox cannot automatically serve as a verified third-party sending domain.
+
+Important: The in-app welcome is saved automatically. Successful-sign-in and welcome EMAILS remain queued until provider setup is complete. No email delivery is implied by a successful HTTP login alone. The signed-in dashboard invokes athlete-notify to flush pending emails; a separate server-side scheduler is needed for retries when users do not return.
+
+### Quality gates
+
+Browser tests exercise the auth-to-dashboard redirect, message visibility, grey zero-data donut, and populated win/loss/draw chart. SQL regression tests use rollback-only test accounts and verify authenticated portal isolation and email queue permissions. Supabase Auth's Site URL and redirect allowlist must also point at the deployed production domain.

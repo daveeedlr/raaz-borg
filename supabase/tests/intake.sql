@@ -20,10 +20,16 @@ begin
   assert (select email_verified=true from public.fighter_registrations where user_id=athlete);
   insert into rb_intake.reviewers values(other_user);
   perform set_config('request.jwt.claim.sub',athlete::text,true);
+  perform set_config('request.jwt.claims',jsonb_build_object('sub',athlete,'session_id',gen_random_uuid(),'role','authenticated')::text,true);
   set local role authenticated;
+  assert public.rb_queue_sign_in_alert() is true;
+  assert public.rb_queue_sign_in_alert() is true;
   receipt := public.rb_submit_application(request,'Test','Quito','white','gp',true);
   assert receipt = public.rb_submit_application(request,'Test','Quito','white','gp',true);
   assert (select count(*)=1 from public.rb_my_applications() where suggested_realm='White Carbon Combat');
+  assert (select (public.rb_my_fighter_portal()#>>'{application,status}')='submitted');
+  assert (select (public.rb_my_fighter_portal()#>>'{stats,total}')::int=0);
+  assert (select jsonb_array_length(public.rb_my_fighter_portal()->'messages')=1);
   perform public.rb_submit_application_v2(gen_random_uuid(), 'Test', 'Quito', 'blue', 'gp', true,
     'Academy', null, null, '{"first_name":"Ana","last_name":"Test","country":"Ecuador","weight":58,"weight_unit":"kg","height":162,"height_unit":"cm","belt_stripes":2}'::jsonb);
   assert (select count(*)=1 from public.rb_my_profile_v2() where first_name='Ana' and weight=58 and belt_stripes=2);
@@ -58,6 +64,8 @@ begin
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   assert (select status='in_review' from public.rb_my_applications() where id=receipt);
   assert not has_function_privilege('anon','public.rb_my_applications()','execute');
+  assert not has_function_privilege('anon','public.rb_my_fighter_portal()','execute');
+  assert not has_function_privilege('authenticated','public.rb_claim_athlete_emails(uuid,integer)','execute');
   assert not has_schema_privilege('authenticated','rb_intake','CREATE');
 end;
 $$;

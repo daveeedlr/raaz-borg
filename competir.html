@@ -24,6 +24,23 @@
 .join-progress { color:var(--cyan); font-size:.92rem; line-height:1.65; }
 .required-indicator { color:var(--acid); font-weight:700; }
 #recover[hidden] { display:none; }
+#feedback:not(:empty) {
+  color:#fff; background:#213039; border:2px solid #69d9f4; border-left:6px solid #69d9f4;
+  border-radius:4px; padding:18px 20px; font-size:clamp(16px,2.4vw,20px);
+  line-height:1.55; font-weight:800; box-shadow:0 12px 38px rgba(0,0,0,.4);
+  max-width:100%; overflow-wrap:anywhere;
+}
+#feedback[data-state="error"]:not(:empty) {
+  background:#351d27;border-color:#ff8aa7;color:#fff;
+}
+#feedback[data-state="success"]:not(:empty) {
+  background:#26331e;border-color:#c8f542;color:#f3ffe0;
+}
+#account .auth-explainer,#application .application-note {color:#e6e1ea;line-height:1.65;}
+#primary-auth,#submit-application {min-height:52px;font-size:clamp(14px,2vw,17px);font-weight:800;}
+#primary-auth:disabled,#submit-application:disabled {opacity:.78;cursor:progress;}
+.join-form-panel input:focus,.join-form-panel select:focus {outline:2px solid #67d9f0;outline-offset:2px;}
+
 .athlete-fields { margin:0; padding:0; border:0; display:grid; gap:.85rem; min-width:0 }
 .athlete-fields legend { font-weight:700; font-size:1.1rem; margin-bottom:.6rem; color:var(--cyan) }
 .athlete-fields .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
@@ -115,6 +132,7 @@
     <div class="interest-form" id="member" hidden>
       <strong id="identity"></strong><button type="button" class="text-link" id="logout" data-en="Sign out">Cerrar sesión</button>
       <h2 data-en="My applications">Mis postulaciones</h2>
+      <a class="btn btn-acid" href="fighter-dashboard.html" data-en="Open my fighter realm">Abrir mi reino de peleador</a>
       <div id="receipts"></div>
       <button class="text-link" type="button" id="refresh" data-en="Refresh status">Actualizar estado</button>
     </div>
@@ -183,6 +201,6 @@
 
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
-<script src="js/interest.js?v=account-guidance-20261119"></script>
+<script src="js/interest.js?v=fighter-portal-20261119"></script>
 </body>
 </html>

@@ -109,56 +109,116 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await expect(page.locator('#gpArchiveOverlay')).toBeVisible();
 });
 
-test('athletes sign in, submit, return to their status and sign out in both languages', async ({page}) => {
+test('athletes sign in, apply, open their private realm, and see grey empty fight stats', async ({page}) => {
   const id = '00000000-0000-4000-8000-000000000001';
-  const user = {id, email:'test@example.invalid', aud:'authenticated', role:'authenticated', app_metadata:{},user_metadata:{}, identities:[]};
+  const user = {id, email:'test@example.invalid', email_confirmed_at:new Date().toISOString(), aud:'authenticated', role:'authenticated', app_metadata:{}, user_metadata:{}, identities:[]};
   const jwtPart = value => Buffer.from(JSON.stringify(value)).toString('base64url');
-  const token = [jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}), 'c2ln'].join('.');
+  const token = [jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600,session_id:'00000000-0000-4000-8000-000000000009'}),'c2ln'].join('.');
   const rows = [];
+  let signinAlertQueued = false;
   await page.route('https://*.supabase.co/**', async route => {
     const path = new URL(route.request().url()).pathname;
     let data;
-    if (path.endsWith('/token')) data = {user,access_token:token,refresh_token:'test-session',token_type:'bearer',expires_in:3600};
-    else if (path.endsWith('/user')) data = user;
-    else if (path.endsWith('/rb_my_profile_v2')) data = [];
-    else if (path.endsWith('/rb_my_applications')) data = rows;
-    else if (path.endsWith('/rb_submit_application_v2')) {
-      const body = route.request().postDataJSON();
+    if(path.endsWith('/token')) data = {user,access_token:token,refresh_token:'test-session',token_type:'bearer',expires_in:3600};
+    else if(path.endsWith('/user')) data = user;
+    else if(path.endsWith('/rb_my_profile_v2')) data = [];
+    else if(path.endsWith('/rb_my_applications')) data = rows;
+    else if(path.endsWith('/rb_queue_sign_in_alert')) { signinAlertQueued = true; data = true; }
+    else if(path.endsWith('/rb_my_fighter_portal')) data = {
+      email:user.email,username:'Prueba',name:'Test',belt:'blue',
+      realm:'Zaphire Trials',gym:'Test Academy',country:'Ecuador',
+      application:rows.length ? {id,interest:'gp',status:'submitted',realm:'Zaphire Trials',submitted_at:new Date().toISOString()} : null,
+      messages:rows.length ? [{kind:'welcome',created_at:new Date().toISOString()}] : [],
+      stats:{total:0,wins:0,losses:0,draws:0},recent_fights:[]
+    };
+    else if(path.endsWith('/rb_submit_application_v2')) {
+      const body=route.request().postDataJSON();
       expect(body.p_belt).toBe('blue');
       expect(body.p_interest).toBe('gp');
       expect(body.p_contact_consent).toBe(true);
       expect(body.p_profile.first_name).toBe('Prueba');
       expect(body.p_profile.last_name).toBe('Atleta');
-      expect(body.p_profile.country).toBe('Ecuador');
       rows.push({id,interest:'gp',suggested_realm:'Zaphire Trials',status:'submitted',submitted_at:new Date().toISOString()});
-      data = id;
-    } else if (path.endsWith('/logout')) data = {};
+      data=id;
+    }
+    else if(path.endsWith('/athlete-notify')) data={configured:false,delivered:0};
+    else if(path.endsWith('/logout')) data={};
     else throw new Error('Unexpected auth route '+path);
     await route.fulfill({json:data});
   });
   await page.goto('/competir.html?belt=blue&interest=gp&lang=es');
   await page.locator('#auth-signin').click();
-  await page.getByLabel('Correo electrónico').fill(user.email);
+  await page.locator('#email').fill(user.email);
   await page.locator('#password').fill('test-password');
-  await page.getByRole('button',{name:'Iniciar sesión'}).click();
+  await page.locator('#primary-auth').click();
+  await expect(page.locator('#application')).toBeVisible();
+  expect(signinAlertQueued).toBe(true);
   await page.locator('#first_name').fill('Prueba');
   await page.locator('#last_name').fill('Atleta');
   await page.locator('#alias').fill('Test');
   await page.locator('#city').fill('Quito');
-  await page.getByRole('checkbox').check();
-  await page.getByRole('button',{name:'Enviar postulación'}).click();
-  await expect(page.locator('#feedback')).toContainText('¡Gracias por postularte!');
-  await expect(page.locator('#receipts')).toContainText(id);
+  await page.locator('#application input[name="contact"]').check();
+  await page.locator('#submit-application').click();
+  await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=es&submitted=1$/);
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await expect(page.locator('#fighterDisplayName')).toHaveText('Prueba');
+  await expect(page.locator('#application-status')).toHaveText('Postulación pendiente');
+  await expect(page.locator('#welcome-copy')).toContainText('¡Bienvenido al universo Börg');
+  await expect(page.locator('#winPercentage')).toHaveText('—');
+  await expect(page.locator('#fightWins')).toHaveText('—');
+  await expect(page.locator('#fightLosses')).toHaveText('—');
+  await expect(page.locator('#fightDonut')).toHaveCSS('background-image',/conic-gradient/);
   await page.locator('#langToggle').click();
-  await expect(page.locator('#feedback')).toContainText('Thanks for applying!');
-  await page.locator('#langToggle').click();
+  await expect(page.locator('#application-status')).toHaveText('Application pending');
+  await expect(page.locator('#welcome-copy')).toContainText('Welcome to the Börg Realm');
   await page.reload();
-  await expect(page.locator('#receipts')).toContainText('Postulación recibida');
-  await page.locator('#langToggle').click();
-  await expect(page.locator('#receipts')).toContainText('Application received');
-  await page.getByRole('button',{name:'Sign out'}).click();
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await page.locator('#portal-logout').click();
+  await expect(page).toHaveURL(/competir\.html\?lang=en$/);
   await expect(page.locator('#application')).toBeHidden();
-  await expect(page.locator('#receipts')).toBeEmpty();
+});
+
+test('fighter record donut shows real registered win/loss/draw proportions', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000050';
+  const user={id,email:'fighter@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_fighter_portal'))data={
+      email:user.email,username:'iron_grappler',name:'Iron Grappler',
+      realm:'Oxide Overdrive',belt:'brown',country:'Ecuador',
+      application:{status:'in_review',id:'00000000-0000-4000-8000-000000000051',interest:'gp',realm:'Oxide Overdrive'},
+      messages:[{kind:'welcome',created_at:new Date().toISOString()}],
+      stats:{wins:3,losses:1,draws:1,total:5},
+      recent_fights:[{opponent:'Sample Opponent',result:'win',method:'Decision',date:'2026-11-01'}]
+    };
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    // A valid-looking persisted client session, used only by mocked browser tests.
+    const key='raaz-athlete-session';
+    localStorage.setItem(key,JSON.stringify({access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user}));
+  },{user,token});
+  await page.goto('/fighter-dashboard.html?lang=en');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await expect(page.locator('#fighterDisplayName')).toHaveText('iron_grappler');
+  await expect(page.locator('#application-status')).toHaveText('Under review');
+  await expect(page.locator('#winPercentage')).toHaveText('60%');
+  await expect(page.locator('#totalFights')).toHaveText('5');
+  await expect(page.locator('#fightWins')).toHaveText('3');
+  await expect(page.locator('#fightLosses')).toHaveText('1');
+  await expect(page.locator('#fightDraws')).toHaveText('1');
+  await expect(page.locator('#fightList')).toContainText('Sample Opponent');
+  const gradient=await page.locator('#fightDonut').evaluate(el=>getComputedStyle(el).backgroundImage);
+  expect(gradient).toContain('conic-gradient');
+  expect(gradient).not.toContain('110, 106, 115');
+  await assertResponsive(page,'/fighter-dashboard.html?lang=en');
 });
 
 test('realm cards retain the whole poster and open one accessible reverse at a time', async ({ page }) => {

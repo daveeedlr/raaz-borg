@@ -12,6 +12,7 @@
   let recovering = false;
   let busy = false;
   let message = [];
+  let messageKind = 'info';
   let historyRows = null;
   let loadNumber = 0;
   let requestKey = null;
@@ -34,9 +35,21 @@
     $('belt-assigned').hidden = !realm;
     $('belt-review').hidden = !belt.value || !!realm;
   }
-  function say(es, en) {
+  function say(es, en, kind = 'info') {
     message = [es, en];
-    $('feedback').textContent = tr(es, en);
+    messageKind = kind;
+    const feedback = $('feedback');
+    feedback.dataset.state = kind;
+    feedback.textContent = tr(es, en);
+    if (kind === 'error' || kind === 'success') {
+      feedback.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+  }
+  function fighterDashboardUrl(submitted = false) {
+    const url = new URL('fighter-dashboard.html', location.href);
+    url.searchParams.set('lang', document.documentElement.lang);
+    if (submitted) url.searchParams.set('submitted', '1');
+    return url.href;
   }
   function render() {
     $('account').hidden = !!user;
@@ -54,6 +67,7 @@
     $('recover').hidden = signingUp;
     $('password').autocomplete = signingUp ? 'new-password' : 'current-password';
     $('password').minLength = signingUp ? 8 : 1;
+    $('feedback').dataset.state = messageKind;
     $('feedback').textContent = message.length ? tr(...message) : '';
     drawHistory();
   }
@@ -80,7 +94,7 @@
     const seq = ++loadNumber;
     const [rows, info] = await Promise.all([client.rpc('rb_my_applications'), profile ? client.rpc('rb_my_profile_v2') : null]);
     if (seq !== loadNumber || !user) return;
-    if (rows.error || info?.error) say('No pudimos cargar todos tus datos. Vuelve a actualizar el estado.','Could not load all your details. Try refreshing your status.');
+    if (rows.error || info?.error) say('No pudimos cargar todos tus datos. Vuelve a actualizar el estado.','Could not load all your details. Try refreshing your status.','error');
     if (!rows.error) historyRows = rows.data;
     if (info?.data?.[0]) {
       const saved = info.data[0];
@@ -108,6 +122,7 @@
       showRealm();
       historyRows = requestKey = null;
       message = [];
+      messageKind = 'info';
       $('password').value = '';
     }
     user = next;
@@ -125,13 +140,14 @@
     if (busy) return;
     busy = button.disabled = true;
     try { await run(); }
-    catch { say('No se pudo completar la operación. Revisa tu conexión e inténtalo de nuevo.','Could not complete the request. Check your connection and try again.'); }
+    catch { say('No se pudo completar la operación. Revisa tu conexión e inténtalo de nuevo.','Could not complete the request. Check your connection and try again.','error'); }
     finally { busy = button.disabled = false; }
   }
   function chooseAuthMode(signUp) {
     if (signingUp === signUp) return;
     signingUp = signUp;
     message = [];
+    messageKind = 'info';
     $('password').value = '';
     render();
     $('email').focus();
@@ -146,13 +162,25 @@
         ? await client.auth.signUp({...credentials, options:{emailRedirectTo:callbackUrl()}})
         : await client.auth.signInWithPassword(credentials);
       if (result.error) {
-        if (result.error.status === 429) say('Demasiados intentos. Espera un momento.','Too many attempts. Please wait a moment.');
-        else if (signingUp) say('No se pudo completar el registro. Verifica los datos; si ya registraste ese correo, pulsa Ya tengo cuenta o recupera tu contraseña.','Could not complete registration. Check your details; if you already registered this email, choose I have an account or recover your password.');
-        else say('No pudimos iniciar sesión. Revisa correo y contraseña o pulsa ¿Olvidaste tu contraseña? para recuperar el acceso.','Could not sign in. Check your email and password or select Forgot your password? to recover access.');
+        if (result.error.status === 429) say('Demasiados intentos. Espera un momento.','Too many attempts. Please wait a moment.','error');
+        else if (signingUp) say('No se pudo completar el registro. Verifica los datos; si ya registraste ese correo, pulsa Ya tengo cuenta o recupera tu contraseña.','Could not complete registration. Check your details; if you already registered this email, choose I have an account or recover your password.','error');
+        else say('No pudimos iniciar sesión. Revisa correo y contraseña o pulsa ¿Olvidaste tu contraseña? para recuperar el acceso.','Could not sign in. Check your email and password or select Forgot your password? to recover access.','error');
       } else if (!result.data.session) {
         signingUp = false;
         render();
-        say('Si es una cuenta nueva, revisa el correo para confirmar tu dirección. Si ese correo ya estaba registrado, inicia sesión o recupera tu contraseña.','If this is a new account, check your email for a confirmation link. If you already registered this address, sign in or use password recovery.');
+        say('Si es una cuenta nueva, revisa el correo para confirmar tu dirección. Si ese correo ya estaba registrado, inicia sesión o recupera tu contraseña.','If this is a new account, check your email for a confirmation link. If you already registered this address, sign in or use password recovery.','success');
+      } else if (!signingUp && result.data?.session) {
+        // One security notification per genuine Auth session, queued on the server.
+        // An email is only delivered when a verified email provider is configured.
+        await client.rpc('rb_queue_sign_in_alert').catch(() => {});
+        say('¡Sesión iniciada! Estamos comprobando tus postulaciones.','Signed in! Checking your applications.','success');
+        const {data:applications,error:applicationsError} = await client.rpc('rb_my_applications');
+        if (!applicationsError && Array.isArray(applications) && applications.length) {
+          location.assign(fighterDashboardUrl());
+        } else {
+          say('¡Bienvenido! Tu sesión está activa. Completa tus datos de atleta y envía la postulación para ingresar a tu portal personal.',
+              'Welcome! You are signed in. Complete your athlete details and submit an application to open your personal portal.','success');
+        }
       }
     });
   };
@@ -161,7 +189,7 @@
     action($('recover'), async () => {
       const {error} = await client.auth.resetPasswordForEmail($('email').value.trim(), {redirectTo:callbackUrl()});
       if (error) throw error;
-      say('Si la cuenta existe, recibirás un enlace para cambiar la contraseña.','If the account exists, you will receive a password reset link.');
+      say('Si la cuenta existe, recibirás un enlace para cambiar la contraseña.','If the account exists, you will receive a password reset link.','success');
     });
   };
   $('reset-password').onsubmit = event => {
@@ -171,7 +199,7 @@
       const {error} = await client.auth.updateUser({password:field.value});
       if (error) throw error;
       field.value = ''; recovering = false; render();
-      say('Contraseña actualizada.','Password updated.');
+      say('Contraseña actualizada.','Password updated.','success');
     });
   };
   $('logout').onclick = () => action($('logout'), async () => {
@@ -183,7 +211,7 @@
     event.preventDefault();
     if (!user || recovering) return;
     if (!belt.reportValidity() || !interest.reportValidity()) {
-      say('Selecciona tu cinturón y el tipo de postulación antes de continuar.','Select your belt and application type before continuing.');
+      say('Selecciona tu cinturón y el tipo de postulación antes de continuar.','Select your belt and application type before continuing.','error');
       return;
     }
     action($('submit-application'), async () => {
@@ -201,7 +229,7 @@
       profile.height_unit = profile.height ? data.get('height_unit') : null;
       for (const name of ['first_name','last_name','country']) {
         if (!profile[name]) {
-          say('Completa tu nombre, apellido y país para continuar.','Enter your first name, last name and country to continue.');
+          say('Completa tu nombre, apellido y país para continuar.','Enter your first name, last name and country to continue.','error');
           form.elements[name].focus();
           return;
         }
@@ -219,10 +247,13 @@
       await load(false);
       if (user?.id !== owner) return;
       say(
-        '¡Gracias por postularte! Recibimos tu postulación. Nuestro equipo la revisará y te escribirá al correo de tu cuenta para contarte qué sigue. Puedes volver aquí para consultar tu estado.',
-        'Thanks for applying! We received your application. Our team will review it and email you directly about the next steps. You can sign back in anytime to check your status.'
+        '¡Postulación recibida! Abriendo tu portal personal para consultar el estado y el mensaje del equipo.',
+        'Application received! Opening your personal portal to view your status and the team message.',
+        'success'
       );
-      $('feedback').scrollIntoView({block:'center'});
+      // The welcome notification is created by the database trigger. The portal will
+      // attempt email delivery when configured, without claiming premature success.
+      location.assign(fighterDashboardUrl(true));
     });
   };
   document.addEventListener('languagechange', render);
