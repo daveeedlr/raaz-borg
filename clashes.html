@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clashes GP — RAAZ BORG</title>
+<title data-en="Grand Prix archive — RA’AZ BORG">Archivo del Grand Prix — RA’AZ BORG</title>
 <meta name="description" content="Explora la historia del Grand Prix de RA’AZ BORG en Quito." data-en-content="Explore the history of the RA’AZ BORG Grand Prix in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=visitor-flow-1">
 </head>
 <body data-lang="es">
 
@@ -15,15 +15,15 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
     <ul class="nav-links" id="main-nav">
-      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
-      <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
-      <li><a href="clashes.html" class="active">CLASHES GP</a></li>
-      <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html" class="active" aria-current="page">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
     </ul>
     <div class="nav-right">
       <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
-      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
@@ -32,61 +32,15 @@
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost">KUMATES</div>
-    <span class="kicker" data-en="OFFICIAL PRO-LOG">ARCHIVO OFICIAL</span>
-    <h1 class="glitch flicker" data-text="CLASHES GP">CLASHES GP</h1>
-    <p class="lead"><span data-en="Eight warriors compete for the title at each Grand Prix. Explore the five editions held in Quito, from White Carbon Combat to Praetoreans Interface.">Ocho guerreros se disputan el título en cada Grand Prix. Recorre las cinco ediciones celebradas en Quito, desde White Carbon Combat hasta Praetoreans Interface.</span></p>
-
-    <p class="clashes-announcement">
-      <span class="lang-en">MORE GRAND PRIX EVENTS ARE ON THE WAY. THE GRID IS CALLING — ENLIST NOW AND PREPARE FOR YOUR
-        NEXT CHALLENGE.</span>
-      <span class="lang-es">MÁS EVENTOS GRAND PRIX ESTÁN EN CAMINO. LA RED TE LLAMA — INSCRÍBETE AHORA Y PREPÁRATE PARA TU
-        PRÓXIMO DESAFÍO.</span>
-    </p>
+    <span class="kicker">Clashes GP · Quito</span>
+    <h1 data-en="Grand Prix archive">Archivo del Grand Prix</h1>
+    <p class="lead" data-en="Open an edition to explore its history and photos. Each Grand Prix brings eight fighters to the mat.">Abre una edición para ver su historia y sus fotos. Cada Grand Prix reúne a ocho peleadores en el tatami.</p>
   </div>
 </header>
 
-<!-- ==== Ticker ==== -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span data-en="MORE FIGHTS COMING SOON">PRÓXIMAMENTE MÁS COMBATES</span>
-    <span>◈</span>
-    <span data-en="NEW TRANSMISSION PENDING">PRÓXIMA TRANSMISIÓN PENDIENTE</span>
-    <span>◈</span>
-    <span data-en="THE GRID IS EVOLVING">LA RED EVOLUCIONA</span>
-    <span>◈</span>
-    <span data-en="STAY CONNECTED">SIGUE EN CONTACTO</span>
-    <span>◈</span>
-  </div>
-</div>
-
-<!-- ==== Timeline ==== -->
-<section class="dark">
+<section class="dark archive-editions">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost" data-en="TIMELINE">CRONOLOGÍA</div>
-      <span class="kicker cy"><span class="lang-en">SYSTEM CHANGELOG</span><span class="lang-es">HISTORIAL DEL
-          SISTEMA</span></span>
-      <h2>
-        <span class="lang-en">Edition History</span>
-        <span class="lang-es">Historial de Ediciones</span>
-      </h2>
-    </div>
-    <p class="timeline-intro reveal">
-      <span class="lang-en">
-        Five Grand Prix editions. Five chapters in the evolution of RAAZ BORG.
-        Since 2020, each tournament has introduced a new realm, bringing together
-        competitors to test their skills and push the boundaries of combat.
-        Five transmissions completed. The next chapters await.
-      </span>
-      <span class="lang-es">
-        Cinco ediciones Grand Prix. Cinco capítulos en la evolución de RAAZ BORG.
-        Desde 2020, cada torneo ha presentado un nuevo reino, reuniendo a
-        competidores para poner a prueba sus habilidades y superar los límites
-        del combate. Cinco transmisiones completadas. Los próximos capítulos esperan.
-      </span>
-    </p>
-    
+    <div class="section-heading"><h2 data-en="Past editions">Ediciones anteriores</h2></div>
     <!-- ============ INTERACTIVE GP TIMELINE ============ -->
     <div class="timeline reveal">
     
@@ -256,85 +210,11 @@
 </div>
 
 
-<!-- ===== Stay Connected ==== -->
-<section class="upcoming-clashes">
-  <div class="wrap">
-    <div class="upcoming-content reveal">
-
-      <p class="kicker" style="color:var(--cyan);margin-bottom:20px">
-        <span class="lang-en">NEXT TRANSMISSION PENDING</span>
-        <span class="lang-es">PRÓXIMA TRANSMISIÓN PENDIENTE</span>
-      </p>
-
-      <h2>
-        <span class="lang-en">MORE FIGHTS<br>COMING SOON.</span>
-        <span class="lang-es">MÁS COMBATES<br>PRÓXIMAMENTE.</span>
-      </h2>
-
-      <p class="upcoming-description">
-        <span class="lang-en">
-          The Grid is preparing its next chapter.
-          New fighters. New challenges. New realms.
-          Stay connected for the next transmission.
-        </span>
-        <span class="lang-es">
-          La Red prepara su próximo capítulo.
-          Nuevos peleadores. Nuevos desafíos. Nuevos reinos.
-          Mantente conectado para la próxima transmisión.
-        </span>
-      </p>
-
-      <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">
-        <span class="lang-en">STAY CONNECTED</span>
-        <span class="lang-es">MANTENTE CONECTADO</span>
-      </a>
-
-    </div>
-  </div>  `
-</section>
-
-
-<!-- ==== Featured Clash ==== -->
-<!-- <section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost">VS</div>
-      <span class="kicker mag">NEXT TRANSMISSION</span>
-      <h2><span class="lang-en">Featured Clash</span><span class="lang-es">Combate Estelar</span></h2>
-    </div>
-    <div class="split reveal">
-      <div class="img-frame">
-        <img src="assets/fighter-super-choque.jpg" alt="Super Choque poster">
-        <span class="frame-tag">SUPER CHOQUE — UNIT_01</span>
-      </div>
-      <div class="img-frame reveal-d1">
-        <img src="assets/fighter-vice-protocol.jpg" alt="Vice Protocol poster">
-        <span class="frame-tag">VICE PROTOCOL — UNIT_02</span>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:52px" class="reveal">
-      <p class="kicker" style="color:var(--acid);margin-bottom:10px">THE BÖRG LAB — 21:00 — QUITO</p>
-      <p style="font-family:var(--mono);font-size:13px;color:var(--text-3);letter-spacing:.2em"><span class="lang-en">ONLY ONE LEAVES THE LAB.</span><span class="lang-es">SOLO UNO SALE DEL LAB.</span></p>
-    </div>
-  </div>
-</section> -->
-
-<!-- ==== Enlist ==== -->
-<section class="cta-final" id="enlist">
-  <div class="scanlines"></div>
-  <div class="wrap">
-    <p class="kicker flicker"><span class="lang-en">RECRUITMENT PROTOCOL OPEN</span><span class="lang-es">PROTOCOLO DE RECLUTAMIENTO ABIERTO</span></p>
-    <h2><span class="lang-en">ENTER<br><span class="accent glitch" data-text="THE GRID.">YOUR REALM.</span></span><span class="lang-es">ENTRA A<br><span class="accent glitch" data-text="LA RED.">LA RED.</span></span></h2>
-    <p>
-      <span class="lang-en">Your journey into the Grid starts here. Step into the arena, challenge your limits, and become
-        part of the next generation of RAAZ BORG competitors. Explore the realms and prepare for upcoming tournaments.</span>
-      <span class="lang-es">Tu camino hacia la Red comienza aquí. Entra a la arena, desafía tus límites y forma parte de la
-        próxima generación de competidores de RAAZ BORG. Explora los reinos y prepárate para los próximos torneos.</span>
-  </p>
-    <a class="btn btn-acid" href="competir.html"><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span>
-    </a>
-  </div>
-</section>
+<section class="archive-entry" id="enlist"><div class="wrap">
+  <h2 data-en="Want to enter the next Grand Prix?">¿Quieres competir en el próximo Grand Prix?</h2>
+  <a class="btn btn-acid" href="competir.html" data-en="Apply to compete">Quiero competir</a>
+  <a class="text-link" href="realm-nexus.html" data-en="How to qualify">Cómo clasificar</a>
+</div></section>
 
 <footer>
   <div class="wrap foot">
@@ -348,6 +228,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=realm-guide-4"></script>
+<script src="js/main.js?v=visitor-flow-1"></script>
 </body>
 </html>

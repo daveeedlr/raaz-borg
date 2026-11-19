@@ -7,7 +7,7 @@
 <meta name="description" content="Börg Lab, el espacio de entrenamiento y producción audiovisual de RA’AZ BORG en Quito." data-en-content="Börg Lab, the RA’AZ BORG training and media space in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=visitor-flow-1">
 </head>
 <body data-lang="es">
 
@@ -15,15 +15,15 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
     <ul class="nav-links" id="main-nav">
-      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
-      <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
-      <li><a href="clashes.html">CLASHES GP</a></li>
-      <li><a href="labs.html" class="active">LABS</a></li>
-      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html" class="active" aria-current="page"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
     </ul>
     <div class="nav-right">
       <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
-      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
@@ -32,43 +32,19 @@
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost">BÖRG LAB</div>
-    <span class="kicker" data-en="QUITO — RESTRICTED ACCESS">QUITO — ACCESO RESTRINGIDO</span>
-    <h1 class="glitch flicker" data-en-glitch="THE BÖRG LAB" data-text="EL BÖRG LAB" data-en="THE BÖRG LAB">EL BÖRG LAB</h1>
-    <p class="lead">
-      <span class="lang-en">Training ground, arena, and broadcast station. The Lab is where personas are forged, encounters are logged, and every transmission leaves the underground.</span>
-      <span class="lang-es">Campo de entrenamiento, arena y estación de transmisión. El Lab es donde se forjan los personajes, se registran los encuentros y cada transmisión sale del underground.</span>
-    </p>
+    <span class="kicker">Börg Lab · Quito</span>
+    <h1 data-en="Training and video">Entrenamiento y videos</h1>
+    <p class="lead" data-en="The Börg Lab is where RA’AZ BORG trains and films in Quito. Watch highlights or ask about joining a training session.">En el Börg Lab entrenamos y filmamos en Quito. Mira los encuentros o consulta cómo participar en una sesión.</p>
+    <a class="text-link lab-inquiry" href="competir.html?interest=lab#athlete-interest" data-en="Ask about training">Consultar por entrenamientos</a>
   </div>
 </header>
-
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span data-en="LAB STATUS: OPERATIONAL">LABORATORIO EN LÍNEA</span><span>◈</span><span data-en="HEROES VS HEROES">HÉROES CONTRA HÉROES</span><span>◈</span><span data-en="NEW DOG IN THE YARD">NUEVO RIVAL EN EL PATIO</span><span>◈</span><span>RA'AZ ENTERTAINMENT</span><span>◈</span>
-  </div>
-</div>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost" data-en="LOGS">REGISTROS</div>
-      <span class="kicker"><span class="lang-en">ENCOUNTER ARCHIVE</span><span class="lang-es">ARCHIVO DE ENCUENTROS</span></span>
-      <h2 data-en="BORG LAB ENCOUNTERS">ENCUENTROS DEL BÖRG LAB</h2>
-    </div>
-    <div class="lab-grid reveal">
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_01</span><h3 data-en="Encounters 1">Encuentros 1</h3><p><span class="lang-en">Heroes vs heroes. The first documented sessions inside the Lab.</span><span class="lang-es">Héroes vs héroes. Las primeras sesiones documentadas dentro del Lab.</span></p></div>
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_02</span><h3 data-en="Encounters 2">Encuentros 2</h3><p><span class="lang-en">New units enter the yard. Grappling becomes them.</span><span class="lang-es">Nuevas unidades entran al patio. El grappling los transforma.</span></p></div>
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_03</span><h3 data-en="Encounters 3">Encuentros 3</h3><p><span class="lang-en">The Grid selects its next heroes. Interface detected.</span><span class="lang-es">La Red selecciona a sus próximos héroes. Interfaz detectada.</span></p></div>
-    </div>
-  </div>
-</section>
 
 <section class="dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="ghost" data-en="FEED">SEÑAL</div>
-      <span class="kicker mag">RA'AZ ENTERTAINMENT</span>
-      <h2><span class="lang-en">Transmissions</span><span class="lang-es">Transmisiones</span></h2>
+
+
+      <h2 data-en="Videos from the Lab">Videos del Lab</h2>
     </div>
     <div class="vid-grid reveal">
       <a class="vid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">
@@ -93,6 +69,23 @@
 <section>
   <div class="wrap">
     <div class="sec-head reveal">
+      <div class="ghost" data-en="LOGS">REGISTROS</div>
+      <span class="kicker"><span class="lang-en">ENCOUNTER ARCHIVE</span><span class="lang-es">ARCHIVO DE ENCUENTROS</span></span>
+      <h2 data-en="BORG LAB ENCOUNTERS">ENCUENTROS DEL BÖRG LAB</h2>
+    </div>
+    <div class="lab-grid reveal">
+      <div class="lab-card"><span class="tag">LOG_RAB_GP_01</span><h3 data-en="Encounters 1">Encuentros 1</h3><p><span class="lang-en">Heroes vs heroes. The first documented sessions inside the Lab.</span><span class="lang-es">Héroes vs héroes. Las primeras sesiones documentadas dentro del Lab.</span></p></div>
+      <div class="lab-card"><span class="tag">LOG_RAB_GP_02</span><h3 data-en="Encounters 2">Encuentros 2</h3><p><span class="lang-en">New units enter the yard. Grappling becomes them.</span><span class="lang-es">Nuevas unidades entran al patio. El grappling los transforma.</span></p></div>
+      <div class="lab-card"><span class="tag">LOG_RAB_GP_03</span><h3 data-en="Encounters 3">Encuentros 3</h3><p><span class="lang-en">The Grid selects its next heroes. Interface detected.</span><span class="lang-es">La Red selecciona a sus próximos héroes. Interfaz detectada.</span></p></div>
+    </div>
+  </div>
+</section>
+
+
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
       <div class="ghost">VISUAL</div>
       <span class="kicker cy"><span class="lang-en">ARCHIVE / RAW FEED</span><span class="lang-es">ARCHIVO / SEÑAL CRUDA</span></span>
       <h2><span class="lang-en">Visual World</span><span class="lang-es">Mundo Visual</span></h2>
@@ -108,19 +101,6 @@
   </div>
 </section>
 
-<section class="cta-final">
-  <div class="scanlines"></div>
-  <div class="wrap">
-    <p class="kicker flicker"><span class="lang-en">DOORS OPEN FOR ALLIES</span><span class="lang-es">PUERTAS ABIERTAS PARA ALIADOS</span></p>
-    <h2><span class="lang-en">TRAIN AT<br><span class="accent glitch" data-text="THE LAB.">THE LAB.</span></span><span class="lang-es">ENTRENA EN<br><span class="accent glitch" data-text="EL LAB.">EL LAB.</span></span></h2>
-    <p>
-      <span class="lang-en">Open mats, closed doors sessions, and encounter filming days. Request coordinates through the interface.</span>
-      <span class="lang-es">Open mats, sesiones a puerta cerrada y días de filmación. Solicita coordenadas por la interfaz.</span>
-    </p>
-    <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener"><span class="lang-en">REQUEST ACCESS</span><span class="lang-es">SOLICITA ACCESO</span></a>
-  </div>
-</section>
-
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
@@ -133,6 +113,6 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=visitor-flow-1"></script>
 </body>
 </html>

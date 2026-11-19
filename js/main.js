@@ -592,114 +592,6 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 
-/* Realm Nexus */
-
-/* ============ RAAZ BORG — FIGHTER PROGRESSION ============ */
-
-const processStages = [
-  {
-    en: ["FIGHTER SIGN-UP",
-      "Select your belt, review the suggested realm and send your inquiry by email. The team will reply if an opportunity matches your level."],
-    es: ["INSCRIPCIÓN DEL PELEADOR",
-      "Selecciona tu cinturón, revisa el reino sugerido y envía tu solicitud por correo. El equipo te responderá si hay una convocatoria para tu nivel."]
-  },
-  {
-    en: ["ROSTER & REGISTRATION",
-      "If you’re invited to the qualifiers, the team sends the registration and payment details for that event."],
-    es: ["REGISTRO Y PAGO",
-      "Si te convocan a las clasificatorias, el equipo te envía los datos de inscripción y pago para ese evento."]
-  },
-  {
-    en: ["PAYMENT CONFIRMED",
-      "Once payment is received, the team confirms your entry in the qualifiers by email or text."],
-    es: ["PAGO CONFIRMADO",
-      "Una vez recibido el pago, el equipo confirma tu inscripción en las clasificatorias por correo o mensaje de texto."]
-  },
-  {
-    en: ["MATCH ASSIGNMENT",
-      "The team emails you the qualifying format for your realm, your matchup or group, and when and where to compete."],
-    es: ["ASIGNACIÓN DE COMBATE",
-      "El equipo te envía por correo el formato de las clasificatorias de tu reino, tu rival o grupo, la fecha y el lugar."]
-  },
-  {
-    en: ["QUALIFYING BOUTS",
-      "When qualifying uses a round robin, you face each of the other fighters in your group. The group results determine who earns the available GP spots."],
-    es: ["COMBATES CLASIFICATORIOS",
-      "Si la clasificación se disputa en un todos contra todos, te enfrentas a cada rival de tu grupo. Los resultados del grupo determinan quién consigue los cupos disponibles para el GP."]
-  },
-  {
-    en: ["THE GRAND PRIX",
-      "Once the field is set, eight warriors compete for the realm’s title. The Grand Prix champion wins a cash prize and can advance to the next league."],
-    es: ["EL GRAND PRIX",
-      "Con los ocho cupos confirmados, los guerreros se disputan el título de su reino. El campeón del Grand Prix gana un premio económico y puede ascender a la siguiente liga."]
-  }
-];
-
-let activeProcessStep = 0;
-
-const stepButtons = document.querySelectorAll(".process-step");
-const processTitle = document.getElementById("processTitle");
-const processDescription = document.getElementById("processDescription");
-const processNumber = document.getElementById("processNumber");
-
-function processLanguage() {
-  return document.body.dataset.lang === "es" ? "es" : "en";
-}
-
-function renderProcess() {
-  if (!processTitle || !processDescription || !processNumber) return;
-
-  const lang = processLanguage();
-  const stage = processStages[activeProcessStep][lang];
-
-  processTitle.textContent = stage[0];
-  processDescription.textContent = stage[1];
-  processNumber.textContent =
-    `${lang === "es" ? "PROTOCOLO" : "PROTOCOL"} ${String(activeProcessStep + 1).padStart(2, "0")} / 06`;
-
-  stepButtons.forEach((button, index) => {
-    button.classList.toggle("active", index === activeProcessStep);
-    button.setAttribute("aria-pressed", String(index === activeProcessStep));
-  });
-}
-
-function changeProcessStep(step) {
-  activeProcessStep =
-    (step + processStages.length) % processStages.length;
-
-  renderProcess();
-}
-
-stepButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    changeProcessStep(Number(button.dataset.step));
-  });
-});
-
-const processPrev = document.getElementById("processPrev");
-if (processPrev) {
-  processPrev.addEventListener("click", () => {
-    changeProcessStep(activeProcessStep - 1);
-  });
-}
-
-const processNext = document.getElementById("processNext");
-if (processNext) {
-  processNext.addEventListener("click", () => {
-    changeProcessStep(activeProcessStep + 1);
-  });
-}
-
-
-// Keep the interactive content synchronized with language changes.
-const languageObserver = new MutationObserver(renderProcess);
-languageObserver.observe(document.body, {
-  attributes: true,
-  attributeFilter: ["data-lang"]
-});
-
-renderProcess();
-
 /* fake cart counter (shop) */
 (function () {
   let count = 0;
@@ -738,13 +630,41 @@ renderProcess();
     card.querySelector("summary").focus({ preventScroll: true });
   });
 
+  const finder = document.getElementById("belt-finder");
+  const beltSelect = document.getElementById("realm-belt");
+  const otherBelt = beltSelect.lastElementChild;
+  const beltOptions = cards.map(card => {
+    const option = new Option("", card.id);
+    beltSelect.insertBefore(option, otherBelt);
+    return { option, label: card.querySelector(".realm-strip [data-en]") };
+  });
+  function translateBelts() {
+    beltOptions.forEach(({ option, label }) => { option.text = label.textContent; });
+  }
+  translateBelts();
+  document.addEventListener("languagechange", translateBelts);
+  finder.hidden = false;
+
   function openLinkedRealm() {
     const card = cards.find(item => "#" + item.id === location.hash);
     if (card) {
       card.open = true;
+      beltSelect.value = card.id;
       card.scrollIntoView({ block: "start", inline: "center" });
     }
   }
+  finder.addEventListener("submit", event => {
+    event.preventDefault();
+    if (beltSelect.value === "review") {
+      location.assign("competir.html#athlete-interest");
+      return;
+    }
+    const card = document.getElementById(beltSelect.value);
+    if (!card) return;
+    if (location.hash !== "#" + card.id) history.pushState(null, "", "#" + card.id);
+    openLinkedRealm();
+    card.querySelector("summary").focus({ preventScroll: true });
+  });
   openLinkedRealm();
   window.addEventListener("hashchange", openLinkedRealm);
 

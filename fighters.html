@@ -7,7 +7,7 @@
 <meta name="description" content="Conoce a los peleadores de RA’AZ BORG en Quito." data-en-content="Meet the RA’AZ BORG fighters in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=visitor-flow-1">
 <style>
 .realm-roster-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:25px}
 .realm-flip-card{display:block;position:relative;min-width:0;width:100%;height:365px;padding:0;border:0;background:transparent;color:#f4f5f8;font:inherit;text-align:center;cursor:pointer;perspective:1200px;touch-action:manipulation}
@@ -67,15 +67,15 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
     <ul class="nav-links" id="main-nav">
-      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
-      <li><a href="fighters.html" class="active"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
-      <li><a href="clashes.html">CLASHES GP</a></li>
-      <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html" class="active" aria-current="page"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
     </ul>
     <div class="nav-right">
       <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
-      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
@@ -84,192 +84,17 @@
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost" data-en="DATABASE">BASE DE DATOS</div>
-    <span class="kicker" data-en="PERSONNEL / 8 ACTIVE UNITS">PLANTEL / 8 UNIDADES ACTIVAS</span>
-    <h1 class="glitch flicker" data-en-glitch="ELITE FIGHTERS" data-text="PELEADORES ÉLITE"><span class="lang-en">ELITE FIGHTERS</span><span class="lang-es">PELEADORES ÉLITE</span></h1>
-    <p class="lead">
-      <span class="lang-en">Every athlete who enters the Grid receives a persona: a name, an archetype, and combat stats logged by the system. These are the active units of the Raaz Borg universe.</span>
-      <span class="lang-es">Cada atleta que entra a la Red recibe un personaje: un nombre, un arquetipo y estadísticas de combate registradas por el sistema. Estas son las unidades activas del universo Raaz Borg.</span>
-    </p>
+    <span class="kicker">RA’AZ BORG · Quito</span>
+    <h1 data-en="Fighters">Peleadores</h1>
+    <p class="lead" data-en="Meet the athletes and their cyberpunk personas. Power and utility describe each character. The Grand Prix filter shows verified competition records.">Conoce a los atletas y sus personajes cyberpunk. La potencia y la utilidad describen al personaje. En el filtro del Grand Prix puedes consultar los registros de competencia verificados.</p>
   </div>
 </header>
-
-<!-- ==== Ticker ==== -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span data-en="UNIT SCAN COMPLETE">ESCANEO DE UNIDADES COMPLETO</span><span>◈</span><span data-en="8 PERSONAS DETECTED">8 PERSONAJES DETECTADOS</span><span>◈</span><span data-en="ARCHETYPES LOADED">ARQUETIPOS CARGADOS</span><span>◈</span><span data-en="THE GRID SELECTS ITS HEROES">LA RED ELIGE A SUS HÉROES</span><span>◈</span>
-  </div>
-</div>
-
-<!-- ============ FIGHTER LEGACY ============ -->
-<section class="dark">
-  <div class="wrap">
-    <div class="split">
-
-      <div class="img-frame reveal">
-        <img src="assets/alzate-raw.jpg" alt="Peleador de RAAZ BORG en acción" data-en-alt="RAAZ BORG fighter in action">
-        <span class="frame-tag" data-en="RAW FEED — THE YARD">SEÑAL EN DIRECTO — EL PATIO</span>
-      </div>
-
-      <div class="reveal reveal-d1">
-
-        <p class="kicker" style="color:var(--cyan);margin-bottom:16px">
-          <span class="lang-en">THE FIGHTER ARCHIVE</span>
-          <span class="lang-es">EL ARCHIVO DE PELEADORES</span>
-        </p>
-
-        <h2>
-          <span class="lang-en">LEGENDS ARE FORGED IN THE GRID.</span>
-          <span class="lang-es">LAS LEYENDAS SE FORJAN EN LA RED.</span>
-        </h2>
-
-        <p>
-          <span class="lang-en">
-            Every fighter carries a story. Every clash leaves a mark.
-            From the first transmission to the latest Grand Prix,
-            these warriors have shaped the RAAZ BORG universe
-            through their determination, skill, and spirit.
-          </span>
-
-          <span class="lang-es">
-            Cada peleador lleva una historia. Cada combate deja una huella.
-            Desde la primera transmisión hasta el último Grand Prix,
-            estos guerreros han dado forma al universo RAAZ BORG
-            con su determinación, habilidad y espíritu.
-          </span>
-        </p>
-
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!--  ==== Featured Fighter ==== -->
-<section class="featured-fighter">
-  <div class="wrap">
-
-    <div class="sec-head reveal">
-      <div class="ghost" data-en="FEATURED">DESTACADO</div>
-
-      <span class="kicker mag">
-        <span class="lang-en">FIGHTER SPOTLIGHT</span>
-        <span class="lang-es">PELEADOR DESTACADO</span>
-      </span>
-
-      <h2>
-        <span class="lang-en">FEATURED FIGHTER</span>
-        <span class="lang-es">PELEADOR DESTACADO</span>
-      </h2>
-    </div>
-
-    <div class="featured-fighter-card reveal">
-
-      <div class="featured-fighter-image">
-        <img src="assets/fighter-super-choque.jpg" alt="Super Choque, peleador de RAAZ BORG" data-en-alt="Super Choque — RAAZ BORG fighter">
-        <span class="featured-fighter-tag">UNIT_01</span>
-      </div>
-
-      <div class="featured-fighter-content">
-
-        <p class="featured-fighter-label">
-          <span class="lang-en">// FIGHTER PROFILE</span>
-          <span class="lang-es">// PERFIL DEL PELEADOR</span>
-        </p>
-
-        <h3>SUPER CHOQUE</h3>
-
-        <p class="featured-fighter-archetype">
-          <span class="lang-en">ARCHETYPE: COMMAND / HEAVY</span>
-          <span class="lang-es">ARQUETIPO: COMANDO / PESADO</span>
-        </p>
-
-        <p class="featured-fighter-description">
-          <span class="lang-en">
-            A powerful presence within the Grid. Super Choque
-            represents strength, determination, and the relentless
-            spirit of RAAZ BORG combat.
-          </span>
-          <span class="lang-es">
-            Una presencia poderosa dentro de la Red. Super Choque
-            representa la fuerza, la determinación y el espíritu
-            implacable del combate RAAZ BORG.
-          </span>
-        </p>
-
-        <div class="featured-fighter-stats">
-
-          <div class="featured-stat">
-            <div class="featured-stat-label">
-              <span data-en="POWER">POTENCIA</span>
-              <span>92</span>
-            </div>
-            <div class="featured-stat-bar">
-              <div class="featured-stat-fill" style="--stat-width:92%"></div>
-            </div>
-          </div>
-
-          <div class="featured-stat">
-            <div class="featured-stat-label">
-              <span data-en="UTILITY">UTILIDAD</span>
-              <span>70</span>
-            </div>
-            <div class="featured-stat-bar">
-              <div class="featured-stat-fill" style="--stat-width:70%"></div>
-            </div>
-          </div>
-
-        </div>
-
-        <p class="featured-fighter-footer">
-          <span class="lang-en">THE GRID REMEMBERS ITS WARRIORS.</span>
-          <span class="lang-es">LA RED RECUERDA A SUS GUERREROS.</span>
-        </p>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ==== Fighter Cards ==== -->
 
 <section class="fighter-roster">
   <div class="wrap">
 
-    <div class="sec-head reveal">
-      <div class="ghost" data-en="ROSTER">PLANTEL</div>
-
-      <span class="kicker cy">
-        <span class="lang-en">THE GRID DATABASE</span>
-        <span class="lang-es">LA BASE DE DATOS DE LA RED</span>
-      </span>
-
-      <h2>
-        <span class="lang-en">THE FIGHTER ROSTER</span>
-        <span class="lang-es">EL ROSTER DE PELEADORES</span>
-      </h2>
-    </div>
-
-    <p class="fighter-roster-intro reveal">
-      <span class="lang-en">
-        Meet the warriors who have stepped into the Grid.
-        Each fighter carries a unique persona, combat archetype,
-        and set of abilities that define their identity within
-        the RAAZ BORG universe. Explore their profiles and
-        discover the fighters behind the legend.
-      </span>
-
-      <span class="lang-es">
-        Conoce a los guerreros que han entrado a la Red.
-        Cada peleador posee un personaje único, un arquetipo de combate
-        y un conjunto de habilidades que definen su identidad
-        dentro del universo RAAZ BORG. Explora sus perfiles y
-        descubre a los peleadores detrás de la leyenda.
-      </span>
-    </p>
-
-
+    <div class="section-heading"><h2 data-en="Fighter profiles">Perfiles de los peleadores</h2></div>
+    <p class="fighter-roster-intro" data-en="Open a card to read the fighter’s profile.">Abre una carta para leer el perfil del peleador.</p>
     <div class="gp-archive-controls reveal">
       <label class="gp-filter-field" for="gpRosterFilter">
         <span class="lang-en">SELECT GRAND PRIX</span><span class="lang-es">SELECCIONAR GRAND PRIX</span>
@@ -438,6 +263,92 @@
   </div>
 </section>
 
+<!--  ==== Featured Fighter ==== -->
+<section class="featured-fighter">
+  <div class="wrap">
+
+    <div class="sec-head reveal">
+      <div class="ghost" data-en="FEATURED">DESTACADO</div>
+
+      <span class="kicker mag">
+        <span class="lang-en">FIGHTER SPOTLIGHT</span>
+        <span class="lang-es">PELEADOR DESTACADO</span>
+      </span>
+
+      <h2>
+        <span class="lang-en">FEATURED FIGHTER</span>
+        <span class="lang-es">PELEADOR DESTACADO</span>
+      </h2>
+    </div>
+
+    <div class="featured-fighter-card reveal">
+
+      <div class="featured-fighter-image">
+        <img src="assets/fighter-super-choque.jpg" alt="Super Choque, peleador de RAAZ BORG" data-en-alt="Super Choque — RAAZ BORG fighter">
+        <span class="featured-fighter-tag">UNIT_01</span>
+      </div>
+
+      <div class="featured-fighter-content">
+
+        <p class="featured-fighter-label">
+          <span class="lang-en">// FIGHTER PROFILE</span>
+          <span class="lang-es">// PERFIL DEL PELEADOR</span>
+        </p>
+
+        <h3>SUPER CHOQUE</h3>
+
+        <p class="featured-fighter-archetype">
+          <span class="lang-en">ARCHETYPE: COMMAND / HEAVY</span>
+          <span class="lang-es">ARQUETIPO: COMANDO / PESADO</span>
+        </p>
+
+        <p class="featured-fighter-description">
+          <span class="lang-en">
+            A powerful presence within the Grid. Super Choque
+            represents strength, determination, and the relentless
+            spirit of RAAZ BORG combat.
+          </span>
+          <span class="lang-es">
+            Una presencia poderosa dentro de la Red. Super Choque
+            representa la fuerza, la determinación y el espíritu
+            implacable del combate RAAZ BORG.
+          </span>
+        </p>
+
+        <div class="featured-fighter-stats">
+
+          <div class="featured-stat">
+            <div class="featured-stat-label">
+              <span data-en="POWER">POTENCIA</span>
+              <span>92</span>
+            </div>
+            <div class="featured-stat-bar">
+              <div class="featured-stat-fill" style="--stat-width:92%"></div>
+            </div>
+          </div>
+
+          <div class="featured-stat">
+            <div class="featured-stat-label">
+              <span data-en="UTILITY">UTILIDAD</span>
+              <span>70</span>
+            </div>
+            <div class="featured-stat-bar">
+              <div class="featured-stat-fill" style="--stat-width:70%"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="featured-fighter-footer">
+          <span class="lang-en">THE GRID REMEMBERS ITS WARRIORS.</span>
+          <span class="lang-es">LA RED RECUERDA A SUS GUERREROS.</span>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 
@@ -453,7 +364,7 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=visitor-flow-1"></script>
 
 <script>
 document.querySelectorAll('.realm-flip-card').forEach(card => {

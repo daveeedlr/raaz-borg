@@ -9,7 +9,9 @@
   const realmName = document.getElementById("belt-realm");
   const assigned = document.getElementById("belt-assigned");
   const review = document.getElementById("belt-review");
-  const requestedBelt = new URLSearchParams(location.search).get("belt");
+  const params = new URLSearchParams(location.search);
+  const requestedBelt = params.get("belt");
+  if (params.get("interest") === "lab") form.elements.interest.value = "lab";
   if (requestedBelt && Array.from(belt.options).some(option => option.value === requestedBelt)) {
     belt.value = requestedBelt;
   }

@@ -46,27 +46,18 @@ test('fighter page fits a mobile viewport', async ({ page }) => {
   await expect(page.locator('.realm-roster-grid')).toBeVisible();
 });
 
-test('Realm Nexus process navigation works without page-script exceptions', async ({ page }) => {
+test('all qualification stages and the eight-spot rule are readable in both languages', async ({ page }) => {
   const errors = captureRuntimeErrors(page);
-  await page.goto('/realm-nexus.html?lang=en');
-  await expect(page.locator('#track, .realm-preview')).toHaveCount(0);
+  await page.goto('/realm-nexus.html?lang=es');
+  const steps = page.locator('.qualification-list li');
+  await expect(steps).toHaveCount(3);
+  await expect(steps.nth(1)).toContainText('Si hay un todos contra todos');
+  await expect(steps.last()).toContainText('Ocho peleadores');
+  await expect(page.locator('.qualification-rules')).toContainText('campeón que asciende');
+  await page.locator('#langToggle').click();
+  await expect(steps.nth(1)).toContainText('In a round robin');
+  await expect(steps.last()).toContainText('Eight fighters');
   await expect(page.getByRole('link', { name: 'Apply to compete' })).toHaveAttribute('href', 'competir.html#athlete-interest');
-  await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 01 / 06');
-  await page.locator('#processNext').click();
-  await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 02 / 06');
-  await expect(page.locator('#processTitle')).toContainText('ROSTER & REGISTRATION');
-  await page.locator('#processPrev').click();
-  await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 01 / 06');
-
-  const description = page.locator('#processDescription');
-  await page.getByRole('button', { name: /QUALIFYING BOUTS/i }).click();
-  await expect(description).toContainText('When qualifying uses a round robin');
-  await page.locator('#langToggle').click();
-  await expect(description).toContainText('Si la clasificación se disputa en un todos contra todos');
-  await page.locator('#processNext').click();
-  await expect(description).toContainText('ocho cupos confirmados');
-  await page.locator('#langToggle').click();
-  await expect(description).toContainText('eight warriors compete');
   await assertNoRuntimeErrors(errors);
 });
 
@@ -90,7 +81,7 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await expect(page.getByRole('link', { name: 'Explorar los reinos', exact: true })).toHaveAttribute('href', '#reinos');
   await expect(page.locator('.realm-preview')).toHaveCount(7);
   await expect(page.locator('.realm-preview img')).toHaveCount(7);
-  await expect(page.locator('.hero .kicker')).toContainText('QUITO');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('en Quito');
   await page.locator('#langToggle').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.locator('#burger').click();
@@ -198,11 +189,11 @@ test.describe('mobile realm navigation', () => {
     await expect(card).toHaveAttribute('open', '');
     await card.locator('.realm-reverse p').tap();
     await expect(card).not.toHaveAttribute('open', '');
-    const routes = page.locator('.atlas-related');
-    await expect(routes.getByRole('link', { name: 'Conocer a los peleadores' })).toHaveAttribute('href', 'fighters.html');
-    await expect(routes.getByRole('link', { name: 'Cómo funciona la clasificación' })).toHaveAttribute('href', 'realm-nexus.html');
+    const routes = page.locator('.realm-tools');
+    await expect(page.getByRole('link', { name: 'Ver todos los peleadores' })).toHaveAttribute('href', 'fighters.html');
+    await expect(routes.getByRole('link', { name: 'Cómo clasificar al Grand Prix' })).toHaveAttribute('href', 'realm-nexus.html');
     await page.locator('#langToggle').tap();
-    await routes.getByRole('link', { name: 'How qualification works' }).tap();
+    await routes.getByRole('link', { name: 'How to qualify for the Grand Prix' }).tap();
     await expect(page).toHaveURL(/realm-nexus\.html$/);
   });
 });
@@ -235,7 +226,7 @@ test('each enlist link prefills the belt and realm shown on that card', async ({
     const card = page.locator('#realm-' + id);
     const realm = await card.getByRole('heading').innerText();
     const belt = await card.locator('.realm-strip [data-en]').innerText();
-    await card.getByRole('link', { name: 'Enlist', exact: true }).click();
+    await card.getByRole('link', { name: 'Apply to compete', exact: true }).click();
     await expect(page.locator('#belt option:checked')).toHaveText(belt, { ignoreCase: true });
     await expect(page.locator('#belt-realm')).toHaveText(realm, { ignoreCase: true });
     await expect(page.getByLabel('Current belt')).toBeInViewport();
@@ -247,4 +238,26 @@ test('each enlist link prefills the belt and realm shown on that card', async ({
   await page.goto('/competir.html?belt=unknown');
   await expect(page.locator('#belt')).toHaveValue('');
   await expect(page.locator('#belt-assigned')).toBeHidden();
+});
+
+test('a visitor can find a belt on mobile and carry it into an inquiry', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?lang=es#reinos');
+  const finder = page.locator('#belt-finder');
+  await finder.getByLabel('Tu cinturón').selectOption({ label: 'Cinturón azul' });
+  await page.locator('#langToggle').click();
+  await expect(finder.locator('option:checked')).toHaveText('Blue belt');
+  await finder.getByRole('button', { name: 'Find my realm' }).click();
+  const card = page.locator('#realm-zaphire');
+  await expect(card.locator('summary')).toBeFocused();
+  await card.getByRole('link', { name: 'Apply to compete' }).click();
+  await expect(page.locator('#belt')).toHaveValue('blue');
+  await expect(page.locator('#belt-realm')).toHaveText('Zaphire Trials');
+  await page.goto('/?lang=es#reinos');
+  await finder.getByLabel('Tu cinturón').selectOption('review');
+  await finder.getByRole('button', { name: 'Ver mi reino' }).click();
+  await expect(page.locator('#belt')).toHaveValue('');
+  await page.goto('/labs.html?lang=es');
+  await page.getByRole('link', { name: 'Consultar por entrenamientos' }).click();
+  await expect(page.locator('#interest')).toHaveValue('lab');
 });
