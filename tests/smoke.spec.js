@@ -294,9 +294,9 @@ test('Lab videos open inline and preserve timestamps and playlists', async ({ pa
   await page.getByRole('link', { name: /Blue Oblivion BJJ 2021/ }).click();
   await expect(page).toHaveURL(/labs\.html\?lang=en$/);
   await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /wOxh1xijsrM\?start=28&autoplay=1$/);
-  await page.locator('#transmisiones .lab-play').click();
+  await page.locator('#transmisiones .lab-play[href*="list="]').click();
   await expect(page.locator('.lab-player iframe')).toHaveCount(1);
   await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg/);
   await page.getByRole('button', { name: 'Close player' }).click();
-  await expect(page.locator('#transmisiones .lab-play')).toBeFocused();
+  await expect(page.locator('#transmisiones .lab-play[href*="list="]')).toBeFocused();
 });
