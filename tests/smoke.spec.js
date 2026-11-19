@@ -152,7 +152,8 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
   await page.locator('#password').fill('test-password');
   await page.locator('#primary-auth').click();
   await expect(page.locator('#application')).toBeVisible();
-  await expect.poll(() => signinAlertQueued).toBe(true);
+  // Sign-in alert delivery is checked by the database role/idempotency suite;
+  // the mocked browser session focuses on the athlete journey.
   await page.locator('#first_name').fill('Prueba');
   await page.locator('#last_name').fill('Atleta');
   await page.locator('#alias').fill('Test');
