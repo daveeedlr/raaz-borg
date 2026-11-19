@@ -102,3 +102,11 @@ The site reuses the existing Supabase project `iltuwbawjiwvuqqrkyiz`, not a sepa
 The athlete submits verified identity, first/last name, fighter alias, location, optional username, birthday, belt stripes, weight/height, gym and discipline. Age is calculated rather than duplicated; email is supplied from verified Auth identity; payments and avatar uploads are not collected during interest application. Existing v1 RPCs remain compatible.
 
 **Hosted Auth redirect configuration (must be set in Supabase Dashboard):** Authentication → URL Configuration. Set Site URL to `https://jayjayanton.github.io/raaz-borg/`, and allow `https://jayjayanton.github.io/raaz-borg/competir.html**` in Redirect URLs. Reissue any confirmation link that previously returned to localhost. A public static page cannot change the project's Auth Site URL.
+
+## Legacy fighter registrations: automatic synchronization
+
+`public.fighter_registrations` is now an account/athlete summary synchronized in Postgres. The `auth.users` insert/confirmation trigger creates a **partial** legacy row with `user_id`, verified-email flag and `registration_status='account_created'`; no fake biographical or payment fields are inserted. Changes in `rb_intake.profiles` copy actual fighter details into that row, and an application submission changes `registration_status` to `application_submitted`.
+
+Do not confuse **accounts** (`auth.users`) with **applications** (`rb_intake.applications`). The private intake profile and applications remain authoritative, while the legacy table is only a restricted, RLS-protected summary. Browser roles cannot INSERT, UPDATE or TRUNCATE the summary directly; profile changes must go through the protected RPCs. Birth-derived age is recalculated on profile changes (not continuously); the date of birth is canonical. Missing values remain `NULL`.
+
+The migrations `20261119181803_sync_legacy_fighter_registration_on_signup.sql` and `20261119181913_harden_legacy_fighter_sync_triggers.sql` have been applied to Supabase project `iltuwbawjiwvuqqrkyiz`. The standalone CI harness builds a disposable baseline for the older table before applying migrations and testing the Auth, profile and application triggers. All fixture accounts are rolled back; they are not production data.
