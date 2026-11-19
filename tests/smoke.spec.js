@@ -144,7 +144,7 @@ test('athletes sign in, submit, return to their status and sign out in both lang
   await page.locator('#first_name').fill('Prueba');
   await page.locator('#last_name').fill('Atleta');
   await page.locator('#alias').fill('Test');
-  await page.getByLabel('Ciudad',{exact:true}).fill('Quito');
+  await page.locator('#city').fill('Quito');
   await page.getByRole('checkbox').check();
   await page.getByRole('button',{name:'Enviar postulación'}).click();
   await expect(page.locator('#feedback')).toContainText('¡Gracias por postularte!');
