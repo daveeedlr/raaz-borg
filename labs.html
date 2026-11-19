@@ -1,138 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Labs & Media — RAAZ BORG</title>
-<meta name="description" content="The Börg Lab — training ground, venue and media hub of the Raaz Borg universe.">
+<title data-en="Lab & Media — RAAZ BORG">Lab y medios — RAAZ BORG</title>
+<meta name="description" content="Börg Lab, el espacio de entrenamiento y producción audiovisual de RA’AZ BORG en Quito." data-en-content="Börg Lab, the RA’AZ BORG training and media space in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=archive-1">
 </head>
-<body data-lang="en">
+<body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
 
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html"><img src="assets/logo-wordmark.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
-      <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
-      <li><a href="clashes.html">CLASHES GP</a></li>
-      <li><a href="labs.html" class="active">LABS</a></li>
-      <li><a href="shop.html" class="shop-link">SHOP</a></li>
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html" class="active" aria-current="page"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-acid nav-cta" href="clashes.html#enlist">ENLIST</a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
 
+<main id="contenido" tabindex="-1">
 <header class="page-hero">
   <div class="scanlines"></div>
-  <div class="wrap">
-    <div class="ghost">BÖRG LAB</div>
-    <span class="kicker">SECTOR GYE — RESTRICTED ACCESS</span>
-    <h1 class="glitch flicker" data-text="THE BÖRG LAB">THE BÖRG LAB</h1>
-    <p class="lead">
-      <span class="lang-en">Training ground, arena, and broadcast station. The Lab is where personas are forged, encounters are logged, and every transmission leaves the underground.</span>
-      <span class="lang-es">Campo de entrenamiento, arena y estación de transmisión. El Lab es donde se forjan los personajes, se registran los encuentros y cada transmisión sale del underground.</span>
-    </p>
+  <div class="wrap lab-intro">
+    <div>
+      <span class="kicker">Börg Lab · Quito</span>
+      <h1 data-heading-outline="BÖRG LAB" data-en="Training and video">Entrenamiento y videos</h1>
+      <p class="lead" data-en="The Börg Lab is where RA’AZ BORG trains and films in Quito. Watch highlights or ask about joining a training session.">En el Börg Lab entrenamos y filmamos en Quito. Mira los encuentros o consulta cómo participar en una sesión.</p>
+      <a class="text-link lab-inquiry" href="competir.html?interest=lab#athlete-interest" data-en="Ask about training">Consultar por entrenamientos</a>
+    </div>
+    <div class="lab-index" role="navigation" aria-label="Secciones del Lab" data-en-label="Lab sections">
+      <a href="#destacados" data-en="Featured videos">Videos destacados</a>
+      <a href="#encuentros" data-en="Lab encounters">Encuentros del Lab</a>
+      <a href="#transmisiones" data-en="Transmissions">Transmisiones</a>
+      <a href="#mundo-visual" data-en="Visual World">Mundo visual</a>
+    </div>
   </div>
 </header>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>LAB STATUS: OPERATIONAL</span><span>◈</span><span>HEROES VS HEROES</span><span>◈</span><span>NEW DOG IN THE YARD</span><span>◈</span><span>RA'AZ ENTERTAINMENT</span><span>◈</span>
-  </div>
-</div>
-
-<section>
+<section id="destacados" class="featured-videos" aria-labelledby="featured-videos-title">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost">LOGS</div>
-      <span class="kicker"><span class="lang-en">ENCOUNTER ARCHIVE</span><span class="lang-es">ARCHIVO DE ENCUENTROS</span></span>
-      <h2>BORG LAB ENCOUNTERS</h2>
+    <div class="section-heading">
+      <h2 data-heading-outline="DESTACADOS" data-heading-outline-en="FEATURED" id="featured-videos-title" data-en="Featured videos">Videos destacados</h2>
     </div>
-    <div class="lab-grid reveal">
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_01</span><h3>Encounters 1</h3><p><span class="lang-en">Heroes vs heroes. The first documented sessions inside the Lab.</span><span class="lang-es">Héroes vs héroes. Las primeras sesiones documentadas dentro del Lab.</span></p></div>
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_02</span><h3>Encounters 2</h3><p><span class="lang-en">New units enter the yard. Grappling becomes them.</span><span class="lang-es">Nuevas unidades entran al patio. El grappling los transforma.</span></p></div>
-      <div class="lab-card"><span class="tag">LOG_RAB_GP_03</span><h3>Encounters 3</h3><p><span class="lang-en">The Grid selects its next heroes. Interface detected.</span><span class="lang-es">La Red selecciona a sus próximos héroes. Interfaz detectada.</span></p></div>
+    <div class="media-grid">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=8prmD7XyLfM">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/8prmD7XyLfM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Violet Combat Royale 2021</h3>
+          <p data-en="Tournament finale">Final del torneo</p>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=wOxh1xijsrM&amp;t=28s">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/wOxh1xijsrM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Blue Oblivion BJJ 2021</h3>
+          <p data-en="Highlights">Momentos destacados</p>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=hN_vTuGBMhw">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/hN_vTuGBMhw/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>White Carbon Combat BJJ 2020</h3>
+          <p data-en="Highlights">Momentos destacados</p>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=P9Hxe6PJR0s">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/P9Hxe6PJR0s/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Oxide Overdrive GP</h3>
+          <p data-en="Brown-belt tournament">Torneo de cinturones café</p>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="dark">
+<section class="dark" id="encuentros" aria-labelledby="encounters-title">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost">FEED</div>
-      <span class="kicker mag">RA'AZ ENTERTAINMENT</span>
-      <h2><span class="lang-en">Transmissions</span><span class="lang-es">Transmisiones</span></h2>
+    <div class="section-heading">
+      <h2 data-heading-outline="ENCUENTROS" data-heading-outline-en="ENCOUNTERS" id="encounters-title" data-en="Börg Lab encounters">Encuentros del Börg Lab</h2>
     </div>
-    <div class="vid-grid reveal">
-      <a class="vid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">
-        <img src="assets/fighter-super-choque.jpg" alt="">
-        <span class="play">▶</span>
-        <span class="v-cap">SERPIENTE VS PRODIGIO — FINAL</span>
+    <div class="media-grid">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=GuiwwZitHeA">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/GuiwwZitHeA/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Diamond Z “The Heel Slayer” <span class="encounter-vs">Vs.</span> JJ Andro “The Arquitect”</h3>
+        </div>
       </a>
-      <a class="vid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">
-        <img src="assets/squad-green.jpg" alt="">
-        <span class="play">▶</span>
-        <span class="v-cap">HIGHLIGHT — OXIDE 2</span>
+      <a class="lab-play" aria-haspopup="dialog" id="oxide-media" href="https://www.youtube.com/watch?v=BsWLIWipOBo">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/BsWLIWipOBo/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Serpiente <span class="encounter-vs">Vs.</span> Prodigio R</h3>
+        </div>
       </a>
-      <a class="vid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">
-        <img src="assets/fighter-mohicano.jpg" alt="">
-        <span class="play">▶</span>
-        <span class="v-cap">GRAPPLING BECOMES THEM — P.II</span>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=_057LaRqOkY">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/_057LaRqOkY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Venetor <span class="encounter-vs">Vs.</span> King</h3>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=ZsFIL7M54RY">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/ZsFIL7M54RY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Diamante <span class="encounter-vs">Vs.</span> Cristopher</h3>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=aeRHSN_0450">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/aeRHSN_0450/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Saa <span class="encounter-vs">Vs.</span> Alzate</h3>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=q7eloJo0oJY">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/q7eloJo0oJY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Madshow <span class="encounter-vs">Vs.</span> Tarantula</h3>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=1ieiZzyXfIM">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/1ieiZzyXfIM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Nimbol <span class="encounter-vs">Vs.</span> Brunao</h3>
+        </div>
+      </a>
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=eQLPU-zUOtg">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/eQLPU-zUOtg/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3>Terremoto Joe <span class="encounter-vs">Vs.</span> Da Bones</h3>
+        </div>
       </a>
     </div>
   </div>
 </section>
 
-<section>
+<section class="lab-transmissions" id="transmisiones" aria-labelledby="transmissions-title">
+  <div class="wrap">
+    <div class="section-heading">
+      <h2 data-heading-outline="TRANSMISIONES" data-heading-outline-en="TRANSMISSIONS" id="transmissions-title" data-en="Transmissions">Transmisiones</h2>
+    </div>
+    <p class="transmissions-intro" data-en="Extended event coverage and livestream replays.">Cobertura de eventos y repeticiones de transmisiones en vivo.</p>
+    <div class="media-grid transmission-grid">
+    <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=qOpCJKI-4Yo">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/qOpCJKI-4Yo/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3 id="transmission-qOpCJKI-4Yo">Ra’az Bxrg Entertainment Live Stream</h3>
+          <p data-en="Livestream replay">Repetición de la transmisión</p>
+        </div>
+      </a>
+    <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=T_YlxFIv2MQ">
+        <span class="lab-video-thumb">
+          <img src="https://i.ytimg.com/vi/T_YlxFIv2MQ/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3 id="transmission-T_YlxFIv2MQ">White Carbon Combat BJJ 2020</h3>
+          <p data-en="Event broadcast">Transmisión del evento</p>
+        </div>
+      </a>
+    <a id="oxide-playlist" class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=QzLvQCTzAXY&amp;list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg">
+        <span class="lab-video-thumb">
+          <img src="assets/realm-qualification-nav.webp" width="584" height="328" alt="" loading="lazy" decoding="async">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+        </span>
+        <div class="encounter-caption">
+          <h3 id="oxide-transmission-title">Oxide Overdrive GP</h3>
+          <p data-en="Watch the brown-belt Grand Prix bout by bout, starting with Serpiente vs. Rickson.">Mira el Grand Prix de cinturones café combate por combate, empezando por Serpiente vs. Rickson.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="mundo-visual">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="ghost">VISUAL</div>
       <span class="kicker cy"><span class="lang-en">ARCHIVE / RAW FEED</span><span class="lang-es">ARCHIVO / SEÑAL CRUDA</span></span>
-      <h2><span class="lang-en">Visual World</span><span class="lang-es">Mundo Visual</span></h2>
+      <h2 data-heading-outline="VISUAL"><span class="lang-en">Visual World</span><span class="lang-es">Mundo Visual</span></h2>
     </div>
     <div class="mosaic reveal">
-      <div class="m-item big"><img src="assets/squad-magenta.jpg" alt="Squad under magenta light"><span class="cap">THE PRAETOREANS</span></div>
-      <div class="m-item"><img src="assets/fighter-alzate.jpg" alt="Alzâte neon poster"><span class="cap">ALZÂTE — MATRIZ RA</span></div>
-      <div class="m-item tall"><img src="assets/fighter-nimbol.jpg" alt="Nimbol under blue light"><span class="cap">NIMBOL — BLUE OBLIVION</span></div>
-      <div class="m-item"><img src="assets/jersey-front.jpg" alt="Circuit jersey"><span class="cap">CIRCUIT ARMOR</span></div>
-      <div class="m-item"><img src="assets/fighter-cyber-zen.jpg" alt="Cyber Zen visor"><span class="cap">CYBER ZEN — INTERFACE</span></div>
-      <div class="m-item"><img src="assets/tee-gasmask.jpg" alt="Gas mask tee"><span class="cap">GAS MASK PROTOCOL</span></div>
+      <button type="button" class="m-item tall" aria-haspopup="dialog">
+        <img src="assets/instagram-jaguar-hoodie.webp" loading="lazy" alt="Sudadera blanca con un jaguar en la espalda y manga roja" data-en-alt="White hoodie with a jaguar on the back and a red sleeve">
+        <span class="cap" data-en="JAGUAR HOODIE · COMING SOON">SUDADERA JAGUAR · PRÓXIMAMENTE</span>
+      </button>
+      <button type="button" class="m-item" aria-haspopup="dialog">
+        <img src="assets/instagram-white-carbon-poster.webp" loading="lazy" alt="Afiche de Da Bones vs. Terremoto Joe" data-en-alt="Da Bones vs. Terremoto Joe poster">
+        <span class="cap" data-en="WHITE CARBON · ROUND TWO">WHITE CARBON · SEGUNDO ASALTO</span>
+      </button>
+      <button type="button" class="m-item tall" aria-haspopup="dialog">
+        <img src="assets/instagram-praetoreans-reel.webp" loading="lazy" alt="Peleadores del Grand Prix bajo luz verde" data-en-alt="Grand Prix fighters under green light">
+        <span class="cap" data-en="PRÆTOREANS · REEL COVER">PRÆTOREANS · PORTADA DEL REEL</span>
+      </button>
+      <button type="button" class="m-item big" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/squad-magenta.jpg" alt="Equipo bajo luz magenta" data-en-alt="Squad under magenta light"><span class="cap" data-en="THE PRAETOREANS">LOS PRETORIANOS</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-alzate.jpg" alt="Afiche de neón de Alzâte" data-en-alt="Alzâte neon poster"><span class="cap">ALZÂTE — MATRIZ RA</span></button>
+      <button type="button" class="m-item tall" id="nimbol-media" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-nimbol.jpg" alt="Nimbol bajo luz azul" data-en-alt="Nimbol under blue light"><span class="cap">NIMBOL — BLUE OBLIVION</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/jersey-front.jpg" alt="Camiseta con circuitos" data-en-alt="Circuit jersey"><span class="cap" data-en="CIRCUIT ARMOR">ARMADURA DE CIRCUITOS</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-cyber-zen.jpg" alt="Visor de Cyber Zen" data-en-alt="Cyber Zen visor"><span class="cap">CYBER ZEN — INTERFACE</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/tee-gasmask.jpg" alt="Camiseta con máscara de gas" data-en-alt="Gas mask tee"><span class="cap" data-en="GAS MASK PROTOCOL">PROTOCOLO MÁSCARA DE GAS</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog">
+        <img src="assets/instagram-neon-city.webp" loading="lazy" alt="Dos figuras en una azotea iluminada con neón rojo" data-en-alt="Two figures on a rooftop lit by red neon">
+        <span class="cap" data-en="NIGHT SCENE">ESCENA NOCTURNA</span>
+      </button>
+      <button type="button" class="m-item" aria-haspopup="dialog">
+        <img src="assets/instagram-white-carbon-art.webp" loading="lazy" alt="Arte de White Carbon en tonos magenta" data-en-alt="White Carbon artwork in magenta">
+        <span class="cap" data-en="WHITE CARBON ARTWORK">ARTE DE WHITE CARBON</span>
+      </button>
+      <button type="button" class="m-item" aria-haspopup="dialog">
+        <img src="assets/instagram-da-bones.webp" loading="lazy" alt="Da Bones frente a un fondo azul" data-en-alt="Da Bones in front of a blue backdrop">
+        <span class="cap" data-en="DA BONES">DA BONES</span>
+      </button>
     </div>
   </div>
 </section>
 
-<section class="cta-final">
-  <div class="scanlines"></div>
-  <div class="wrap">
-    <p class="kicker flicker"><span class="lang-en">DOORS OPEN FOR ALLIES</span><span class="lang-es">PUERTAS ABIERTAS PARA ALIADOS</span></p>
-    <h2><span class="lang-en">TRAIN AT<br><span class="accent glitch" data-text="THE LAB.">THE LAB.</span></span><span class="lang-es">ENTRENA EN<br><span class="accent glitch" data-text="EL LAB.">EL LAB.</span></span></h2>
-    <p>
-      <span class="lang-en">Open mats, closed doors sessions, and encounter filming days. Request coordinates through the interface.</span>
-      <span class="lang-es">Open mats, sesiones a puerta cerrada y días de filmación. Solicita coordenadas por la interfaz.</span>
-    </p>
-    <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener"><span class="lang-en">REQUEST ACCESS</span><span class="lang-es">SOLICITA ACCESO</span></a>
+<dialog class="visual-gallery" aria-label="Galería de Mundo Visual" data-en-label="Visual World gallery">
+  <div class="visual-gallery-inner">
+    <form method="dialog" class="visual-gallery-close">
+      <button class="text-link" data-en="Close gallery">Cerrar galería</button>
+    </form>
+    <figure>
+      <img class="visual-gallery-image" alt="">
+      <figcaption aria-live="polite"></figcaption>
+    </figure>
+    <div class="visual-gallery-controls">
+      <button type="button" class="text-link" data-gallery-step="-1" data-en="Previous">Anterior</button>
+      <button type="button" class="text-link" data-gallery-step="1" data-en="Next">Siguiente</button>
+    </div>
   </div>
-</section>
+</dialog>
+
+<dialog class="lab-player" aria-labelledby="lab-player-title">
+  <div class="lab-player-header">
+    <h2 id="lab-player-title"></h2>
+    <button type="button" class="text-link lab-player-close" autofocus data-en="Close player">Cerrar reproductor</button>
+  </div>
+  <iframe title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <div class="lab-player-actions">
+    <a class="text-link lab-player-fallback" target="_blank" rel="noopener" data-en="Open on YouTube">Abrir en YouTube</a>
+  </div>
+</dialog>
+
+</main>
 
 <footer>
   <div class="wrap foot">
-    <img src="assets/logo-wordmark.png" alt="Raaz Borg">
-    <span class="fm">RA'AZ BORG © 2026 — RA'AZ UNDERGROUNDS, GUAYAQUIL EC</span>
+    <img src="assets/Isotipo.png" alt="Raaz Borg">
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=archive-1"></script>
+<script src="js/lab-video.js?v=3" defer></script>
+<script src="js/visual-gallery.js" defer></script>
 </body>
 </html>

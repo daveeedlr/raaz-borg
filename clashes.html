@@ -1,146 +1,241 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clashes GP — RAAZ BORG</title>
-<meta name="description" content="Kumates GP — the official Raaz Borg tournament timeline. Praetoreans Interface GP is live.">
+<title data-en="Grand Prix shows and archive — RA’AZ BORG">Shows y archivo del Grand Prix — RA’AZ BORG</title>
+<meta name="description" content="Consulta cómo asistir al Grand Prix en Quito y recorre el archivo de ediciones anteriores." data-en-content="Find out how to attend a Grand Prix in Quito and explore past editions.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=archive-1">
 </head>
-<body data-lang="en">
+<body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
 
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html"><img src="assets/logo-wordmark.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
-      <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
-      <li><a href="clashes.html" class="active">CLASHES GP</a></li>
-      <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link">SHOP</a></li>
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html" class="active" aria-current="page">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-acid nav-cta" href="#enlist">ENLIST</a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
 
-<header class="page-hero">
+<main id="contenido" tabindex="-1">
+<header class="page-hero" id="publico">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost">KUMATES</div>
-    <span class="kicker">OFFICIAL PRO-LOG</span>
-    <h1 class="glitch flicker" data-text="CLASHES GP">CLASHES GP</h1>
-    <p class="lead">
-      <span class="lang-en">Five editions. Five colors. One grid. Each Kumates GP is a system update — a new protocol, new personas, new transmissions from the underground.</span>
-      <span class="lang-es">Cinco ediciones. Cinco colores. Una red. Cada Kumates GP es una actualización del sistema — nuevo protocolo, nuevos personajes, nuevas transmisiones desde el underground.</span>
-    </p>
+    <span class="kicker">Clashes GP · Quito</span>
+    <h1 data-heading-outline="GRAND PRIX" data-en="At the Grand Prix">El Grand Prix desde la grada</h1>
+    <p class="lead" data-en="Coming to watch? Bring your friends and cheer on the eight fighters competing for the title. For the next show in Quito, ask RA’AZ BORG on Instagram about the date, venue and admission.">¿Vienes de público? Trae a tu gente y alienta a los ocho peleadores que se disputan el título. Para asistir al próximo show en Quito, consulta con RA’AZ BORG en Instagram la fecha, el lugar y cómo entrar.</p>
+    <div class="event-actions">
+      <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" data-en="Ask about the next show on Instagram">Consultar por el show en Instagram</a>
+      <a class="text-link" href="#ediciones" data-en="Explore past editions">Ver ediciones anteriores</a>
+    </div>
   </div>
 </header>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>PRAETOREANS INTERFACE GP — VERSION 5.0</span><span>◈</span><span>SUBMISSION ONLY</span><span>◈</span><span>HEROES VS HEROES</span><span>◈</span><span>FREE LIVE STREAM</span><span>◈</span>
+<section class="dark archive-editions" id="ediciones">
+  <div class="wrap">
+    <div class="section-heading"><h2 data-heading-outline="EDICIONES" data-heading-outline-en="EDITIONS" data-en="Past editions">Ediciones anteriores</h2></div>
+    <!-- ============ INTERACTIVE GP TIMELINE ============ -->
+    <div class="timeline reveal">
+    
+      <!-- WHITE CARBON COMBAT -->
+      <div class="t-item" style="--tc:var(--text)" data-gp="0" id="gp-white-carbon" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de White Carbon Combat" data-en-label="View White Carbon Combat archive">
+    
+        <div class="year">2020</div>
+        <div class="ev">White Carbon Combat</div>
+    
+        <div class="st">
+          <span class="lang-en">8 Ecuadorian athletes. Only 1 hero. The first transmission.</span>
+          <span class="lang-es">8 atletas ecuatorianos. Solo 1 héroe. La primera transmisión.</span>
+        </div>
+    
+        <span class="timeline-view">
+          <span class="lang-en">+ VIEW ARCHIVE</span>
+          <span class="lang-es">+ VER ARCHIVO</span>
+        </span>
+      </div>
+    
+      <!-- BLUE OBLIVION -->
+      <div class="t-item" style="--tc:var(--cyan)" data-gp="1" id="gp-blue-oblivion" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Blue Oblivion" data-en-label="View Blue Oblivion archive">
+    
+        <div class="year">2021</div>
+        <div class="ev">Blue Oblivion BJJ</div>
+    
+        <div class="st">
+          <span class="lang-en">The system expands into the oblivion protocol.</span>
+          <span class="lang-es">El sistema se expande al protocolo oblivion.</span>
+        </div>
+    
+        <span class="timeline-view">
+          <span class="lang-en">+ VIEW ARCHIVE</span>
+          <span class="lang-es">+ VER ARCHIVO</span>
+        </span>
+      </div>
+    
+      <!-- VIOLET COMBAT ROYALE -->
+      <div class="t-item" style="--tc:var(--violet)" data-gp="2" id="gp-violet-royale" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Violet Combat Royale" data-en-label="View Violet Combat Royale archive">
+    
+        <div class="year">2021</div>
+        <div class="ev">Violet Combat Royale</div>
+    
+        <div class="st">
+          <span class="lang-en">Royale format. Every unit for itself.</span>
+          <span class="lang-es">Formato royale. Cada unidad por su cuenta.</span>
+        </div>
+    
+        <span class="timeline-view">
+          <span class="lang-en">+ VIEW ARCHIVE</span>
+          <span class="lang-es">+ VER ARCHIVO</span>
+        </span>
+      </div>
+    
+      <!-- OXIDE OVERDRIVE -->
+      <div class="t-item" style="--tc:var(--orange)" data-gp="3" id="gp-oxide-overdrive" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Oxide Overdrive" data-en-label="View Oxide Overdrive archive">
+    
+        <div class="year">2022</div>
+        <div class="ev">Oxide Overdrive</div>
+    
+        <div class="st">
+          <span class="lang-en">Corrosion patch. The wasteland era begins.</span>
+          <span class="lang-es">Parche de corrosión. Comienza la era wasteland.</span>
+        </div>
+    
+        <span class="timeline-view">
+          <span class="lang-en">+ VIEW ARCHIVE</span>
+          <span class="lang-es">+ VER ARCHIVO</span>
+        </span>
+      </div>
+    
+      <!-- PRAETOREANS INTERFACE -->
+      <div class="t-item" style="--tc:var(--acid)" data-gp="4" id="gp-praetoreans" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Praetoreans Interface" data-en-label="View Praetoreans Interface archive">
+    
+        <div class="year">2024</div>
+        <div class="ev">Praetoreans Interface GP</div>
+    
+        <div class="st">
+          <span class="lang-en">Latest Version. Heroes vs heroes.</span>
+          <span class="lang-es">Última versión. Héroes vs. héroes.</span>
+        </div>
+    
+        <span class="timeline-view">
+          <span class="lang-en">+ VIEW ARCHIVE</span>
+          <span class="lang-es">+ VER ARCHIVO</span>
+        </span>
+      </div>
+    
+    </div>
+
+    <a class="btn btn-ghost" id="experience-guide-link" href="index.html#reinos"><span data-en="Find your realm by experience level">Encuentra tu reino según tu experiencia</span></a>
+  </div>
+</section>
+
+<!-- ============ GRAND PRIX ARCHIVE ============ -->
+<div class="gp-archive-overlay" id="gpArchiveOverlay" hidden>
+
+  <div class="gp-archive-panel" role="dialog" aria-modal="true" aria-labelledby="gpArchiveTitle" tabindex="-1">
+
+    <button class="gp-archive-close" id="gpArchiveClose" type="button" aria-label="Cerrar archivo" data-en-label="Close archive">
+      &times;
+    </button>
+
+    <div class="gp-archive-meta">
+      <span id="gpArchiveYear"></span>
+      <span data-en="// GP ARCHIVE">// ARCHIVO GP</span>
+    </div>
+
+    <h2 id="gpArchiveTitle"></h2>
+
+    <!-- CHAMPION -->
+    <div class="gp-archive-champion">
+
+      <span class="lang-en">EDITION CHAMPION</span>
+      <span class="lang-es">CAMPEÓN DE LA EDICIÓN</span>
+
+      <strong id="gpArchiveChampion"></strong>
+
+      <a id="gpArchiveFighterLink" href="fighters.html" hidden>
+        <span class="lang-en">VIEW FIGHTER CARD</span>
+        <span class="lang-es">VER FICHA DEL PELEADOR</span>
+      </a>
+
+    </div>
+
+    <!-- EVENT PHOTOGRAPH -->
+    <div class="gp-archive-image-wrap">
+
+      <img id="gpArchiveImage" alt="" hidden>
+
+      <p id="gpArchiveImageFallback">
+        <span class="lang-en">Event photograph coming soon.</span>
+        <span class="lang-es">Fotografía del evento próximamente.</span>
+      </p>
+
+    </div>
+
+    <!-- TOURNAMENT RECAP -->
+    <div class="gp-archive-summary">
+
+      <h3>
+        <span class="lang-en">THE CLASH REPORT</span>
+        <span class="lang-es">RESEÑA DEL COMBATE</span>
+      </h3>
+
+      <p id="gpArchiveSummary"></p>
+
+    </div>
+
+    <!-- ARCHIVE NAVIGATION -->
+    <div class="gp-archive-nav">
+
+      <button id="gpArchivePrev" type="button" aria-label="Edición anterior" data-en-label="Previous edition">&#10094;</button>
+
+      <span id="gpArchiveCount"></span>
+
+      <button id="gpArchiveNext" type="button" aria-label="Siguiente edición" data-en-label="Next edition">&#10095;</button>
+
+    </div>
+
   </div>
 </div>
 
-<section>
-  <div class="wrap">
-    <div class="split">
-      <div class="img-frame reveal">
-        <img src="assets/fighter-interface-prime.jpg" alt="Praetoreans Interface GP poster">
-        <span class="frame-tag">GP 5.0 — WASTELAND BREACH</span>
-      </div>
-      <div class="reveal reveal-d1">
-        <p class="kicker" style="color:var(--acid);margin-bottom:16px">NOW LIVE / EN VIVO — VER 5.0</p>
-        <h2>PRAETOREANS INTERFACE GP</h2>
-        <p>
-          <span class="lang-en">The current edition. The Praetoreans — first black belts of the movement — defend the Grid against a new generation of lethal avatars. Submission-only rules, no time for mercy.</span>
-          <span class="lang-es">La edición actual. Los Praetoreanos — primeros cinturones negros del movimiento — defienden la Red contra una nueva generación de avatares letales. Reglas de solo sumisión, sin tiempo para piedad.</span>
-        </p>
-        <p class="protocol">
-          <span class="lang-en">// IN MEMORY OF DANIEL VILLACÍS — THE GRID REMEMBERS.</span>
-          <span class="lang-es">// EN MEMORIA DE DANIEL VILLACÍS — LA RED RECUERDA.</span>
-        </p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a class="btn btn-acid" href="#enlist"><span class="lang-en">COMPETE</span><span class="lang-es">COMPITE</span></a>
-          <a class="btn btn-ghost" href="labs.html"><span class="lang-en">WATCH TRANSMISSIONS</span><span class="lang-es">VER TRANSMISIONES</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="dark">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost">TIMELINE</div>
-      <span class="kicker cy"><span class="lang-en">SYSTEM CHANGELOG</span><span class="lang-es">HISTORIAL DEL SISTEMA</span></span>
-      <h2><span class="lang-en">Edition History</span><span class="lang-es">Historial de Ediciones</span></h2>
-    </div>
-    <div class="timeline reveal">
-      <div class="t-item" style="--tc:var(--text)"><div class="year">2020</div><div class="ev">White Carbon Combat</div><div class="st"><span class="lang-en">8 Ecuadorian athletes. Only 1 hero. The first transmission.</span><span class="lang-es">8 atletas ecuatorianos. Solo 1 héroe. La primera transmisión.</span></div></div>
-      <div class="t-item" style="--tc:var(--cyan)"><div class="year">2021</div><div class="ev">Blue Oblivion BJJ</div><div class="st"><span class="lang-en">The system expands into the oblivion protocol.</span><span class="lang-es">El sistema se expande al protocolo oblivion.</span></div></div>
-      <div class="t-item" style="--tc:var(--violet)"><div class="year">2021</div><div class="ev">Violet Combat Royale</div><div class="st"><span class="lang-en">Royale format. Every unit for itself.</span><span class="lang-es">Formato royale. Cada unidad por su cuenta.</span></div></div>
-      <div class="t-item" style="--tc:var(--orange)"><div class="year">2023</div><div class="ev">Oxide Overdrive</div><div class="st"><span class="lang-en">Corrosion patch. The wasteland era begins.</span><span class="lang-es">Parche de corrosión. Comienza la era wasteland.</span></div></div>
-      <div class="t-item" style="--tc:var(--acid)"><div class="year">2024</div><div class="ev">Praetoreans Interface GP</div><div class="st"><span class="lang-en">Current version. Heroes vs heroes.</span><span class="lang-es">Versión actual. Héroes vs héroes.</span></div></div>
-    </div>
-  </div>
-</section>
+<section class="archive-entry" id="enlist"><div class="wrap">
+  <h2 data-heading-outline="COMPETIR" data-heading-outline-en="COMPETE" data-en="Want to enter the next Grand Prix?">¿Quieres competir en el próximo Grand Prix?</h2>
+  <a class="btn btn-acid" href="competir.html" data-en="Apply to compete">Quiero competir</a>
+  <a class="text-link" href="realm-nexus.html" data-en="How to qualify">Cómo clasificar</a>
+</div></section>
 
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="ghost">VS</div>
-      <span class="kicker mag">NEXT TRANSMISSION</span>
-      <h2><span class="lang-en">Featured Clash</span><span class="lang-es">Combate Estelar</span></h2>
-    </div>
-    <div class="split reveal">
-      <div class="img-frame">
-        <img src="assets/fighter-super-choque.jpg" alt="Super Choque poster">
-        <span class="frame-tag">SUPER CHOQUE — UNIT_01</span>
-      </div>
-      <div class="img-frame reveal-d1">
-        <img src="assets/fighter-vice-protocol.jpg" alt="Vice Protocol poster">
-        <span class="frame-tag">VICE PROTOCOL — UNIT_02</span>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:52px" class="reveal">
-      <p class="kicker" style="color:var(--acid);margin-bottom:10px">THE BÖRG LAB — 21:00 — SECTOR GYE</p>
-      <p style="font-family:var(--mono);font-size:13px;color:var(--text-3);letter-spacing:.2em"><span class="lang-en">ONLY ONE LEAVES THE LAB.</span><span class="lang-es">SOLO UNO SALE DEL LAB.</span></p>
-    </div>
-  </div>
-</section>
-
-<section class="cta-final" id="enlist">
-  <div class="scanlines"></div>
-  <div class="wrap">
-    <p class="kicker flicker"><span class="lang-en">RECRUITMENT PROTOCOL OPEN</span><span class="lang-es">PROTOCOLO DE RECLUTAMIENTO ABIERTO</span></p>
-    <h2><span class="lang-en">ENTER<br><span class="accent glitch" data-text="THE GRID.">THE GRID.</span></span><span class="lang-es">ENTRA A<br><span class="accent glitch" data-text="LA RED.">LA RED.</span></span></h2>
-    <p>
-      <span class="lang-en">Competitors, sponsors, and allies: transmissions are received through our Instagram interface.</span>
-      <span class="lang-es">Competidores, auspiciantes y aliados: las transmisiones se reciben por nuestra interfaz de Instagram.</span>
-    </p>
-    <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener"><span class="lang-en">ENLIST NOW</span><span class="lang-es">ALÍSTATE</span></a>
-  </div>
-</section>
+</main>
 
 <footer>
   <div class="wrap foot">
-    <img src="assets/logo-wordmark.png" alt="Raaz Borg">
-    <span class="fm">RA'AZ BORG © 2026 — RA'AZ UNDERGROUNDS, GUAYAQUIL EC</span>
+    <img src="assets/Isotipo.png" alt="Raaz Borg">
+    <span class="fm">© 2026 — RA'AZ COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=archive-1"></script>
 </body>
 </html>

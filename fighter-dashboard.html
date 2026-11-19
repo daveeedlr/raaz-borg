@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title data-en="My fighter realm — RA’AZ BORG">Mi reino de combate — RA’AZ BORG</title>
+<meta name="description" content="Portal privado del roster RA’AZ BORG: registro, identidad, historial previo y estadísticas." data-en-content="Private RA’AZ BORG roster portal: registration, fighter identity, previous record and verified fight statistics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=profile-v2">
+<link rel="stylesheet" href="css/fighter-dashboard.css?v=portal-1">
+<style>.portal-language-note{color:#e5dfea;font:600 12px/1.6 var(--mono);margin:.4rem 0 0;overflow-wrap:anywhere}.portal-language-note strong{color:var(--portal-win)}#emailLanguageSaving{color:#b1e9fc}</style>
+</head>
+<body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="RA’AZ BORG — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a aria-current="page" class="btn btn-acid nav-cta" href="fighter-dashboard.html"><span data-en="My realm">Mi reino</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
+    </div>
+  </div>
+</nav>
+<main class="portal-page" id="contenido">
+  <div class="portal-wrap">
+    <div class="portal-upper">
+      <p class="portal-eyebrow" data-en="PRIVATE ATHLETE AREA · COMBAT RE-CODED">ÁREA PRIVADA DEL ATLETA · COMBAT RE-CODED</p>
+      <div class="portal-actions">
+        <a href="index.html#reinos" data-en="Explore the realms">Explorar los reinos</a>
+        <button type="button" id="portal-refresh" data-en="Refresh status">Actualizar estado</button>
+        <button type="button" id="portal-logout" data-en="Sign out">Cerrar sesión</button>
+      </div>
+    </div>
+    <div id="portal-loading" class="portal-feedback" role="status" aria-live="polite" data-en="Checking your athlete account…">Verificando tu cuenta de atleta…</div>
+    <section id="portal-signin-required" class="portal-card" hidden>
+      <h2 data-en="Your account is private">Tu cuenta es privada</h2>
+      <p data-en="Sign in with your confirmed athlete email to access your roster registration and fight record.">Inicia sesión con tu correo confirmado para ver tu registro al roster y tu historial.</p>
+      <a class="portal-link" href="competir.html" data-en="Sign in or register">Iniciar sesión o registrarme</a>
+    </section>
+    <section id="portal-error" class="portal-card" hidden>
+      <h2 data-en="Could not load your realm">No pudimos cargar tu reino</h2>
+      <p data-en="Your account information could not be retrieved. Try refreshing your status.">No pudimos obtener la información de tu cuenta. Vuelve a actualizar tu estado.</p>
+    </section>
+    <section id="portal-content" hidden>
+      <div id="portal-submitted-confirmation" class="portal-feedback" hidden role="status" aria-live="polite" data-en="Roster registration saved. Your fighter profile is pending team review; your welcome note is below.">¡Inscripción al roster guardada! Tu perfil está pendiente de revisión por el equipo. Debajo encontrarás tu mensaje de bienvenida.</div>
+      <header class="portal-hero">
+        <p class="portal-eyebrow" data-en="YOUR PROFILE IS NOW IN THE GRID">TU PERFIL YA ES PARTE DE LA RED</p>
+        <h1><span data-en="Welcome">Bienvenido</span>, <span class="portal-name" id="fighterDisplayName">Atleta</span>.</h1>
+        <p data-en="Your private place inside the Börg universe. Follow your roster status, view your fighter identity and track your fight history.">Tu espacio privado dentro del universo Börg. Consulta el estado de tu inscripción al roster, tu identidad de peleador y tu historial de combate.</p>
+      </header>
+      <div class="portal-grid">
+        <article class="portal-card" aria-labelledby="application-heading">
+          <p class="portal-kicker" data-en="01 / ROSTER REGISTRATION">01 / REGISTRO AL ROSTER</p>
+          <h2 id="application-heading" data-en="My roster registration">Mi inscripción al roster</h2>
+          <span id="application-status" class="portal-status" data-state="none" data-en="Not registered">Sin registro</span>
+          <p id="roster-acknowledged-status" class="portal-mail-note" role="status" hidden
+             data-en="The RA’AZ BORG team has personally confirmed receipt of your registration. This does not confirm a scheduled fight.">El equipo RA’AZ BORG ha confirmado personalmente que recibió tu registro. Esto no confirma un combate programado.</p>
+          <p id="status-description" class="portal-status-description" aria-live="polite"></p>
+          <div class="portal-steps" aria-label="Etapas del roster" data-en-label="Roster review stages">
+            <span id="step-submitted" data-en="01 · Registered">01 · Registrado</span>
+            <span id="step-review" data-en="02 · Roster review">02 · Revisión</span>
+            <span id="step-invited" data-en="03 · Invitation">03 · Invitación</span>
+          </div>
+          <dl class="portal-facts">
+            <div><dt data-en="Realm">Reino</dt><dd id="application-realm">—</dd></div>
+            <div><dt data-en="Registration date">Fecha de inscripción</dt><dd id="application-date">—</dd></div>
+            <div><dt data-en="Participation">Participación</dt><dd id="application-interest">—</dd></div>
+            <div><dt data-en="Receipt">Comprobante</dt><dd id="application-receipt">—</dd></div>
+          </dl>
+          <a class="portal-link" href="index.html#reinos" data-en="Explore your realm">Explora tu reino</a>
+        </article>
+        <article class="portal-card" aria-labelledby="message-heading">
+          <p class="portal-kicker" data-en="02 / TEAM COMMUNICATION">02 / COMUNICACIÓN DEL EQUIPO</p>
+          <h2 id="message-heading" data-en="My messages">Mis mensajes</h2>
+          <div id="welcome-message" class="portal-mail" hidden>
+            <div class="portal-mail-header">
+              <strong data-en="RA’AZ BORG team">Equipo RA’AZ BORG</strong>
+              <small id="welcome-date">—</small>
+            </div>
+            <p id="welcome-copy"></p>
+          </div>
+          <div id="acknowledgement-message" class="portal-mail portal-ack-mail" hidden>
+            <div class="portal-mail-header">
+              <strong data-en="Registration received · RA’AZ BORG team">Registro recibido · Equipo RA’AZ BORG</strong>
+              <small id="acknowledgement-date">—</small>
+            </div>
+            <p id="acknowledgement-copy"></p>
+            <p class="portal-mail-note" data-en="This confirms receipt of your registration, not a confirmed bout or fight date.">Esta es una confirmación de recepción de tu registro, no de un combate ni fecha asignados.</p>
+          </div>
+          <p id="message-empty" class="portal-empty-note" data-en="There are no messages yet. Your welcome note will appear after you submit your first application.">Todavía no hay mensajes. Tu bienvenida aparecerá al enviar tu primera postulación.</p>
+          <p class="portal-mail-note" data-en="Roster updates appear here. Joining the roster does not confirm a fight; the team will contact you with verified details.">Aquí encontrarás las novedades de tu inscripción al roster. Registrarte no confirma un combate; el equipo te contactará con los detalles verificados.</p>
+        </article>
+        <article class="portal-card" aria-labelledby="profile-heading">
+          <p class="portal-kicker" data-en="03 / ATHLETE IDENTITY">03 / IDENTIDAD DEL ATLETA</p>
+          <div class="portal-profile-top">
+            <div class="portal-photo-frame">
+              <span class="portal-avatar" id="fighter-avatar" aria-hidden="true">RB</span>
+              <img id="fighter-photo" class="portal-avatar-image" alt="Fotografía privada del peleador" data-en-alt="Private fighter portrait" hidden>
+            </div>
+            <div>
+              <h2 id="fighterName">—</h2>
+              <p id="fighterUsername" class="portal-username">—</p>
+              <p class="portal-language-note"><span data-en="Email language">Idioma de correos</span>: <strong id="emailLanguageValue">Español</strong><span id="emailLanguageSaving" aria-live="polite"></span></p>
+            </div>
+          </div>
+          <dl class="portal-profile-facts">
+            <div><dt data-en="First name">Nombre</dt><dd id="fighterFirstName">—</dd></div>
+            <div><dt data-en="Last name">Apellido</dt><dd id="fighterLastName">—</dd></div>
+            <div><dt data-en="Fighter alias">Alias de combate</dt><dd id="fighterAlias">—</dd></div>
+            <div><dt data-en="Birth date">Fecha de nacimiento</dt><dd id="fighterBirthDate">—</dd></div>
+            <div><dt data-en="Realm">Reino</dt><dd id="fighterRealm">—</dd></div>
+            <div><dt data-en="Belt">Cinturón</dt><dd id="fighterRank">—</dd></div>
+            <div><dt data-en="Belt stripes">Franjas</dt><dd id="fighterStripes">—</dd></div>
+            <div><dt data-en="Discipline">Disciplina</dt><dd id="fighterDiscipline">—</dd></div>
+            <div><dt data-en="Academy / gym">Academia / gimnasio</dt><dd id="fighterGym">—</dd></div>
+            <div><dt data-en="City">Ciudad</dt><dd id="fighterCity">—</dd></div>
+            <div><dt data-en="Province / state">Provincia / estado</dt><dd id="fighterProvince">—</dd></div>
+            <div><dt data-en="Country">País</dt><dd id="fighterCountry">—</dd></div>
+            <div><dt data-en="Weight">Peso</dt><dd id="fighterWeight">—</dd></div>
+            <div><dt data-en="Height">Estatura</dt><dd id="fighterHeight">—</dd></div>
+          </dl>
+          <div class="portal-photo-editor">
+            <label for="portal-photo-input" data-en="Private fighter photo · JPG, PNG or WebP · 2 MB max">Foto privada del peleador · JPG, PNG o WebP · máximo 2 MB</label>
+            <input id="portal-photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+            <div class="portal-actions">
+              <button type="button" id="portal-photo-save" data-en="Save photo">Guardar foto</button>
+              <button type="button" id="portal-photo-remove" data-en="Remove photo" hidden>Eliminar foto</button>
+            </div>
+            <p id="portal-photo-feedback" class="portal-field-feedback" role="status" aria-live="polite"></p>
+            <p class="portal-small-note" data-en="Your portrait stays private and is not automatically published in the public fighter roster.">Tu retrato permanece privado y no se publica automáticamente en el roster público.</p>
+          </div>
+          <div class="portal-prior-record">
+            <div class="portal-prior-heading">
+              <div>
+                <p class="portal-kicker" data-en="PREVIOUS FIGHT EXPERIENCE">EXPERIENCIA EN COMBATE ANTERIOR</p>
+                <h3 data-en="Self-reported record">Historial declarado por el peleador</h3>
+              </div>
+              <button type="button" class="portal-small-button" id="portal-prior-edit-toggle" data-en="Edit">Editar</button>
+            </div>
+            <p class="portal-small-note" data-en="These totals are provided by the athlete and have not been independently verified by RA’AZ BORG.">Estos datos son declarados por el atleta y no han sido verificados independientemente por RA’AZ BORG.</p>
+            <div class="portal-stats portal-stats-prior">
+              <div class="portal-stat"><strong id="priorCompeted">—</strong><small data-en="Competed">Disputados</small></div>
+              <div class="portal-stat"><strong id="priorWon">—</strong><small data-en="Won">Ganados</small></div>
+              <div class="portal-stat"><strong id="priorLost">—</strong><small data-en="Lost">Perdidos</small></div>
+              <div class="portal-stat"><strong id="priorDrawn">—</strong><small data-en="Draws">Empates</small></div>
+            </div>
+            <form id="portal-prior-form" class="portal-prior-form" hidden>
+              <p class="portal-small-note" data-en="Enter all four numbers, including zeros. Wins, losses and draws cannot exceed competed fights. Clear all fields to remove your declared record.">Ingresa los cuatro valores, incluyendo ceros. Ganados, perdidos y empates no pueden superar los disputados. Deja todos vacíos para quitar tu historial declarado.</p>
+              <div class="portal-prior-grid">
+                <label><span data-en="Competed">Disputados</span><input id="edit-prior-competed" type="number" min="0" max="5000" step="1" inputmode="numeric"></label>
+                <label><span data-en="Won">Ganados</span><input id="edit-prior-won" type="number" min="0" max="5000" step="1" inputmode="numeric"></label>
+                <label><span data-en="Lost">Perdidos</span><input id="edit-prior-lost" type="number" min="0" max="5000" step="1" inputmode="numeric"></label>
+                <label><span data-en="Draws">Empates</span><input id="edit-prior-drawn" type="number" min="0" max="5000" step="1" inputmode="numeric"></label>
+              </div>
+              <button type="submit" class="portal-small-button" id="portal-prior-save" data-en="Save previous record">Guardar historial anterior</button>
+              <p id="portal-prior-feedback" class="portal-field-feedback" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </article>
+        <article class="portal-card" aria-labelledby="record-heading">
+          <p class="portal-kicker" data-en="04 / RECORDED FIGHTS">04 / COMBATES REGISTRADOS</p>
+          <h2 id="record-heading" data-en="Recorded fight statistics">Estadísticas de combates registrados</h2>
+          <div class="portal-chart-wrap">
+            <div id="fightDonut" class="portal-donut" role="img" aria-label="Sin combates registrados" data-en-label="No recorded fights">
+              <div class="portal-donut-content">
+                <strong id="winPercentage">—</strong>
+                <span data-en="Win rate">Victorias</span>
+              </div>
+            </div>
+          </div>
+          <div class="portal-legend">
+            <span class="win" data-en="Wins">Victorias</span>
+            <span class="loss" data-en="Losses">Derrotas</span>
+            <span class="draw" data-en="Draws">Empates</span>
+          </div>
+          <div class="portal-stats">
+            <div class="portal-stat"><strong id="totalFights">—</strong><small data-en="Fights">Combates</small></div>
+            <div class="portal-stat"><strong id="fightWins">—</strong><small data-en="Wins">Victorias</small></div>
+            <div class="portal-stat"><strong id="fightLosses">—</strong><small data-en="Losses">Derrotas</small></div>
+            <div class="portal-stat"><strong id="fightDraws">—</strong><small data-en="Draws">Empates</small></div>
+          </div>
+          <p id="record-caption" class="portal-chart-note" data-en="No fight-by-fight results have been recorded here yet. The donut stays grey; your self-reported previous record appears under Athlete Identity.">Todavía no se han registrado resultados individuales de combates aquí. El gráfico permanece gris; tu historial previo declarado aparece en Identidad del atleta.</p>
+        </article>
+      </div>
+      <article class="portal-card portal-lower" aria-labelledby="recent-heading">
+        <p class="portal-kicker" data-en="05 / HISTORY">05 / HISTORIAL</p>
+        <h2 id="recent-heading" data-en="Recent fights">Últimos combates</h2>
+        <div id="fightList"></div>
+        <p class="portal-empty-note" id="emptyFightMessage" data-en="No bouts have been registered for your account yet.">Todavía no hay combates registrados en tu cuenta.</p>
+      </article>
+    </section>
+  </div>
+</main>
+<footer><div class="wrap foot">
+  <img src="assets/Isotipo.png" alt="RA’AZ BORG">
+  <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
+  <ul class="foot-links">
+    <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
+    <li><a href="competir.html"><span class="lang-es">POSTULACIONES</span><span class="lang-en">APPLICATIONS</span></a></li>
+  </ul>
+</div></footer>
+<script src="js/main.js?v=langpref-20261119"></script>
+<script src="js/vendor/supabase-2.49.8.js"></script>
+<script src="js/roster-avatar.js?v=roster-v1"></script>
+<script src="js/athlete-language.js?v=langpref-v1"></script>
+<script src="js/fighter-dashboard.js?v=email-paused-20261119-v2"></script>
+</body>
+</html>

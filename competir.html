@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-en="Join the fighter roster — RA’AZ BORG">Inscripción al roster de peleadores — RA’AZ BORG</title>
+<meta name="description" content="Regístrate una sola vez para entrar al roster de RA’AZ BORG en Quito." data-en-content="Register once to join the RA’AZ BORG fighter roster in Quito.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=profile-v2">
+<style>
+.join-form-panel { display:grid; gap:1rem; min-width:0 }
+#athlete-interest { scroll-margin-top:145px }
+.account-message { color:var(--grey); overflow-wrap:anywhere }
+.account-message:empty { display:none }
+#receipts article { padding:.75rem 0; border-top:1px solid var(--smoke); overflow-wrap:anywhere }
+#receipts small { display:block; color:var(--grey) }
+#member strong { overflow-wrap:anywhere }
+.auth-mode-tabs { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.auth-mode-tabs button { background:var(--void); color:var(--white); border:1px solid var(--smoke); border-radius:4px; font:inherit; font-size:.9rem; padding:.85rem .55rem; cursor:pointer; min-height:48px; }
+.auth-mode-tabs button[aria-pressed="true"] { background:var(--acid); border-color:var(--acid); color:var(--void); font-weight:800; }
+.auth-mode-tabs button:focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+.auth-explainer, .application-note { margin:0; font-size:.9rem; line-height:1.6; color:var(--grey); }
+.join-progress { color:var(--cyan); font-size:.92rem; line-height:1.65; }
+.required-indicator { color:var(--acid); font-weight:700; }
+#recover[hidden] { display:none; }
+#feedback:not(:empty) {
+  color:#fff; background:#213039; border:2px solid #69d9f4; border-left:6px solid #69d9f4;
+  border-radius:4px; padding:18px 20px; font-size:clamp(16px,2.4vw,20px);
+  line-height:1.55; font-weight:800; box-shadow:0 12px 38px rgba(0,0,0,.4);
+  max-width:100%; overflow-wrap:anywhere;
+}
+#feedback[data-state="error"]:not(:empty) {
+  background:#351d27;border-color:#ff8aa7;color:#fff;
+}
+#feedback[data-state="success"]:not(:empty) {
+  background:#26331e;border-color:#c8f542;color:#f3ffe0;
+}
+#account .auth-explainer,#application .application-note {color:#e6e1ea;line-height:1.65;}
+#primary-auth,#submit-application {min-height:52px;font-size:clamp(14px,2vw,17px);font-weight:800;}
+#primary-auth:disabled,#submit-application:disabled {opacity:.78;cursor:progress;}
+.join-form-panel input:focus,.join-form-panel select:focus {outline:2px solid #67d9f0;outline-offset:2px;}
+
+.athlete-fields { margin:0; padding:0; border:0; display:grid; gap:.85rem; min-width:0 }
+.athlete-fields legend { font-weight:700; font-size:1.1rem; margin-bottom:.6rem; color:var(--cyan) }
+.athlete-fields .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.athlete-fields .measure-row { display:flex; align-items:stretch; gap:6px; }
+.athlete-fields .measure-row input { min-width:0; flex:1 }
+.athlete-fields .measure-row select { width:auto; min-width:76px; flex:none; }
+.athlete-fields p { font-size:.85rem; color:var(--grey); margin:0 }
+@media(max-width:520px) { .athlete-fields .field-grid { grid-template-columns:1fr } }
+.record-validation {border-left:4px solid #ff8aa7;padding:11px 14px;background:#2f2028;color:#fff;font-weight:700;}
+.record-validation[hidden]{display:none}
+#roster-photo {cursor:pointer;color:#fff;font-weight:700}
+#roster-photo::file-selector-button {background:#c8f542;color:#171717;font:700 12px/1.4 var(--mono);border:none;padding:11px 15px;margin-right:13px;cursor:pointer}
+#previous-record-fields input {min-height:44px}
+
+/* The roster must not appear until the current Auth session and registration are checked. */
+body.roster-gate-pending .join-layout { display:none !important; }
+body:not(.roster-gate-pending) #roster-gate { display:none !important; }
+#roster-gate {
+  min-height:max(380px,70vh);
+  padding:clamp(140px,17vw,190px) 24px 90px;
+  background:radial-gradient(circle at 50% 30%,rgba(200,245,66,.08),transparent 60%),var(--void);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  text-align:center;
+}
+.roster-gate-spinner {
+  width:38px;
+  height:38px;
+  border:3px solid rgba(255,255,255,.28);
+  border-top-color:var(--acid);
+  border-radius:50%;
+  animation:roster-gate-spin .9s linear infinite;
+}
+@keyframes roster-gate-spin { to {transform:rotate(360deg)} }
+#roster-gate h1 { font:clamp(29px,5vw,52px)/1.2 Anton,Impact,sans-serif; color:var(--white); margin:0; }
+#roster-gate p { color:#e7e5e9; font-size:clamp(15px,2vw,18px); line-height:1.6; max-width:460px; margin:0; }
+#roster-gate-retry {
+  min-height:48px; border:1px solid var(--acid); color:var(--void);
+  background:var(--acid); font:700 13px var(--mono); padding:11px 18px; cursor:pointer;
+}
+#roster-gate-retry[hidden] { display:none !important; }
+@media (prefers-reduced-motion:reduce) { .roster-gate-spinner {animation:none;} }
+
+
+</style>
+</head>
+<body data-lang="es" class="roster-gate-pending">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span data-en="Realms">Reinos</span></a></li>
+      <li><a href="clashes.html">Grand Prix</a></li>
+      <li><a href="fighters.html"><span data-en="Fighters">Peleadores</span></a></li>
+      <li><a href="labs.html"><span data-en="Lab &amp; videos">Lab y videos</span></a></li>
+      <li><a href="shop.html" class="shop-link"><span data-en="Shop">Tienda</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a aria-current="page" class="btn btn-acid nav-cta" href="competir.html"><span data-en="Compete">Competir</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="contenido" tabindex="-1" class="join-page">
+  <section id="roster-gate" aria-live="polite" aria-busy="true">
+    <span class="roster-gate-spinner" aria-hidden="true"></span>
+    <h1 data-en="Checking your fighter account">Verificando tu cuenta de peleador</h1>
+    <p id="roster-gate-message" data-en="Checking your session and roster registration…">Comprobando tu sesión y tu inscripción al roster…</p>
+    <button id="roster-gate-retry" type="button" hidden data-en="Try again">Volver a intentar</button>
+  </section>
+  <div class="wrap join-layout">
+  <div class="join-intro">
+    <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
+    <h1 data-heading-outline="ATLETAS" data-heading-outline-en="ATHLETES" data-en="Join the fighter roster">Registro de peleadores</h1>
+    <p data-en="Register once for our fighter roster. Choose your belt and whether you want to compete in a Grand Prix qualifier, train at the Börg Lab, or both.">Inscríbete una sola vez en el roster de peleadores. Elige tu cinturón y si quieres competir en una clasificatoria del Grand Prix, entrenar en el Börg Lab o ambos.</p>
+    <p class="join-progress" data-en="1. Choose your belt · 2. Create your account · 3. Join the roster · 4. Open your fighter portal">1. Elige tu cinturón · 2. Crea tu cuenta · 3. Inscríbete al roster · 4. Abre tu portal</p>
+    <a class="text-link" href="realm-nexus.html" data-en="How Grand Prix qualification works">Cómo se clasifica al Grand Prix</a>
+  </div>
+  <div class="join-form-panel">
+    <div class="interest-form" id="athlete-interest">
+      <div class="belt-choice">
+        <label for="belt"><span data-en="Current belt">Cinturón actual</span>
+          <select id="belt" form="application" name="belt" required>
+            <option value="" data-en="Select your belt">Selecciona tu cinturón</option>
+            <option value="white" data-realm="White Carbon Combat" data-en="White belt">Cinturón blanco</option>
+            <option value="blue" data-realm="Zaphire Trials" data-en="Blue belt">Cinturón azul</option>
+            <option value="purple" data-realm="Violet Combat Royale" data-en="Purple belt">Cinturón morado</option>
+            <option value="brown" data-realm="Oxide Overdrive" data-en="Brown belt">Cinturón café</option>
+            <option value="black-0" data-en="Black belt · no degree">Cinturón negro · sin grado</option>
+            <option value="black-1" data-realm="Praetoreans Interface" data-en="Black belt · 1st degree">Cinturón negro · 1.er grado</option>
+            <option value="black-2" data-realm="Nexus Noir" data-en="Black belt · 2nd degree">Cinturón negro · 2.º grado</option>
+            <option value="black-3" data-realm="Eclipse Syndicate" data-en="Black belt · 3rd degree">Cinturón negro · 3.er grado</option>
+            <option value="black-4-plus" data-en="Black belt · 4th degree or higher">Cinturón negro · 4.º grado o superior</option>
+            <option value="other" data-en="Other belt or rank">Otro cinturón o graduación</option>
+            <option value="unranked" data-en="I train without a belt">Entreno sin cinturón</option>
+          </select>
+        </label>
+        <div class="belt-match" aria-live="polite" aria-atomic="true">
+          <span id="belt-assigned" hidden><span data-en="Suggested realm">Reino sugerido</span> · <strong id="belt-realm"></strong></span>
+          <span id="belt-review" hidden data-en="The team will help you find the right division.">El equipo te ayudará a encontrar tu división.</span>
+        </div>
+      </div>
+      <label for="interest"><span data-en="I’m interested in">Me interesa</span><select id="interest" form="application" name="interest" required>
+        <option value="" data-en="Choose an option">Selecciona una opción</option>
+        <option value="gp" data-en="Competing for a Grand Prix spot">Competir por un cupo en el Grand Prix</option>
+        <option value="lab" data-en="Training at the Börg Lab">Entrenar en el Börg Lab</option>
+        <option value="both" data-en="Both">Ambos</option>
+      </select></label>
+    </div>
+    <form class="interest-form" id="account">
+      <h2 data-en="Your athlete account">Tu cuenta de atleta</h2>
+      <div class="auth-mode-tabs" role="group" aria-label="Acceso de atletas" data-en-label="Athlete account access">
+        <button id="auth-create" type="button" aria-pressed="true" data-en="Create account">Crear cuenta</button>
+        <button id="auth-signin" type="button" aria-pressed="false" data-en="I have an account">Ya tengo cuenta</button>
+      </div>
+      <p class="auth-explainer" id="auth-explainer" aria-live="polite"></p>
+      <p class="auth-explainer" data-en="Notification emails follow your selected language (English or Spanish). You can change it later in your fighter portal.">Los correos de notificación se enviarán en el idioma que elijas (español o inglés). Puedes cambiarlo después desde tu portal de peleador.</p>
+      <label for="email"><span data-en="Email address">Correo electrónico</span> <span class="required-indicator" aria-hidden="true">*</span><input id="email" type="email" autocomplete="email" required></label>
+      <label for="password"><span data-en="Password">Contraseña</span> <span class="required-indicator" aria-hidden="true">*</span><input id="password" type="password" autocomplete="new-password" minlength="8" required></label>
+      <button class="btn btn-acid" type="submit" id="primary-auth" data-en="Create account">Crear cuenta</button>
+      <p class="auth-explainer" data-en="Already registered? Select I have an account. If you have completed the roster registration, you will return directly to your fighter portal without repeating the form.">¿Ya te registraste? Elige «Ya tengo cuenta». Si completaste la inscripción al roster, entrarás directamente a tu portal sin repetir el formulario.</p>
+      <button class="text-link" type="button" id="recover" hidden data-en="Forgot your password?">¿Olvidaste tu contraseña?</button>
+    </form>
+    <form class="interest-form" id="reset-password" hidden>
+      <label><span data-en="New password">Nueva contraseña</span><input type="password" autocomplete="new-password" required minlength="8"></label>
+      <button class="btn btn-acid" data-en="Save password">Guardar contraseña</button>
+    </form>
+    <div class="interest-form" id="member" hidden>
+      <strong id="identity"></strong><button type="button" class="text-link" id="logout" data-en="Sign out">Cerrar sesión</button>
+      <h2 data-en="My roster">Mi registro al roster</h2>
+      <a class="btn btn-acid" href="fighter-dashboard.html" data-en="Open my fighter realm">Abrir mi reino de peleador</a>
+      <div id="receipts"></div>
+      <button class="text-link" type="button" id="refresh" data-en="Refresh status">Actualizar estado</button>
+    </div>
+    <p class="account-message" id="feedback" role="status" aria-live="polite"></p>
+    <form class="interest-form" id="application" hidden>
+      <h2 data-en="Your roster details">Tus datos para el roster</h2>
+      <p class="application-note" data-en="Enter your fighter details once. After registering you will go directly to your personal portal. Your contact email comes from your verified account.">Ingresa tus datos de peleador una sola vez. Al terminar, entrarás directamente a tu portal personal. Tu correo se obtiene de la cuenta verificada.</p>
+      <fieldset class="athlete-fields">
+        <legend data-en="Identity">Identidad</legend>
+        <div class="field-grid">
+          <label for="first_name"><span data-en="First name">Nombre</span> <span class="required-indicator" aria-hidden="true">*</span><input id="first_name" name="first_name" autocomplete="given-name" maxlength="80" required></label>
+          <label for="last_name"><span data-en="Last name">Apellido</span> <span class="required-indicator" aria-hidden="true">*</span><input id="last_name" name="last_name" autocomplete="family-name" maxlength="80" required></label>
+        </div>
+        <div class="field-grid">
+          <label for="alias"><span data-en="Fighter name / alias">Nombre de peleador o alias</span> <span class="required-indicator" aria-hidden="true">*</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
+          <label for="username"><span data-en="Username (optional)">Usuario (opcional)</span><input id="username" name="username" maxlength="40" minlength="3" pattern="[A-Za-z0-9_.-]{3,40}" autocomplete="username" title="3–40: letras, números, punto, guion o guion bajo"></label>
+        </div>
+        <label for="date_of_birth"><span data-en="Date of birth (optional)">Fecha de nacimiento (opcional)</span><input id="date_of_birth" name="date_of_birth" type="date" min="1900-01-01"></label>
+        <p data-en="Your age is calculated from your date of birth; you do not need to enter it twice.">Calculamos tu edad a partir de tu fecha de nacimiento; no necesitas ingresarla dos veces.</p>
+      </fieldset>
+      <fieldset class="athlete-fields">
+        <legend data-en="Training and division">Entrenamiento y división</legend>
+        <label for="academy"><span data-en="Academy / gym (optional)">Academia o gimnasio (opcional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
+        <div class="field-grid">
+          <label for="discipline"><span data-en="Discipline (optional)">Disciplina (opcional)</span><input id="discipline" name="discipline" type="text" maxlength="100"></label>
+          <label for="belt_stripes"><span data-en="Belt stripes (optional)">Franjas del cinturón (opcional)</span><select id="belt_stripes" name="belt_stripes"><option value="" data-en="Not specified">Sin especificar</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+        </div>
+        <div class="field-grid">
+          <label for="weight"><span data-en="Weight (optional)">Peso (opcional)</span><span class="measure-row"><input id="weight" name="weight" type="number" step="0.1" min="0.1" max="1499" inputmode="decimal"><select id="weight_unit" name="weight_unit" aria-label="Unidad de peso" data-en-label="Weight unit"><option value="kg">kg</option><option value="lb">lb</option></select></span></label>
+          <label for="height"><span data-en="Height (optional)">Estatura (opcional)</span><span class="measure-row"><input id="height" name="height" type="number" step="0.1" min="0.1" max="349" inputmode="decimal"><select id="height_unit" name="height_unit" aria-label="Unidad de estatura" data-en-label="Height unit"><option value="cm">cm</option><option value="in">in</option></select></span></label>
+        </div>
+      </fieldset>
+      <fieldset class="athlete-fields">
+        <legend data-en="Location">Ubicación</legend>
+        <div class="field-grid">
+          <label for="country"><span data-en="Country">País</span> <span class="required-indicator" aria-hidden="true">*</span><input id="country" name="country" required maxlength="80" autocomplete="country-name" value="Ecuador"></label>
+          <label for="state_province"><span data-en="Province / state (optional)">Provincia o estado (opcional)</span><input id="state_province" name="state_province" maxlength="80" autocomplete="address-level1"></label>
+        </div>
+        <label for="city"><span data-en="City">Ciudad</span> <span class="required-indicator" aria-hidden="true">*</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
+      </fieldset>
+      <fieldset class="athlete-fields" id="previous-record-fields">
+        <legend data-en="Previous fight record (optional)">Historial de combates anterior (opcional)</legend>
+        <p data-en="Self-reported experience from before joining RA’AZ BORG. Leave all four blanks if you have no previous record to report. Your results will be labeled as self-reported until verified.">Experiencia declarada antes de ingresar a RA’AZ BORG. Deja los cuatro campos vacíos si no tienes historial que reportar. Se identificará como información declarada hasta ser verificada.</p>
+        <div class="field-grid">
+          <label for="prior_competed"><span data-en="Fights competed">Combates disputados</span><input id="prior_competed" name="prior_competed" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_won"><span data-en="Won">Ganados</span><input id="prior_won" name="prior_won" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_lost"><span data-en="Lost">Perdidos</span><input id="prior_lost" name="prior_lost" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_drawn"><span data-en="Draws">Empates</span><input id="prior_drawn" name="prior_drawn" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+        </div>
+        <p id="prior-validation" class="record-validation" role="alert" hidden></p>
+      </fieldset>
+      <fieldset class="athlete-fields" id="roster-photo-fields">
+        <legend data-en="Fighter photo (optional)">Fotografía del peleador (opcional)</legend>
+        <label for="roster-photo"><span data-en="Choose a portrait, JPG / PNG / WebP, maximum 2 MB">Selecciona tu retrato, JPG / PNG / WebP, máximo 2 MB</span><input id="roster-photo" name="roster_photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <p data-en="Your photo will be stored privately. Uploading does not grant permission for us to publish it on the public roster. You can also add or change it later in your fighter portal.">Tu foto se guardará de forma privada. Subirla no autoriza su publicación en el roster público. También podrás agregarla o cambiarla desde tu portal de peleador.</p>
+      </fieldset>
+      <label for="footage"><span data-en="Profile or footage link (optional)">Enlace a tu perfil o video (opcional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
+      <label class="contact-ok"><input type="checkbox" name="contact" required><span data-en="I agree that RA’AZ BORG may contact me about my roster registration and potential participation.">Acepto que RA’AZ BORG me contacte sobre mi inscripción al roster y posible participación.</span></label>
+      <p class="application-note" data-en="Registering joins the roster review process; it does not guarantee a Grand Prix place or a confirmed fight. You will get a personal portal to follow your status.">Inscribirte te incorpora al proceso de revisión del roster; no garantiza un cupo en el Grand Prix ni un combate confirmado. Tendrás un portal personal para consultar tu estado.</p>
+      <button id="submit-application" class="btn btn-acid" data-en="Complete roster registration">Completar inscripción al roster</button>
+    </form>
+    <p class="manual-contact"><span class="lang-es">También puedes escribir directamente a</span><span class="lang-en">You can also email us directly at</span> <a href="mailto:raazborgstudios@gmail.com">raazborgstudios@gmail.com</a>.</p>
+  </div>
+  <section class="join-followup">
+    <h2 data-heading-outline="PRÓXIMOS PASOS" data-heading-outline-en="NEXT STEPS"><span class="lang-es">Después de registrarte al roster</span><span class="lang-en">After joining the roster</span></h2>
+    <p><span class="lang-es">El equipo revisará tu inscripción al roster y te escribirá al correo de tu cuenta. Si quieres competir, podemos invitarte primero a una ronda clasificatoria. Cuando se confirme tu combate, te enviaremos el nombre de tu rival, la fecha y el lugar.</span><span class="lang-en">Our team will review your roster registration and email you directly. If you want to compete, we may invite you to a qualifying round first. Once your bout is confirmed, we’ll send you your opponent’s name, the date and the venue.</span></p>
+    <p><span class="lang-es">Tu registro es privado. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your registration is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
+  </section>
+</div></main>
+
+<footer>
+  <div class="wrap foot">
+    <img src="assets/Isotipo.png" alt="Raaz Borg">
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
+    <ul class="foot-links">
+      <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/main.js?v=langpref-20261119"></script>
+<script src="js/vendor/supabase-2.49.8.js"></script>
+<script src="js/roster-avatar.js?v=roster-v1"></script>
+<script src="js/athlete-language.js?v=langpref-v1"></script>
+<script src="js/interest.js?v=email-paused-20261119"></script>
+</body>
+</html>
