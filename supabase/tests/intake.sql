@@ -10,6 +10,10 @@ begin
   insert into auth.users(id,email,email_confirmed_at) values
     (athlete, athlete::text || '@example.invalid',now()),
     (other_user, other_user::text || '@example.invalid',now());
+  assert (select count(*)=2 from public.fighter_registrations
+    where user_id in (athlete, other_user) and registration_status='account_created');
+  assert (select count(*)=2 from public.fighter_registrations
+    where first_name is null and payment_option is null);
   insert into rb_intake.reviewers values(other_user);
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   set local role authenticated;
@@ -19,6 +23,12 @@ begin
   perform public.rb_submit_application_v2(gen_random_uuid(), 'Test', 'Quito', 'blue', 'gp', true,
     'Academy', null, null, '{"first_name":"Ana","last_name":"Test","country":"Ecuador","weight":58,"weight_unit":"kg","height":162,"height_unit":"cm","belt_stripes":2}'::jsonb);
   assert (select count(*)=1 from public.rb_my_profile_v2() where first_name='Ana' and weight=58 and belt_stripes=2);
+  assert (select count(*)=1 from public.fighter_registrations
+    where user_id=athlete and first_name='Ana' and last_name='Test' and
+      realm='Zaphire Trials' and weight=58 and height=162 and
+      registration_status='application_submitted' and payment_option is null);
+  assert not has_table_privilege('authenticated','public.fighter_registrations','TRUNCATE');
+  assert not has_table_privilege('anon','public.fighter_registrations','INSERT');
 
   begin
     perform public.rb_review_queue();
