@@ -1036,6 +1036,13 @@ render();
   const next = pager.querySelector('[data-step="1"]');
   const cards = Array.from(deck.children);
 
+  deck.addEventListener("click", event => {
+    const card = event.target.closest(".realm-preview[open]");
+    if (!card || event.target.closest("summary, a")) return;
+    card.open = false;
+    card.querySelector("summary").focus({ preventScroll: true });
+  });
+
   function updatePager() {
     previous.disabled = deck.scrollLeft <= 1;
     next.disabled = deck.scrollLeft + deck.clientWidth >= deck.scrollWidth - 1;

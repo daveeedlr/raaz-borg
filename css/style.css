@@ -610,6 +610,7 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   box-shadow:0 8px 18px #0006,inset 0 0 0 1px #141416;
   transition:transform .2s ease,border-color .2s ease;
 }
+.realm-preview[open] { cursor:pointer }
 .realm-preview[open], .realm-preview:focus-within { border-color:var(--realm-accent) }
 .realm-toggle { display:block; list-style:none; cursor:pointer; border-radius:4px }
 .realm-toggle::-webkit-details-marker { display:none }
@@ -674,8 +675,63 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   line-height:1.35;
 }
 .realm-links a:hover, .realm-links a:focus-visible { color:var(--realm-accent) }
-.atlas-related { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; margin-top:1.5rem }
-.atlas-related a, .manual-contact a { color:var(--cyan); text-underline-offset:3px }
+.atlas-related, .atlas-route { scroll-margin-block:144px 32px }
+.atlas-related {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(12px,2vw,24px);
+  margin-top:clamp(24px,3vw,40px);
+}
+.atlas-route {
+  --route-base:#0e1921;
+  --route-accent:#69cedc;
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  align-items:center;
+  min-height:clamp(110px,11vw,144px);
+  padding:20px clamp(20px,2.2vw,32px);
+  overflow:hidden;
+  border:1px solid #49494f;
+  border-inline-start:3px solid var(--route-accent);
+  background:var(--route-base);
+  color:var(--white);
+  text-decoration:none;
+}
+.route-qualification { --route-base:#201812; --route-accent:#dfaa74 }
+.atlas-route img {
+  position:absolute;
+  z-index:-2;
+  inset-block:0;
+  right:0;
+  width:58%;
+  height:100%;
+  object-fit:cover;
+}
+.atlas-route::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  background:linear-gradient(90deg,var(--route-base) 45%,transparent 83%);
+}
+.atlas-route span {
+  max-width:58%;
+  font:400 clamp(1.35rem,2.2vw,1.95rem)/1.12 var(--display);
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+.atlas-route:hover, .atlas-route:focus-visible { border-color:var(--route-accent) }
+.atlas-route:focus-visible { outline:2px solid var(--route-accent); outline-offset:4px }
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  .atlas-route img { transition:transform .25s ease-out }
+  .atlas-route:hover img { transform:scale(1.04) }
+}
+@media (max-width:700px) {
+  .atlas-related { grid-template-columns:1fr }
+  .atlas-route { min-height:100px }
+}
+.manual-contact a { color:var(--cyan); text-underline-offset:3px }
 .deck-pager { display:none }
 @media(prefers-reduced-motion:no-preference) {
   .realm-print img { transition:transform .3s ease-in-out }

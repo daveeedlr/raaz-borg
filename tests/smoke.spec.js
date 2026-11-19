@@ -138,10 +138,34 @@ test('realm cards retain the whole poster and open one accessible reverse at a t
   await page.keyboard.press('Enter');
   await expect(first.getByRole('link', { name: 'View classification' })).toBeVisible();
   expect((await first.boundingBox()).height).toBeCloseTo(front.height, 0);
+  await first.locator('.realm-reverse h3').click();
+  await expect(first).not.toHaveAttribute('open', '');
+  await expect(first.locator('summary')).toBeFocused();
+  await first.locator('summary').press('Enter');
   await second.locator('summary').press('Space');
   await expect(first).not.toHaveAttribute('open', '');
   await expect(second).toHaveAttribute('open', '');
   await expect(second.getByRole('link', { name: 'Grand Prix · Blue Oblivion BJJ' })).toBeVisible();
   await second.locator('summary').press('Enter');
   await expect(second).not.toHaveAttribute('open', '');
+});
+
+
+test.describe('mobile realm navigation', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: 'reduce' });
+
+  test('tapping the back closes the card and destination links work in both languages', async ({ page }) => {
+    await page.goto('/?lang=es#reinos');
+    const card = page.locator('.realm-preview').first();
+    await card.locator('summary').tap();
+    await card.locator('.realm-reverse p').tap();
+    await expect(card).not.toHaveAttribute('open', '');
+    await expect(page.locator('.realm-links a[href$=".gif"]')).toHaveCount(0);
+    const routes = page.locator('.atlas-related');
+    await expect(routes.getByRole('link', { name: 'Conocer a los peleadores' })).toHaveAttribute('href', 'fighters.html');
+    await expect(routes.getByRole('link', { name: 'Cómo funciona la clasificación' })).toHaveAttribute('href', 'realm-nexus.html');
+    await page.locator('#langToggle').tap();
+    await routes.getByRole('link', { name: 'How qualification works' }).tap();
+    await expect(page).toHaveURL(/realm-nexus\.html$/);
+  });
 });
