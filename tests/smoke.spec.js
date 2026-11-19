@@ -668,7 +668,7 @@ test('private fighter photo uploads to the owner folder and can be removed from 
       data={Key:'roster-avatars/'+uploaded};
     }
     else if(path.startsWith('/storage/v1/object/sign/roster-avatars/')) {
-      if(method==='POST')data={signedURL:'https://iltuwbawjiwvuqqrkyiz.supabase.co/storage/v1/object/sign/roster-avatars/'+stored+'?token=fake'};
+      if(method==='POST')data={signedURL:'/object/sign/roster-avatars/'+stored+'?token=fake'};
       else {await route.fulfill({body:png,contentType:'image/png'});return;}
     }
     else if(path==='/storage/v1/object/roster-avatars' && method==='DELETE')data={};
