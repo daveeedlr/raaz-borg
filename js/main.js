@@ -605,33 +605,33 @@ const processStages = [
   },
   {
     en: ["ROSTER & REGISTRATION",
-      "The fighter enters the roster pool and completes the registration payment to participate."],
+      "If you’re invited to the qualifiers, the team sends the registration and payment details for that event."],
     es: ["REGISTRO Y PAGO",
-      "El peleador ingresa al grupo de participantes y realiza el pago de inscripción."]
+      "Si te convocan a las clasificatorias, el equipo te envía los datos de inscripción y pago para ese evento."]
   },
   {
     en: ["PAYMENT CONFIRMED",
-      "Once payment is received, the fighter receives confirmation by email or text message."],
+      "Once payment is received, the team confirms your entry in the qualifiers by email or text."],
     es: ["PAGO CONFIRMADO",
-      "Una vez recibido el pago, el peleador recibe una confirmación por correo electrónico o mensaje de texto."]
+      "Una vez recibido el pago, el equipo confirma tu inscripción en las clasificatorias por correo o mensaje de texto."]
   },
   {
     en: ["MATCH ASSIGNMENT",
-      "The RAAZ BORG team selects a matchup based on skill level and notifies the designated fighters by email, including the confirmed date, location and instructions."],
+      "The team emails you the qualifying format for your realm, your matchup or group, and when and where to compete."],
     es: ["ASIGNACIÓN DE COMBATE",
-      "El equipo de RAAZ BORG selecciona el enfrentamiento según el nivel de habilidad y notifica a los peleadores por correo electrónico, incluyendo fecha, lugar e instrucciones."]
+      "El equipo te envía por correo el formato de las clasificatorias de tu reino, tu rival o grupo, la fecha y el lugar."]
   },
   {
-    en: ["THE FIGHT",
-      "The fighter enters the arena. Victory means advancement to the next qualifying round. Defeat means an opportunity to register again."],
-    es: ["EL COMBATE",
-      "El peleador entra a la arena. Una victoria significa avanzar a la siguiente ronda clasificatoria. Una derrota ofrece la oportunidad de inscribirse nuevamente."]
+    en: ["QUALIFYING BOUTS",
+      "When qualifying uses a round robin, you face each of the other fighters in your group. The group results determine who earns the available GP spots."],
+    es: ["COMBATES CLASIFICATORIOS",
+      "Si la clasificación se disputa en un todos contra todos, te enfrentas a cada rival de tu grupo. Los resultados del grupo determinan quién consigue los cupos disponibles para el GP."]
   },
   {
-    en: ["GRAND PRIX QUALIFICATION",
-      "Winners continue competing until the available Grand Prix spots are filled. The GP champion earns a cash prize and can advance to the next league."],
-    es: ["CLASIFICACIÓN AL GRAND PRIX",
-      "Los ganadores continúan compitiendo hasta completar los cupos disponibles del Grand Prix. El campeón obtiene un premio económico y puede avanzar a la siguiente liga."]
+    en: ["THE GRAND PRIX",
+      "Once the field is set, eight warriors compete for the realm’s title. The Grand Prix champion wins a cash prize and can advance to the next league."],
+    es: ["EL GRAND PRIX",
+      "Con los ocho cupos confirmados, los guerreros se disputan el título de su reino. El campeón del Grand Prix gana un premio económico y puede ascender a la siguiente liga."]
   }
 ];
 

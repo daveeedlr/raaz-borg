@@ -57,6 +57,16 @@ test('Realm Nexus process navigation works without page-script exceptions', asyn
   await expect(page.locator('#processTitle')).toContainText('ROSTER & REGISTRATION');
   await page.locator('#processPrev').click();
   await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 01 / 06');
+
+  const description = page.locator('#processDescription');
+  await page.getByRole('button', { name: /QUALIFYING BOUTS/i }).click();
+  await expect(description).toContainText('When qualifying uses a round robin');
+  await page.locator('#langToggle').click();
+  await expect(description).toContainText('Si la clasificación se disputa en un todos contra todos');
+  await page.locator('#processNext').click();
+  await expect(description).toContainText('ocho cupos confirmados');
+  await page.locator('#langToggle').click();
+  await expect(description).toContainText('eight warriors compete');
   await assertNoRuntimeErrors(errors);
 });
 
@@ -125,10 +135,10 @@ test('athlete inquiry validates, prepares a private email draft and supports bot
   await page.getByRole('button', { name: 'Preparar correo' }).click();
   await expect(page.locator('#send-inquiry')).toHaveAttribute('href', /^mailto:raazborgstudios@gmail\.com\?/);
   await expect(page.locator('#email-body')).toHaveValue(/Cinturón: Cinturón azul\nReino sugerido: Zaphire Trials/);
-  await expect(page.locator('#email-body')).toHaveValue(/Interés: Competir en el Grand Prix/);
+  await expect(page.locator('#email-body')).toHaveValue(/Interés: Competir por un cupo en el Grand Prix/);
   await page.locator('#langToggle').click();
   await expect(page.locator('#email-body')).toHaveValue(/Belt: Blue belt\nSuggested realm: Zaphire Trials/);
-  await expect(page.locator('#email-body')).toHaveValue(/Interest: Competing in the Grand Prix/);
+  await expect(page.locator('#email-body')).toHaveValue(/Interest: Competing for a Grand Prix spot/);
   await page.getByLabel('Current belt').selectOption('unranked');
   await expect(page.locator('#belt-review')).toBeVisible();
   await expect(page.locator('#email-preview')).toBeHidden();
