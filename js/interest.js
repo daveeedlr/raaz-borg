@@ -52,6 +52,31 @@
     if (submitted) url.searchParams.set('submitted', '1');
     return url.href;
   }
+  function showRosterGate() {
+    document.body.classList.add('roster-gate-pending');
+    $('roster-gate').setAttribute('aria-busy', 'true');
+    $('roster-gate-retry').hidden = true;
+    $('roster-gate-message').textContent = tr('Comprobando tu sesión y tu inscripción al roster…',
+      'Checking your session and roster registration…');
+  }
+  function revealRosterPage() {
+    document.body.classList.remove('roster-gate-pending');
+    $('roster-gate').setAttribute('aria-busy', 'false');
+  }
+  function rosterCheckFailed() {
+    $('roster-gate').setAttribute('aria-busy', 'false');
+    $('roster-gate-retry').hidden = false;
+    $('roster-gate-message').textContent = tr(
+      'No pudimos verificar tu registro. Tu información no se ha perdido. Vuelve a intentarlo.',
+      'We could not verify your registration. Your information is safe. Please try again.'
+    );
+  }
+  $('roster-gate-retry').onclick = () => {
+    if (!user) { revealRosterPage(); return; }
+    checkingRoster = true;
+    showRosterGate();
+    load(true);
+  };
   function render() {
     $('account').hidden = !!user;
     $('member').hidden = !user || recovering || checkingRoster;
@@ -100,8 +125,9 @@
     if (rows.error) {
       checkingRoster = false;
       historyRows = null;
-      say('No pudimos comprobar tu registro. Actualiza el estado antes de continuar.','Could not verify your roster registration. Refresh your status before continuing.','error');
-      render();
+      // Keep the one-time registration screen hidden when lookup fails.
+      // Never tell an existing roster member to register again.
+      rosterCheckFailed();
       return;
     }
     historyRows = Array.isArray(rows.data) ? rows.data : [];
@@ -126,6 +152,7 @@
     checkingRoster = false;
     render();
     drawHistory();
+    revealRosterPage();
   }
   client.auth.onAuthStateChange((event, session) => {
     const next = session?.user || null;
@@ -145,6 +172,12 @@
       $('password').value = '';
     }
     user = next;
+    if (changed) {
+      if (next && !recovering) showRosterGate();
+      else revealRosterPage();
+    } else if (!next) {
+      revealRosterPage();
+    }
     render();
     // SIGNED_IN may precede resolution of signInWithPassword().
     // Queue once per actual Auth session; the database rejects duplicate session alerts.

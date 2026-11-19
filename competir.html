@@ -55,10 +55,42 @@
 #roster-photo::file-selector-button {background:#c8f542;color:#171717;font:700 12px/1.4 var(--mono);border:none;padding:11px 15px;margin-right:13px;cursor:pointer}
 #previous-record-fields input {min-height:44px}
 
+/* The roster must not appear until the current Auth session and registration are checked. */
+body.roster-gate-pending .join-layout { display:none !important; }
+body:not(.roster-gate-pending) #roster-gate { display:none !important; }
+#roster-gate {
+  min-height:max(380px,70vh);
+  padding:clamp(140px,17vw,190px) 24px 90px;
+  background:radial-gradient(circle at 50% 30%,rgba(200,245,66,.08),transparent 60%),var(--void);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  text-align:center;
+}
+.roster-gate-spinner {
+  width:38px;
+  height:38px;
+  border:3px solid rgba(255,255,255,.28);
+  border-top-color:var(--acid);
+  border-radius:50%;
+  animation:roster-gate-spin .9s linear infinite;
+}
+@keyframes roster-gate-spin { to {transform:rotate(360deg)} }
+#roster-gate h1 { font:clamp(29px,5vw,52px)/1.2 Anton,Impact,sans-serif; color:var(--white); margin:0; }
+#roster-gate p { color:#e7e5e9; font-size:clamp(15px,2vw,18px); line-height:1.6; max-width:460px; margin:0; }
+#roster-gate-retry {
+  min-height:48px; border:1px solid var(--acid); color:var(--void);
+  background:var(--acid); font:700 13px var(--mono); padding:11px 18px; cursor:pointer;
+}
+#roster-gate-retry[hidden] { display:none !important; }
+@media (prefers-reduced-motion:reduce) { .roster-gate-spinner {animation:none;} }
+
 
 </style>
 </head>
-<body data-lang="es">
+<body data-lang="es" class="roster-gate-pending">
 <a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
 
 <nav>
@@ -79,7 +111,14 @@
   </div>
 </nav>
 
-<main id="contenido" tabindex="-1" class="join-page"><div class="wrap join-layout">
+<main id="contenido" tabindex="-1" class="join-page">
+  <section id="roster-gate" aria-live="polite" aria-busy="true">
+    <span class="roster-gate-spinner" aria-hidden="true"></span>
+    <h1 data-en="Checking your fighter account">Verificando tu cuenta de peleador</h1>
+    <p id="roster-gate-message" data-en="Checking your session and roster registration…">Comprobando tu sesión y tu inscripción al roster…</p>
+    <button id="roster-gate-retry" type="button" hidden data-en="Try again">Volver a intentar</button>
+  </section>
+  <div class="wrap join-layout">
   <div class="join-intro">
     <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
     <h1 data-heading-outline="ATLETAS" data-heading-outline-en="ATHLETES" data-en="Join the fighter roster">Registro de peleadores</h1>
@@ -224,6 +263,6 @@
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
 <script src="js/roster-avatar.js?v=roster-v1"></script>
-<script src="js/interest.js?v=roster-v1"></script>
+<script src="js/interest.js?v=roster-gate-v2"></script>
 </body>
 </html>

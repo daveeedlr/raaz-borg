@@ -592,6 +592,60 @@ test('roster members clicking Compete go to their portal without repeating fight
   await expect(page.locator('#priorCompeted')).toHaveText('—');
 });
 
+test('roster screen never flashes while checking an authenticated returning fighter', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000081';
+  const user={id,email:'existing@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[encode({alg:'HS256'}),encode({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'sig'].join('.');
+  let releaseLookup;
+  const lookupGate=new Promise(resolve=>{releaseLookup=resolve;});
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/user'))return route.fulfill({json:user});
+    if(path.endsWith('/rb_my_applications')) {
+      await lookupGate;
+      return route.fulfill({json:[{id:'00000000-0000-4000-8000-000000000082',
+        status:'submitted',interest:'gp',belt:'blue',submitted_at:new Date().toISOString()}]});
+    }
+    if(path.endsWith('/rb_my_profile_v2'))return route.fulfill({json:[]});
+    if(path.endsWith('/rb_queue_sign_in_alert'))return route.fulfill({json:true});
+    if(path.endsWith('/rb_my_fighter_portal'))return route.fulfill({json:{
+      email:user.email,username:'existing',name:'Existing Fighter',belt:'blue',
+      application:{id:'00000000-0000-4000-8000-000000000082',status:'submitted',
+        interest:'gp',realm:'Zaphire Trials'},
+      stats:{wins:0,losses:0,draws:0,total:0},messages:[],recent_fights:[]
+    }});
+    if(path.endsWith('/athlete-notify'))return route.fulfill({json:{configured:false,delivered:0}});
+    throw Error('Unexpected '+path);
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user
+    }));
+  },{user,token});
+  try {
+    await page.goto('/competir.html?lang=en');
+    await expect(page.locator('#roster-gate')).toBeVisible();
+    await expect(page.locator('#roster-gate-message')).toContainText('Checking');
+    await expect(page.getByRole('heading',{name:'Join the fighter roster'})).toBeHidden();
+    await expect(page.locator('#account')).toBeHidden();
+    await expect(page.locator('#application')).toBeHidden();
+    await page.waitForTimeout(850);
+    await expect(page.getByRole('heading',{name:'Join the fighter roster'})).toBeHidden();
+    releaseLookup();
+    await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=en$/);
+    await expect(page.locator('#portal-content')).toBeVisible();
+  } finally { releaseLookup(); }
+});
+
+test('visitors without a session see the roster form after authentication check', async ({page})=>{
+  await page.goto('/competir.html?lang=en');
+  await expect(page.locator('#roster-gate')).toBeHidden();
+  await expect(page.getByRole('heading',{name:'Join the fighter roster'})).toBeVisible();
+  await expect(page.locator('#account')).toBeVisible();
+});
+
 test('private portal updates self-reported totals without changing fight-by-fight donut', async ({page}) => {
   const id='00000000-0000-4000-8000-000000000093';
   const user={id,email:'prior@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
