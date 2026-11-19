@@ -62,7 +62,7 @@
       const title = document.createElement('strong');
       title.textContent = [option?.textContent, row.suggested_realm].filter(Boolean).join(' · ');
       const details = document.createElement('p');
-      details.textContent = new Date(row.submitted_at).toLocaleDateString(document.documentElement.lang) + ' · ' + tr(...statuses[row.status]);
+      details.textContent = new Date(row.submitted_at).toLocaleDateString(document.documentElement.lang) + ' · ' + tr(...(statuses[row.status] || ['Estado pendiente de confirmar','Status pending confirmation']));
       const receipt = document.createElement('small');
       receipt.textContent = tr('Comprobante','Receipt') + ' · ' + row.id;
       entry.append(title, details, receipt);
@@ -163,6 +163,10 @@
   form.onsubmit = event => {
     event.preventDefault();
     if (!user || recovering) return;
+    if (!belt.reportValidity() || !interest.reportValidity()) {
+      say('Selecciona tu cinturón y el tipo de postulación antes de continuar.','Select your belt and application type before continuing.');
+      return;
+    }
     action($('submit-application'), async () => {
       const owner = user.id;
       const data = new FormData(form);
