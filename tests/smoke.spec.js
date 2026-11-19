@@ -640,3 +640,59 @@ test('private portal updates self-reported record without changing verified figh
   await expect(page.locator('#portal-prior-feedback')).toContainText('Results cannot exceed');
   await expect(page.locator('#priorCompeted')).toHaveText('10');
 });
+
+
+test('private fighter photo uploads to the owner folder and can be removed from the portal', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000095';
+  const user={id,email:'photo@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
+  let stored=null,uploaded=null,saveCount=0;
+  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4//8/AwAI/AL+ZykvAAAAAElFTkSuQmCC','base64');
+  await page.route('https://*.supabase.co/**',async route=>{
+    const u=new URL(route.request().url()),path=u.pathname,method=route.request().method();
+    let data;
+    if(path.endsWith('/user')) data=user;
+    else if(path.endsWith('/rb_my_fighter_portal')) data={
+      email:user.email,username:'photo_athlete',name:'Photo Athlete',belt:'blue',
+      avatar_path:stored,prior_record:null,
+      application:{id:'00000000-0000-4000-8000-000000000096',status:'submitted',interest:'gp'},
+      messages:[],stats:{total:0,wins:0,losses:0,draws:0},recent_fights:[]
+    };
+    else if(path.endsWith('/rb_set_roster_avatar')) {
+      stored=route.request().postDataJSON().p_path;saveCount++;data=stored;
+    }
+    else if(path.startsWith('/storage/v1/object/roster-avatars/') && method==='POST') {
+      uploaded=decodeURIComponent(path.split('/').slice(5).join('/'));
+      expect(uploaded).toMatch(new RegExp('^'+id.replace(/-/g,'\\-')+'/[a-f0-9-]+\\.png$'));
+      data={Key:'roster-avatars/'+uploaded};
+    }
+    else if(path.startsWith('/storage/v1/object/sign/roster-avatars/')) {
+      if(method==='POST')data={signedURL:'https://iltuwbawjiwvuqqrkyiz.supabase.co/storage/v1/object/sign/roster-avatars/'+stored+'?token=fake'};
+      else {await route.fulfill({body:png,contentType:'image/png'});return;}
+    }
+    else if(path==='/storage/v1/object/roster-avatars' && method==='DELETE')data={};
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected route '+method+' '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user}));
+  },{user,token});
+  await page.goto('/fighter-dashboard.html?lang=en');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await page.locator('#portal-photo-input').setInputFiles({
+    name:'fighter.png',mimeType:'image/png',buffer:png
+  });
+  await page.locator('#portal-photo-save').click();
+  await expect.poll(()=>saveCount).toBe(1);
+  expect(uploaded).toContain(id+'/');
+  await expect(page.locator('#portal-photo-remove')).toBeVisible();
+  await page.locator('#portal-photo-remove').click();
+  await expect.poll(()=>saveCount).toBe(2);
+  expect(stored).toBeNull();
+  await expect(page.locator('#portal-photo-remove')).toBeHidden();
+  await expect(page.locator('#fighter-avatar')).toBeVisible();
+});
