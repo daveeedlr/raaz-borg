@@ -68,7 +68,7 @@ Deno.serve(async(req:Request)=>{
         const sent=await fetch("https://api.resend.com/emails",{
           method:"POST",
           headers:{"Authorization":"Bearer "+resendKey,"Content-Type":"application/json"},
-          body:JSON.stringify({from:sender,to:[msg.recipient],subject,html})
+          body:JSON.stringify({from:sender,to:[msg.recipient],reply_to:"raazborgstudios@gmail.com",subject,html})
         });
         if(!sent.ok())throw new Error("Provider status "+sent.status);
         await rpc(supabaseUrl,serviceKey,"rb_finish_athlete_email",{p_id:msg.id,p_sent:true,p_error:null});
