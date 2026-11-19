@@ -882,3 +882,16 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 .lab-player iframe { display:block; width:100%; aspect-ratio:16/9; border:0 }
 .lab-player-actions { display:flex; flex-wrap:wrap; gap:.5rem; padding:.75rem }
 .lab-player-actions button { cursor:pointer }
+
+/* Visual World lightbox */
+#mundo-visual { scroll-margin-top:105px }
+#mundo-visual .m-item { display:block; cursor:zoom-in; background:var(--carbon); text-align:left }
+#mundo-visual .m-item:focus-visible { outline:2px solid var(--control-fill); outline-offset:3px }
+.visual-gallery { position:fixed; inset:0; margin:auto; width:min(94vw,980px); max-height:94dvh; padding:0; border:1px solid var(--control-border); border-radius:12px; background:var(--carbon); color:var(--text) }
+.visual-gallery::backdrop { background:rgba(6,6,10,.87) }
+.visual-gallery-inner { display:grid; gap:.55rem; padding:clamp(.55rem,2vw,1rem) }
+.visual-gallery-close { justify-self:end }
+.visual-gallery-image { width:100%; height:min(65dvh,680px); object-fit:contain; background:#09090d }
+.visual-gallery figcaption { padding:.55rem .25rem 0; text-align:center; font-size:.9rem }
+.visual-gallery-controls { display:flex; justify-content:center; gap:.75rem }
+.visual-gallery button { cursor:pointer }

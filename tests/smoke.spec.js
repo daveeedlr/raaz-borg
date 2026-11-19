@@ -300,3 +300,20 @@ test('Lab videos open inline and preserve timestamps and playlists', async ({ pa
   await page.getByRole('button', { name: 'Close player' }).click();
   await expect(page.locator('#transmisiones .lab-play[href*="list="]')).toBeFocused();
 });
+
+test('Visual World opens the jaguar hoodie and browses images without leaving the page', async ({ page }) => {
+  await page.goto('/labs.html?lang=en#mundo-visual');
+  const hoodie = page.getByRole('button', { name: /jaguar hoodie/i });
+  await hoodie.click();
+  const gallery = page.getByRole('dialog', { name: 'Visual World gallery' });
+  await expect(gallery).toBeVisible();
+  await expect(gallery.locator('img')).toHaveAttribute('src', /instagram-jaguar-hoodie\.webp$/);
+  await gallery.getByRole('button', { name: 'Next', exact: true }).click();
+  await expect(gallery.locator('img')).toHaveAttribute('src', /instagram-white-carbon-poster\.webp$/);
+  await page.keyboard.press('ArrowLeft');
+  await expect(gallery.locator('img')).toHaveAttribute('src', /instagram-jaguar-hoodie\.webp$/);
+  await page.keyboard.press('Escape');
+  await expect(gallery).not.toBeVisible();
+  await expect(hoodie).toBeFocused();
+  await expect(page).toHaveURL(/labs\.html\?lang=en#mundo-visual$/);
+});
