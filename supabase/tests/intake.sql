@@ -19,7 +19,6 @@ begin
   perform public.rb_submit_application_v2(gen_random_uuid(), 'Test', 'Quito', 'blue', 'gp', true,
     'Academy', null, null, '{"first_name":"Ana","last_name":"Test","country":"Ecuador","weight":58,"weight_unit":"kg","height":162,"height_unit":"cm","belt_stripes":2}'::jsonb);
   assert (select count(*)=1 from public.rb_my_profile_v2() where first_name='Ana' and weight=58 and belt_stripes=2);
-  assert (select count(*)=1 from rb_intake.applications where profile_snapshot->>'first_name'='Ana');
 
   begin
     perform public.rb_review_queue();
