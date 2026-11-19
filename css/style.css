@@ -797,7 +797,7 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   letter-spacing:-.02em;
   text-transform:none;
 }
-.cover-line { display:block; color:#e8a5bc }
+.cover-line { display:block; color:var(--magenta); text-shadow:0 0 .32em rgba(245,54,131,.24) }
 .cover-intro, .street-intro > p:last-child { color:var(--text-2); font-size:clamp(1rem,1.3vw,1.15rem); line-height:1.6; max-width:47ch; margin-top:1.15rem }
 .cover-actions, .event-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.75rem 1rem; margin-top:1.5rem }
 .cover-actions .btn, .event-actions .btn { font-size:.875rem; padding:.8rem 1.1rem }
