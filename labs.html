@@ -7,9 +7,10 @@
 <meta name="description" content="Börg Lab, el espacio de entrenamiento y producción audiovisual de RA’AZ BORG en Quito." data-en-content="Börg Lab, the RA’AZ BORG training and media space in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=lab-player-2">
+<link rel="stylesheet" href="css/style.css?v=archive-1">
 </head>
 <body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
 
 <nav>
   <div class="nav-inner">
@@ -29,68 +30,73 @@
   </div>
 </nav>
 
+<main id="contenido" tabindex="-1">
 <header class="page-hero">
   <div class="scanlines"></div>
-  <div class="wrap">
-    <span class="kicker">Börg Lab · Quito</span>
-    <h1 data-heading-outline="BÖRG LAB" data-en="Training and video">Entrenamiento y videos</h1>
-    <p class="lead" data-en="The Börg Lab is where RA’AZ BORG trains and films in Quito. Watch highlights or ask about joining a training session.">En el Börg Lab entrenamos y filmamos en Quito. Mira los encuentros o consulta cómo participar en una sesión.</p>
-    <a class="text-link lab-inquiry" href="competir.html?interest=lab#athlete-interest" data-en="Ask about training">Consultar por entrenamientos</a>
+  <div class="wrap lab-intro">
+    <div>
+      <span class="kicker">Börg Lab · Quito</span>
+      <h1 data-heading-outline="BÖRG LAB" data-en="Training and video">Entrenamiento y videos</h1>
+      <p class="lead" data-en="The Börg Lab is where RA’AZ BORG trains and films in Quito. Watch highlights or ask about joining a training session.">En el Börg Lab entrenamos y filmamos en Quito. Mira los encuentros o consulta cómo participar en una sesión.</p>
+      <a class="text-link lab-inquiry" href="competir.html?interest=lab#athlete-interest" data-en="Ask about training">Consultar por entrenamientos</a>
+    </div>
+    <div class="lab-index" role="navigation" aria-label="Secciones del Lab" data-en-label="Lab sections">
+      <a href="#destacados" data-en="Featured videos">Videos destacados</a>
+      <a href="#encuentros" data-en="Lab encounters">Encuentros del Lab</a>
+      <a href="#transmisiones" data-en="Transmissions">Transmisiones</a>
+      <a href="#mundo-visual" data-en="Visual World">Mundo visual</a>
+    </div>
   </div>
 </header>
 
-<section class="featured-videos" aria-labelledby="featured-videos-title">
+<section id="destacados" class="featured-videos" aria-labelledby="featured-videos-title">
   <div class="wrap">
     <div class="section-heading">
       <h2 data-heading-outline="DESTACADOS" data-heading-outline-en="FEATURED" id="featured-videos-title" data-en="Featured videos">Videos destacados</h2>
     </div>
-    <div class="vid-grid">
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=8prmD7XyLfM">
+    <div class="media-grid">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=8prmD7XyLfM">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/8prmD7XyLfM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/8prmD7XyLfM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Violet Combat Royale 2021</h3>
           <p data-en="Tournament finale">Final del torneo</p>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=wOxh1xijsrM&amp;t=28s">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=wOxh1xijsrM&amp;t=28s">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/wOxh1xijsrM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/wOxh1xijsrM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Blue Oblivion BJJ 2021</h3>
           <p data-en="Highlights">Momentos destacados</p>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=hN_vTuGBMhw">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=hN_vTuGBMhw">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/hN_vTuGBMhw/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/hN_vTuGBMhw/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>White Carbon Combat BJJ 2020</h3>
           <p data-en="Highlights">Momentos destacados</p>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=P9Hxe6PJR0s">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=P9Hxe6PJR0s">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/P9Hxe6PJR0s/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/P9Hxe6PJR0s/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Oxide Overdrive GP</h3>
           <p data-en="Brown-belt tournament">Torneo de cinturones café</p>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
     </div>
@@ -102,93 +108,85 @@
     <div class="section-heading">
       <h2 data-heading-outline="ENCUENTROS" data-heading-outline-en="ENCOUNTERS" id="encounters-title" data-en="Börg Lab encounters">Encuentros del Börg Lab</h2>
     </div>
-    <div class="vid-grid">
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=GuiwwZitHeA">
+    <div class="media-grid">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=GuiwwZitHeA">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/GuiwwZitHeA/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/GuiwwZitHeA/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Diamond Z “The Heel Slayer” <span class="encounter-vs">Vs.</span> JJ Andro “The Arquitect”</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" id="oxide-media" href="https://www.youtube.com/watch?v=BsWLIWipOBo">
+      <a class="lab-play" aria-haspopup="dialog" id="oxide-media" href="https://www.youtube.com/watch?v=BsWLIWipOBo">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/BsWLIWipOBo/hqdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/BsWLIWipOBo/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Serpiente <span class="encounter-vs">Vs.</span> Prodigio R</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=_057LaRqOkY">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=_057LaRqOkY">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/_057LaRqOkY/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/_057LaRqOkY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Venetor <span class="encounter-vs">Vs.</span> King</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=ZsFIL7M54RY">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=ZsFIL7M54RY">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/ZsFIL7M54RY/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/ZsFIL7M54RY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Diamante <span class="encounter-vs">Vs.</span> Cristopher</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=aeRHSN_0450">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=aeRHSN_0450">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/aeRHSN_0450/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/aeRHSN_0450/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Saa <span class="encounter-vs">Vs.</span> Alzate</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=q7eloJo0oJY">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=q7eloJo0oJY">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/q7eloJo0oJY/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/q7eloJo0oJY/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Madshow <span class="encounter-vs">Vs.</span> Tarantula</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=1ieiZzyXfIM">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=1ieiZzyXfIM">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/1ieiZzyXfIM/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/1ieiZzyXfIM/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Nimbol <span class="encounter-vs">Vs.</span> Brunao</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
-      <a class="encounter lab-play" href="https://www.youtube.com/watch?v=eQLPU-zUOtg">
+      <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=eQLPU-zUOtg">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/eQLPU-zUOtg/maxresdefault.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+          <img src="https://i.ytimg.com/vi/eQLPU-zUOtg/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
         <div class="encounter-caption">
           <h3>Terremoto Joe <span class="encounter-vs">Vs.</span> Da Bones</h3>
-          <span class="encounter-watch" data-en="Play video">Reproducir video</span>
         </div>
       </a>
     </div>
@@ -201,49 +199,40 @@
       <h2 data-heading-outline="TRANSMISIONES" data-heading-outline-en="TRANSMISSIONS" id="transmissions-title" data-en="Transmissions">Transmisiones</h2>
     </div>
     <p class="transmissions-intro" data-en="Extended event coverage and livestream replays.">Cobertura de eventos y repeticiones de transmisiones en vivo.</p>
-    <div class="featured-video-grid">
-    <article class="featured-video transmission">
-      <a class="featured-video-cover lab-play" href="https://www.youtube.com/watch?v=qOpCJKI-4Yo" aria-labelledby="transmission-qOpCJKI-4Yo">
+    <div class="media-grid transmission-grid">
+    <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=qOpCJKI-4Yo">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/qOpCJKI-4Yo/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/qOpCJKI-4Yo/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
-        <span class="encounter-watch" data-en="Play video">Reproducir video</span>
+        <div class="encounter-caption">
+          <h3 id="transmission-qOpCJKI-4Yo">Ra’az Bxrg Entertainment Live Stream</h3>
+          <p data-en="Livestream replay">Repetición de la transmisión</p>
+        </div>
       </a>
-      <div class="featured-video-copy">
-        <h3 id="transmission-qOpCJKI-4Yo">Ra’az Bxrg Entertainment Live Stream</h3>
-        <p data-en="Livestream replay">Repetición de la transmisión</p>
-      </div>
-    </article>
-    <article class="featured-video transmission">
-      <a class="featured-video-cover lab-play" href="https://www.youtube.com/watch?v=T_YlxFIv2MQ" aria-labelledby="transmission-T_YlxFIv2MQ">
+    <a class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=T_YlxFIv2MQ">
         <span class="lab-video-thumb">
-          <img src="https://i.ytimg.com/vi/T_YlxFIv2MQ/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+          <img src="https://i.ytimg.com/vi/T_YlxFIv2MQ/hqdefault.jpg" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
-        <span class="encounter-watch" data-en="Play video">Reproducir video</span>
+        <div class="encounter-caption">
+          <h3 id="transmission-T_YlxFIv2MQ">White Carbon Combat BJJ 2020</h3>
+          <p data-en="Event broadcast">Transmisión del evento</p>
+        </div>
       </a>
-      <div class="featured-video-copy">
-        <h3 id="transmission-T_YlxFIv2MQ">White Carbon Combat BJJ 2020</h3>
-        <p data-en="Event broadcast">Transmisión del evento</p>
-      </div>
-    </article>
-    <article class="featured-video transmission">
-      <a class="featured-video-cover lab-play" href="https://www.youtube.com/watch?v=QzLvQCTzAXY&amp;list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg" aria-labelledby="oxide-transmission-title">
+    <a id="oxide-playlist" class="lab-play" aria-haspopup="dialog" href="https://www.youtube.com/watch?v=QzLvQCTzAXY&amp;list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg">
         <span class="lab-video-thumb">
-          <img src="assets/realm-qualification-nav.webp" width="584" height="328" alt="" loading="lazy">
+          <img src="assets/realm-qualification-nav.webp" width="584" height="328" alt="" loading="lazy" decoding="async">
           <span class="corner c-tl" aria-hidden="true"></span>
           <span class="corner c-br" aria-hidden="true"></span>
         </span>
-        <span class="encounter-watch" data-en="Play event playlist">Reproducir lista del evento</span>
+        <div class="encounter-caption">
+          <h3 id="oxide-transmission-title">Oxide Overdrive GP</h3>
+          <p data-en="Watch the brown-belt Grand Prix bout by bout, starting with Serpiente vs. Rickson.">Mira el Grand Prix de cinturones café combate por combate, empezando por Serpiente vs. Rickson.</p>
+        </div>
       </a>
-      <div class="featured-video-copy">
-        <h3 id="oxide-transmission-title">Oxide Overdrive GP</h3>
-        <p data-en="Watch the brown-belt Grand Prix bout by bout, starting with Serpiente vs. Rickson.">Mira el Grand Prix de cinturones café combate por combate, empezando por Serpiente vs. Rickson.</p>
-      </div>
-    </article>
     </div>
   </div>
 </section>
@@ -267,12 +256,12 @@
         <img src="assets/instagram-praetoreans-reel.webp" loading="lazy" alt="Peleadores del Grand Prix bajo luz verde" data-en-alt="Grand Prix fighters under green light">
         <span class="cap" data-en="PRÆTOREANS · REEL COVER">PRÆTOREANS · PORTADA DEL REEL</span>
       </button>
-      <button type="button" class="m-item big" aria-haspopup="dialog"><img src="assets/squad-magenta.jpg" alt="Equipo bajo luz magenta" data-en-alt="Squad under magenta light"><span class="cap" data-en="THE PRAETOREANS">LOS PRETORIANOS</span></button>
-      <button type="button" class="m-item" aria-haspopup="dialog"><img src="assets/fighter-alzate.jpg" alt="Afiche de neón de Alzâte" data-en-alt="Alzâte neon poster"><span class="cap">ALZÂTE — MATRIZ RA</span></button>
-      <button type="button" class="m-item tall" id="nimbol-media" aria-haspopup="dialog"><img src="assets/fighter-nimbol.jpg" alt="Nimbol bajo luz azul" data-en-alt="Nimbol under blue light"><span class="cap">NIMBOL — BLUE OBLIVION</span></button>
-      <button type="button" class="m-item" aria-haspopup="dialog"><img src="assets/jersey-front.jpg" alt="Camiseta con circuitos" data-en-alt="Circuit jersey"><span class="cap" data-en="CIRCUIT ARMOR">ARMADURA DE CIRCUITOS</span></button>
-      <button type="button" class="m-item" aria-haspopup="dialog"><img src="assets/fighter-cyber-zen.jpg" alt="Visor de Cyber Zen" data-en-alt="Cyber Zen visor"><span class="cap">CYBER ZEN — INTERFACE</span></button>
-      <button type="button" class="m-item" aria-haspopup="dialog"><img src="assets/tee-gasmask.jpg" alt="Camiseta con máscara de gas" data-en-alt="Gas mask tee"><span class="cap" data-en="GAS MASK PROTOCOL">PROTOCOLO MÁSCARA DE GAS</span></button>
+      <button type="button" class="m-item big" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/squad-magenta.jpg" alt="Equipo bajo luz magenta" data-en-alt="Squad under magenta light"><span class="cap" data-en="THE PRAETOREANS">LOS PRETORIANOS</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-alzate.jpg" alt="Afiche de neón de Alzâte" data-en-alt="Alzâte neon poster"><span class="cap">ALZÂTE — MATRIZ RA</span></button>
+      <button type="button" class="m-item tall" id="nimbol-media" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-nimbol.jpg" alt="Nimbol bajo luz azul" data-en-alt="Nimbol under blue light"><span class="cap">NIMBOL — BLUE OBLIVION</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/jersey-front.jpg" alt="Camiseta con circuitos" data-en-alt="Circuit jersey"><span class="cap" data-en="CIRCUIT ARMOR">ARMADURA DE CIRCUITOS</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/fighter-cyber-zen.jpg" alt="Visor de Cyber Zen" data-en-alt="Cyber Zen visor"><span class="cap">CYBER ZEN — INTERFACE</span></button>
+      <button type="button" class="m-item" aria-haspopup="dialog"><img loading="lazy" decoding="async" src="assets/tee-gasmask.jpg" alt="Camiseta con máscara de gas" data-en-alt="Gas mask tee"><span class="cap" data-en="GAS MASK PROTOCOL">PROTOCOLO MÁSCARA DE GAS</span></button>
       <button type="button" class="m-item" aria-haspopup="dialog">
         <img src="assets/instagram-neon-city.webp" loading="lazy" alt="Dos figuras en una azotea iluminada con neón rojo" data-en-alt="Two figures on a rooftop lit by red neon">
         <span class="cap" data-en="NIGHT SCENE">ESCENA NOCTURNA</span>
@@ -316,6 +305,8 @@
   </div>
 </dialog>
 
+</main>
+
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
@@ -328,8 +319,8 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=visitor-flow-1"></script>
-<script src="js/lab-video.js?v=2" defer></script>
+<script src="js/main.js?v=archive-1"></script>
+<script src="js/lab-video.js?v=3" defer></script>
 <script src="js/visual-gallery.js" defer></script>
 </body>
 </html>

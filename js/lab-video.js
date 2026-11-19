@@ -21,7 +21,7 @@
 
       event.preventDefault();
       trigger = link;
-      const title = link.querySelector('h3') || document.getElementById(link.getAttribute('aria-labelledby'));
+      const title = link.querySelector('h3');
       heading.textContent = title.textContent.trim();
       frame.title = heading.textContent;
       frame.src = embed.href;

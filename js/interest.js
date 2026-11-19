@@ -10,10 +10,18 @@
   const assigned = document.getElementById("belt-assigned");
   const review = document.getElementById("belt-review");
   const params = new URLSearchParams(location.search);
-  const requestedBelt = params.get("belt");
-  if (params.get("interest") === "lab") form.elements.interest.value = "lab";
-  if (requestedBelt && Array.from(belt.options).some(option => option.value === requestedBelt)) {
-    belt.value = requestedBelt;
+  const interest = form.elements.interest;
+  for (const field of [belt, interest]) {
+    const value = params.get(field.name);
+    if (value && Array.from(field.options).some(option => option.value === value)) {
+      field.value = value;
+    }
+    field.addEventListener("change", () => {
+      const url = new URL(location.href);
+      if (field.value) url.searchParams.set(field.name, field.value);
+      else url.searchParams.delete(field.name);
+      history.replaceState(null, "", url);
+    });
   }
 
   function updateRealm() {
@@ -54,10 +62,6 @@
   belt.addEventListener("change", () => {
     updateRealm();
     clearDraft();
-    const url = new URL(location.href);
-    if (belt.value) url.searchParams.set("belt", belt.value);
-    else url.searchParams.delete("belt");
-    history.replaceState(null, "", url);
   });
   window.addEventListener("pageshow", updateRealm);
   form.addEventListener("input", clearDraft);

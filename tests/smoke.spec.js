@@ -326,3 +326,51 @@ test('Visual World opens the jaguar hoodie and browses images without leaving th
   await expect(hoodie).toBeFocused();
   await expect(page).toHaveURL(/labs\.html\?lang=en#mundo-visual$/);
 });
+
+test('the Lab directory jumps to a compact mobile list and every card opens the player', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion:'reduce' });
+  await page.route('https://www.youtube-nocookie.com/**', route => route.fulfill({ body:'Player' }));
+  await assertResponsive(page, '/labs.html?lang=es');
+  const directory = page.getByRole('navigation', { name:'Secciones del Lab' });
+  await directory.getByRole('link', { name:'Encuentros del Lab' }).click();
+  await expect(page.locator('#encounters-title')).toBeInViewport();
+  const first = page.locator('#encuentros .lab-play').first();
+  expect((await first.locator('img').boundingBox()).width).toBeLessThan(150);
+  await first.getByRole('heading').click();
+  await expect(page.locator('.lab-player')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(first).toBeFocused();
+  await page.locator('#langToggle').click();
+  await page.getByRole('navigation', { name:'Lab sections' }).getByRole('link', { name:'Transmissions' }).click();
+  await page.locator('#transmisiones .lab-play').last().getByRole('heading').click();
+  await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /list=/);
+});
+
+test('catalog previews defer originals until opened and the gallery returns focus', async ({ page }) => {
+  const originals = [];
+  await page.route(/\/assets\/(?:dragon|dragron|white|orange|tracksuit)-[^/]+\.png$/, route => {
+    originals.push(route.request().url());
+    return route.continue();
+  });
+  await page.goto('/shop.html');
+  const thumb = page.locator('#kimono-dragon .thumb').nth(1);
+  await thumb.scrollIntoViewIfNeeded();
+  await expect(thumb.locator('img')).toHaveAttribute('src', /-thumb\.webp$/);
+  expect(originals).toHaveLength(0);
+  await thumb.click();
+  const gallery = page.getByRole('dialog', { name:'Galería de productos' });
+  await expect(gallery.locator('img')).toHaveAttribute('src', /dragron-kimono-back\.png$/);
+  await page.keyboard.press('ArrowRight');
+  await expect(gallery.locator('img')).toHaveAttribute('src', /dragon-kimono-front\.png$/);
+  await page.keyboard.press('Escape');
+  await expect(thumb).toBeFocused();
+});
+
+test('the application restores belt and GP or Lab interest together', async ({ page }) => {
+  await page.goto('/competir.html?lang=en&interest=both&belt=brown');
+  await expect(page.locator('#interest')).toHaveValue('both');
+  await page.locator('#interest').selectOption('gp');
+  await page.reload();
+  await expect(page.locator('#interest')).toHaveValue('gp');
+  await expect(page.locator('#belt-realm')).toHaveText('Oxide Overdrive');
+});

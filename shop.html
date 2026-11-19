@@ -7,9 +7,10 @@
 <meta name="description" content="Ropa urbana y de entrenamiento de RA’AZ BORG en Quito." data-en-content="RA’AZ BORG streetwear and training gear in Quito, Ecuador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=outline-headings-1">
+<link rel="stylesheet" href="css/style.css?v=archive-1">
 </head>
 <body data-lang="es">
+<a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
 
 <nav>
   <div class="nav-inner">
@@ -29,6 +30,7 @@
   </div>
 </nav>
 
+<main id="contenido" tabindex="-1">
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
@@ -52,16 +54,16 @@
       <div class="p-card" id="kimono-dragon">
         <span class="p-badge">UNISEX</span>
 
-        <div class="p-photo product-gallery">
-          <img id="dragon-kimono" src="assets/dragon-kimono-front.png" alt="Kimono negro Dragón de RAAZ BORG" data-en-alt="RAAZ BORG black dragon kimono">
-        </div>
+        <button type="button" class="p-photo product-gallery" aria-haspopup="dialog">
+          <img id="dragon-kimono" src="assets/shop/dragon-kimono-front.webp" data-full="assets/dragon-kimono-front.png" width="637" height="850" loading="lazy" decoding="async" alt="Kimono negro Dragón de RAAZ BORG" data-en-alt="RAAZ BORG black dragon kimono">
+        </button>
 
         <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/dragon-kimono-front.png" alt="Frente" data-en-alt="Front">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/dragon-kimono-front-thumb.webp" data-full="assets/dragon-kimono-front.png" width="112" height="150" loading="lazy" decoding="async" alt="Frente" data-en-alt="Front">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/dragron-kimono-back.png" alt="Vista en ángulo" data-en-alt="Angle">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/dragron-kimono-back-thumb.webp" data-full="assets/dragron-kimono-back.png" width="137" height="150" loading="lazy" decoding="async" alt="Vista en ángulo" data-en-alt="Angle">
           </button>
         </div>
 
@@ -78,7 +80,7 @@
           </p>
 
           <div class="size-row selectable-sizes" data-product="Dragon Kimono">
-            <button type="button" class="selected" data-size="One Size" data-en="ONE SIZE">TALLA ÚNICA</button>
+            <button type="button" class="selected" data-size="One Size" aria-pressed="true" data-en="ONE SIZE">TALLA ÚNICA</button>
           </div>
 
           <div class="p-row">
@@ -107,16 +109,16 @@
       <div class="p-card" id="conjunto-urbano">
         <span class="p-badge" data-en="TRACK SUIT">CONJUNTO DEPORTIVO</span>
 
-        <div class="p-photo product-gallery">
-          <img id="tracksuit" src="assets/tracksuit-front.png" alt="Conjunto deportivo de RAAZ BORG" data-en-alt="RAAZ BORG tracksuit">
-        </div>
+        <button type="button" class="p-photo product-gallery" aria-haspopup="dialog">
+          <img id="tracksuit" src="assets/shop/tracksuit-front.webp" data-full="assets/tracksuit-front.png" width="567" height="850" loading="lazy" decoding="async" alt="Conjunto deportivo de RAAZ BORG" data-en-alt="RAAZ BORG tracksuit">
+        </button>
 
         <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/tracksuit-front.png" alt="Conjunto deportivo de frente" data-en-alt="Tracksuit front">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/tracksuit-front-thumb.webp" data-full="assets/tracksuit-front.png" width="100" height="150" loading="lazy" decoding="async" alt="Conjunto deportivo de frente" data-en-alt="Tracksuit front">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/tracksuit-back.png" alt="Conjunto deportivo de espalda" data-en-alt="Tracksuit back">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/tracksuit-back-thumb.webp" data-full="assets/tracksuit-back.png" width="100" height="150" loading="lazy" decoding="async" alt="Conjunto deportivo de espalda" data-en-alt="Tracksuit back">
           </button>
         </div>
 
@@ -133,9 +135,9 @@
           </p>
 
           <div class="size-row selectable-sizes" data-product="Urbanwear Tracksuit">
-            <button type="button" class="selected" data-size="S">S</button>
-            <button type="button" disabled="M">M</button>
-            <button type="button" data-size="L">L</button>
+            <button type="button" class="selected" data-size="S" aria-pressed="true">S</button>
+            <button type="button" disabled>M</button>
+            <button type="button" data-size="L" aria-pressed="false">L</button>
             <button type="button" disabled>XL</button>
           </div>
 
@@ -168,22 +170,22 @@
       <div class="p-card">
         <span class="p-badge" data-en="COMBAT SET">CONJUNTO DE COMBATE</span>
 
-        <div class="p-photo product-gallery">
-          <img id="white-main" src="assets/white-set.png" alt="Rashguard blanco y pantaloneta de RAAZ BORG" data-en-alt="RAAZ BORG white rashguard and shorts">
-        </div>
+        <button type="button" class="p-photo product-gallery" aria-haspopup="dialog">
+          <img id="white-main" src="assets/shop/white-set.webp" data-full="assets/white-set.png" width="637" height="850" loading="lazy" decoding="async" alt="Rashguard blanco y pantaloneta de RAAZ BORG" data-en-alt="RAAZ BORG white rashguard and shorts">
+        </button>
 
         <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/white-set.png" alt="Conjunto blanco" data-en-alt="white set">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/white-set-thumb.webp" data-full="assets/white-set.png" width="112" height="150" loading="lazy" decoding="async" alt="Conjunto blanco" data-en-alt="white set">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/white-right.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/white-right-thumb.webp" data-full="assets/white-right.png" width="112" height="150" loading="lazy" decoding="async" alt="Costado derecho del rashguard blanco" data-en-alt="White rashguard, right side">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/white-left.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/white-left-thumb.webp" data-full="assets/white-left.png" width="100" height="150" loading="lazy" decoding="async" alt="Costado izquierdo del rashguard blanco" data-en-alt="White rashguard, left side">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/white-back.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/white-back-thumb.webp" data-full="assets/white-back.png" width="100" height="150" loading="lazy" decoding="async" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
           </button>
         </div>
 
@@ -200,9 +202,9 @@
           </p>
 
           <div class="size-row selectable-sizes" data-product="white Honeycomb Set">
-            <button type="button" class="selected" data-size="S">S</button>
-            <button type="button" data-size="M">M</button>
-            <button type="button" data-size="L">L</button>
+            <button type="button" class="selected" data-size="S" aria-pressed="true">S</button>
+            <button type="button" data-size="M" aria-pressed="false">M</button>
+            <button type="button" data-size="L" aria-pressed="false">L</button>
             <button type="button" disabled>XL</button>
           </div>
 
@@ -237,22 +239,22 @@
           <span class="lang-es">ÚLTIMA UNIDAD</span>
         </span>
 
-        <div class="p-photo product-gallery">
-          <img id="orange-main" src="assets/orange-front.png" alt="Rashguard naranja Honeycomb de RAAZ BORG" data-en-alt="RAAZ BORG orange honeycomb rashguard">
-        </div>
+        <button type="button" class="p-photo product-gallery" aria-haspopup="dialog">
+          <img id="orange-main" src="assets/shop/orange-front.webp" data-full="assets/orange-front.png" width="850" height="829" loading="lazy" decoding="async" alt="Rashguard naranja Honeycomb de RAAZ BORG" data-en-alt="RAAZ BORG orange honeycomb rashguard">
+        </button>
 
         <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/orange-front.png" alt="Frente" data-en-alt="Front">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/orange-front-thumb.webp" data-full="assets/orange-front.png" width="150" height="146" loading="lazy" decoding="async" alt="Frente" data-en-alt="Front">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/orange-right.png" alt="Vista en ángulo" data-en-alt="Angle">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/orange-right-thumb.webp" data-full="assets/orange-right.png" width="112" height="150" loading="lazy" decoding="async" alt="Vista en ángulo" data-en-alt="Angle">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/orange-left.png" alt="Costado" data-en-alt="Side">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/orange-left-thumb.webp" data-full="assets/orange-left.png" width="112" height="150" loading="lazy" decoding="async" alt="Costado" data-en-alt="Side">
           </button>
-          <button type="button" class="thumb">
-            <img src="assets/orange-back.png" alt="Espalda" data-en-alt="Back">
+          <button type="button" class="thumb" aria-haspopup="dialog">
+            <img src="assets/shop/orange-back-thumb.webp" data-full="assets/orange-back.png" width="112" height="150" loading="lazy" decoding="async" alt="Espalda" data-en-alt="Back">
           </button>
         </div>
 
@@ -269,7 +271,7 @@
           </p>
 
           <div class="size-row selectable-sizes" data-product="Orange Honeycomb Rashguard">
-            <button type="button" class="selected" data-size="S">S</button>
+            <button type="button" class="selected" data-size="S" aria-pressed="true">S</button>
             <button type="button" disabled>M</button>
             <button type="button" disabled>L</button>
             <button type="button" disabled>XL</button>
@@ -302,6 +304,8 @@
 </section>
 </div>
 
+</main>
+
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
@@ -316,23 +320,22 @@
 
 
 <!-- PRODUCT IMAGE CAROUSEL LIGHTBOX -->
-<div id="productLightbox" class="product-lightbox" role="dialog" aria-modal="true" aria-label="Galería de productos" data-en-label="Product image gallery"
-  hidden>
+<dialog id="productLightbox" class="product-lightbox" aria-label="Galería de productos" data-en-label="Product image gallery">
 
-  <button type="button" class="lightbox-close" aria-label="Cerrar vista previa" data-en-label="Close image preview">&times;</button>
+  <button type="button" class="lightbox-close" autofocus aria-label="Cerrar vista previa" data-en-label="Close image preview">&times;</button>
 
   <button type="button" class="lightbox-arrow lightbox-prev" aria-label="Imagen anterior" data-en-label="Previous image">&#10094;</button>
 
-  <img id="lightboxImage" src="" alt="Vista previa del producto" data-en-alt="Product preview">
+  <img id="lightboxImage" alt="">
 
   <button type="button" class="lightbox-arrow lightbox-next" aria-label="Siguiente imagen" data-en-label="Next image">&#10095;</button>
 
-  <span id="lightboxCounter" class="lightbox-counter"></span>
-
-</div>
-
+  <span id="lightboxCounter" class="lightbox-counter" aria-live="polite"></span>
+</dialog>
 
 
-<script src="js/main.js?v=visitor-flow-1"></script>
+
+<script src="js/main.js?v=archive-1"></script>
+<script src="js/shop.js?v=1"></script>
 </body>
 </html>
