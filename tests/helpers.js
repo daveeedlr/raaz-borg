@@ -43,7 +43,12 @@ async function assertResponsive(page, path) {
   await page.goto(path);
   await expect(page.locator('body')).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow, 'page should not overflow horizontally at a 390px viewport').toBeLessThanOrEqual(1);
+  if (overflow > 1) {
+    const overflowing = await page.locator('body *').evaluateAll(nodes => nodes
+      .filter(node => node.getBoundingClientRect().right > innerWidth && !node.closest('.ticker'))
+      .map(node => node.tagName + '.' + node.className).slice(0, 12));
+    throw new Error('Mobile content exceeds the viewport by ' + overflow + 'px: ' + overflowing.join(', '));
+  }
 }
 
 module.exports = { captureRuntimeErrors, assertNoRuntimeErrors, assertLocalAssetsAndLinks, assertResponsive };

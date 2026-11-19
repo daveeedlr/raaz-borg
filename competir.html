@@ -40,25 +40,25 @@
   </div>
   <div>
     <form class="interest-form" id="athlete-interest" hidden>
-      <label for="alias"><span class="lang-es">Nombre o alias</span><span class="lang-en">Name or alias</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
-      <label for="email"><span class="lang-es">Correo electrónico</span><span class="lang-en">Email address</span><input id="email" name="email" type="email" required maxlength="150" autocomplete="email"></label>
-      <label for="city"><span class="lang-es">Ciudad</span><span class="lang-en">City</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
-      <label for="academy"><span class="lang-es">Academia o equipo (opcional)</span><span class="lang-en">Academy or team (optional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
-      <label for="discipline"><span class="lang-es">Disciplina o cinturón</span><span class="lang-en">Discipline or belt</span><input id="discipline" name="discipline" type="text" required maxlength="100"></label>
-      <label for="interest"><span class="lang-es">Me interesa</span><span class="lang-en">I’m interested in</span><select id="interest" name="interest" required>
+      <label for="alias"><span data-en="Name or alias">Nombre o alias</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
+      <label for="email"><span data-en="Email address">Correo electrónico</span><input id="email" name="email" type="email" required maxlength="150" autocomplete="email"></label>
+      <label for="city"><span data-en="City">Ciudad</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
+      <label for="academy"><span data-en="Academy or team (optional)">Academia o equipo (opcional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
+      <label for="discipline"><span data-en="Discipline or belt">Disciplina o cinturón</span><input id="discipline" name="discipline" type="text" required maxlength="100"></label>
+      <label for="interest"><span data-en="I’m interested in">Me interesa</span><select id="interest" name="interest" required>
         <option value="" data-en="Choose an option">Selecciona una opción</option>
         <option value="gp" data-en="Competing in the Grand Prix">Competir en el Grand Prix</option>
         <option value="lab" data-en="Training at the Börg Lab">Entrenar en el Börg Lab</option>
         <option value="both" data-en="Both">Ambos</option>
       </select></label>
-      <label for="footage"><span class="lang-es">Enlace a tu perfil o video (opcional)</span><span class="lang-en">Profile or footage link (optional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
-      <label class="contact-ok"><input type="checkbox" name="contact" required><span class="lang-es">Acepto que RA’AZ BORG me contacte sobre esta solicitud.</span><span class="lang-en">I agree to be contacted by RA’AZ BORG about this inquiry.</span></label>
-      <p><span class="lang-es">Prepararemos un correo con estos datos. Revísalo y envíalo desde tu aplicación de correo.</span><span class="lang-en">We’ll prepare an email with these details. Review and send it from your email app.</span></p>
-      <button class="btn btn-acid" type="submit"><span class="lang-es">Preparar correo</span><span class="lang-en">Prepare email</span></button>
+      <label for="footage"><span data-en="Profile or footage link (optional)">Enlace a tu perfil o video (opcional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
+      <label class="contact-ok"><input type="checkbox" name="contact" required><span data-en="I agree to be contacted by RA’AZ BORG about this inquiry.">Acepto que RA’AZ BORG me contacte sobre esta solicitud.</span></label>
+      <p><span data-en="We’ll prepare an email with these details. Review and send it from your email app.">Prepararemos un correo con estos datos. Revísalo y envíalo desde tu aplicación de correo.</span></p>
+      <button class="btn btn-acid" type="submit"><span data-en="Prepare email">Preparar correo</span></button>
       <div id="email-preview" hidden>
-        <p role="status"><span class="lang-es">Tu borrador está listo. Abre tu correo para enviarlo o copia el texto a tu servicio de correo.</span><span class="lang-en">Your draft is ready. Open your email app to send it, or copy the text into your email service.</span></p>
+        <p role="status"><span data-en="Your draft is ready. Open your email app to send it, or copy the text into your email service.">Tu borrador está listo. Abre tu correo para enviarlo o copia el texto a tu servicio de correo.</span></p>
         <textarea id="email-body" readonly aria-label="Texto del correo" data-en-label="Email draft"></textarea>
-        <a id="send-inquiry" class="btn btn-ghost"><span class="lang-es">Abrir mi correo</span><span class="lang-en">Open email app</span></a>
+        <a id="send-inquiry" class="btn btn-ghost"><span data-en="Open email app">Abrir mi correo</span></a>
       </div>
     </form>
     <p class="manual-contact"><span class="lang-es">También puedes escribir directamente a</span><span class="lang-en">You can also email us directly at</span> <a href="mailto:raazborgstudios@gmail.com">raazborgstudios@gmail.com</a>.</p>

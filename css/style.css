@@ -201,6 +201,7 @@ to { transform:translateX(-50%) }
 /* ============ SECTION HEADS w/ giant ghost text ============ */
 .sec-head { position:relative; margin-bottom:64px }
 .ghost { position:absolute; top:-70px; left:-8px; font-family:var(--display); font-size:clamp(90px,16vw,240px); color:transparent; -webkit-text-stroke:1px var(--graphite); text-transform:uppercase; line-height:1; pointer-events:none; user-select:none; white-space:nowrap }
+.sec-head .ghost { max-width:calc(100% + 8px); overflow:hidden }
 .sec-head h2 { font-size:clamp(44px,6vw,84px); position:relative }
 .sec-head .kicker { color:var(--cyan); margin-bottom:14px; display:block }
 .sec-head .kicker.mag { color:var(--magenta) }
@@ -605,6 +606,9 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 }
 @media(max-width:720px) {
   .join-layout { grid-template-columns:1fr }
+  .sec-head h2, .roster-growth h3 { overflow-wrap:anywhere }
+  .page-hero h1 { font-size:clamp(42px,11vw,60px) }
+  .fighter-roster .wrap, .featured-fighter .wrap { padding-inline:20px }
   .nav-inner { padding:12px; gap:8px }
   .nav-logo { min-width:0; max-width:135px }
   .nav-right { gap:6px; flex-shrink:0 }
