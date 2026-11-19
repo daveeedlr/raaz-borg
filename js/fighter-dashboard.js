@@ -76,13 +76,6 @@
     });
   }
   function put(id,value) { $(id).textContent = value == null || value === '' ? '—' : String(value); }
-  function notifyEmailDelivery() {
-    // Email delivery is optional until a verified sender/API key are configured server-side.
-    // Never claim that an email was sent based on an invocation alone.
-    if (client.functions?.invoke) {
-      Promise.resolve(client.functions.invoke('athlete-notify', {body:{}})).catch(() => {});
-    }
-  }
   function renderStatus(application, realm) {
     const status = application?.status in statuses ? application.status : 'none';
     const state = statuses[status];
@@ -311,7 +304,7 @@
       }
       snapshot={...data,acknowledgement:ack.error ? null : (ack.data || null)};
       render();
-      notifyEmailDelivery();
+      // Custom emails are paused; the in-app welcome remains visible.
     } catch {
       if (seq===loadSeq) visible('error');
     }
