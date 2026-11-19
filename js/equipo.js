@@ -51,7 +51,15 @@
       const date=Number.isNaN(receivedDate.getTime())?'—':receivedDate.toLocaleString(document.documentElement.lang==='en'?'en-US':'es-EC');
       for(const value of [tr(...(statusLabels[row.status]||['Pendiente','Pending'])), tr(...(interests[row.interest]||['Interés no definido','Interest unavailable'])),row.belt||'—',row.suggested_realm||tr('División por definir','Division to be confirmed'),row.city||'—',date]) meta.append(el('span',value));
       const email=el('p',row.contact_email||'');
-      const details=el('p',[row.academy,row.discipline].filter(Boolean).join(' · '),'team-note');
+      const profile=row.profile_snapshot||{};
+      const fullName=[profile.first_name,profile.last_name].filter(Boolean).join(' ');
+      if(fullName) card.append(el('p',fullName));
+      const details=el('p',[row.academy,row.discipline,profile.country,profile.state_province,
+        profile.date_of_birth ? tr('Nacimiento: ','Born: ')+profile.date_of_birth : null,
+        profile.weight ? profile.weight+' '+(profile.weight_unit||'') : null,
+        profile.height ? profile.height+' '+(profile.height_unit||'') : null,
+        profile.belt_stripes != null ? tr('Franjas: ','Stripes: ')+profile.belt_stripes : null
+      ].filter(Boolean).join(' · '),'team-note');
       const actions=el('div',null,'team-actions');
       if(row.contact_email) {
         const contact=el('a',tr('Escribir al atleta','Email athlete'));
@@ -84,7 +92,7 @@
     const seq=++refreshNumber, owner=user.id;
     loading=true;allowed=false;render();
     try {
-      const {data,error}=await client.rpc('rb_review_queue');
+      const {data,error}=await client.rpc('rb_review_queue_v2');
       if(seq!==refreshNumber||!user||user.id!==owner) return;
       loading=false;
       if(error) {
