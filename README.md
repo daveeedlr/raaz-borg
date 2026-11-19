@@ -94,3 +94,11 @@ where email = 'replace-with-verified-staff-email@example.org'
   and email_confirmed_at is not null;
 ```
 Do not approve unconfirmed or disposable QA accounts. Reviewers email applicants manually; changing a status does not notify them automatically. Staff should only mark `invited` after sending an invitation. Remove staff access by deleting that UUID from `rb_intake.reviewers` when necessary.
+
+## Athlete profile v2 — registration and storage
+
+The site reuses the existing Supabase project `iltuwbawjiwvuqqrkyiz`, not a separate database. Login and email confirmation live in `auth.users`. Athlete identity, belt, gym, geographic and optional size details live in `rb_intake.profiles`; each submitted application stores an immutable `profile_snapshot` in `rb_intake.applications`. Staff can inspect the snapshot via the protected `rb_review_queue_v2` function. The original legacy `public.fighter_registrations` table remains untouched.
+
+The athlete submits verified identity, first/last name, fighter alias, location, optional username, birthday, belt stripes, weight/height, gym and discipline. Age is calculated rather than duplicated; email is supplied from verified Auth identity; payments and avatar uploads are not collected during interest application. Existing v1 RPCs remain compatible.
+
+**Hosted Auth redirect configuration (must be set in Supabase Dashboard):** Authentication → URL Configuration. Set Site URL to `https://jayjayanton.github.io/raaz-borg/`, and allow `https://jayjayanton.github.io/raaz-borg/competir.html**` in Redirect URLs. Reissue any confirmation link that previously returned to localhost. A public static page cannot change the project's Auth Site URL.
