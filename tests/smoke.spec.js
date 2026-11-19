@@ -120,13 +120,16 @@ test('athletes sign in, submit, return to their status and sign out in both lang
     let data;
     if (path.endsWith('/token')) data = {user,access_token:token,refresh_token:'test-session',token_type:'bearer',expires_in:3600};
     else if (path.endsWith('/user')) data = user;
-    else if (path.endsWith('/rb_my_profile')) data = [];
+    else if (path.endsWith('/rb_my_profile_v2')) data = [];
     else if (path.endsWith('/rb_my_applications')) data = rows;
-    else if (path.endsWith('/rb_submit_application')) {
+    else if (path.endsWith('/rb_submit_application_v2')) {
       const body = route.request().postDataJSON();
       expect(body.p_belt).toBe('blue');
       expect(body.p_interest).toBe('gp');
       expect(body.p_contact_consent).toBe(true);
+      expect(body.p_profile.first_name).toBe('Prueba');
+      expect(body.p_profile.last_name).toBe('Atleta');
+      expect(body.p_profile.country).toBe('Ecuador');
       rows.push({id,interest:'gp',suggested_realm:'Zaphire Trials',status:'submitted',submitted_at:new Date().toISOString()});
       data = id;
     } else if (path.endsWith('/logout')) data = {};
@@ -138,7 +141,9 @@ test('athletes sign in, submit, return to their status and sign out in both lang
   await page.getByLabel('Correo electrónico').fill(user.email);
   await page.locator('#password').fill('test-password');
   await page.getByRole('button',{name:'Iniciar sesión'}).click();
-  await page.getByLabel('Nombre o alias').fill('Test');
+  await page.locator('#first_name').fill('Prueba');
+  await page.locator('#last_name').fill('Atleta');
+  await page.locator('#alias').fill('Test');
   await page.getByLabel('Ciudad',{exact:true}).fill('Quito');
   await page.getByRole('checkbox').check();
   await page.getByRole('button',{name:'Enviar postulación'}).click();
@@ -438,7 +443,7 @@ test('reviewer dashboard denies unauthorised users and only exposes a verified q
     let data;
     if(path.endsWith('/token')) data={user,access_token:token,refresh_token:'staff-session',token_type:'bearer',expires_in:3600};
     else if(path.endsWith('/user')) data=user;
-    else if(path.endsWith('/rb_review_queue')) data=rows;
+    else if(path.endsWith('/rb_review_queue_v2')) data=rows;
     else if(path.endsWith('/rb_review_application')) {
       const body=route.request().postDataJSON();
       expect(body.p_expected_status).toBe(record.status);
@@ -460,4 +465,16 @@ test('reviewer dashboard denies unauthorised users and only exposes a verified q
   await page.locator('#team-signout').click();
   await expect(page.locator('#team-queue')).toBeHidden();
   await expect(page.locator('#team-login')).toBeVisible();
+});
+
+test('expanded athlete profile keeps typed values and shows selected measurements', async ({ page }) => {
+  await page.goto('/competir.html?lang=en&belt=purple&interest=gp');
+  await page.locator('#auth-signin').click();
+  await expect(page.locator('#first_name')).toBeHidden();
+  await expect(page.locator('#date_of_birth')).toBeHidden();
+  await expect(page.locator('#belt')).toHaveValue('purple');
+  await expect(page.locator('#interest')).toHaveValue('gp');
+  await expect(page.locator('#country')).toHaveAttribute('required','');
+  await expect(page.locator('#weight_unit')).toHaveValue('kg');
+  await expect(page.locator('#height_unit')).toHaveValue('cm');
 });
