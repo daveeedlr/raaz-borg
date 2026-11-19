@@ -1,0 +1,41 @@
+name: Athlete intake database checks
+on:
+  push:
+    paths: ['supabase/**', '.github/workflows/athlete-intake.yml']
+  pull_request:
+    paths: ['supabase/**', '.github/workflows/athlete-intake.yml']
+permissions:
+  contents: read
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - name: Provide Supabase Auth interfaces in the disposable database
+        run: |
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          create role anon;
+          create role authenticated;
+          create role service_role;
+          create schema auth;
+          create table auth.users(id uuid primary key, email text, email_confirmed_at timestamptz);
+          create function auth.uid() returns uuid language sql stable as $$
+            select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
+          $$;
+          SQL
+      - name: Apply migrations and exercise athlete and reviewer roles
+        run: |
+          for migration in supabase/migrations/*.sql; do psql -v ON_ERROR_STOP=1 -f "$migration"; done
+          psql -v ON_ERROR_STOP=1 -f supabase/tests/intake.sql

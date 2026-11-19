@@ -35,13 +35,41 @@ Works out of the box on GitHub Pages (Settings → Pages → Deploy from branch 
 
 RA'AZ BORG © 2026 — [@raazborg](https://www.instagram.com/raazborg/)
 
-## Moving athlete inquiries into accounts
+## Athlete application backend
 
-The public site runs on GitHub Pages. Today, `competir.html` prepares an email draft. Its URL can carry a belt and an interest (`gp`, `lab`, or `both`), which lets an athlete return to the same application. The athlete sends the email from their own mail app. Browsing videos, viewing fighters and exploring the shop are public activities.
+Supabase Auth supplies the account identity. The private `rb_intake` schema stores profiles, belt mappings, submitted applications, reviewer membership and review history. Existing fighter registrations and event records retain their original structure. An application expresses interest in the GP, the Börg Lab or both. A reviewer invitation does not award one of the eight GP places.
 
-The separate account prototype has an Express API, Supabase Auth, fighter profiles and a dashboard. Its client calls a local development server. Registration currently couples account creation to athlete and payment details, and the recovery screens are empty. The following steps apply to a future account release.
+### Authenticated API
 
-1. **Keep the entry point.** When an athlete chooses to apply, check for a valid session. Returning athletes go straight to their application. New visitors can sign in or create an account in Spanish or English. Return to the selected belt and GP or Lab interest after verification or sign-in. Carry only these choices through the return URL. Collect athlete details when the application needs them.
-2. **Connect a staging API and database.** Configure an HTTPS API origin and Supabase Auth for the staging site. Implement email verification, recovery, sign-out and expired-session handling. Store privileged credentials on the server. Use a verified session to determine the owner of each private profile and application.
-3. **Separate an account from an application.** A private profile stores reusable athlete details. A separate application records the event or Lab interest, belt, contact consent and review status. Validate the belt and derive the suggested realm on the server. Make retries return the same application. Only staff can change review status or confirm a GP spot. Publish a profile only after separate approval.
-4. **Test the handoff.** Run a two-account test of row-level access, plus staff review, recovery, a repeated submission and returning to the chosen realm on mobile. Enable the account path once athletes can see a receipt and their status and the team can see the same application in its queue. Keep the email route available during rollout.
+Call these public functions through Supabase RPC with the athlete’s session. Generate a UUID once per intended submission and reuse it for retries.
+
+```js
+const { data: receipt, error } = await supabase.rpc('rb_submit_application', {
+  p_request_id: requestId,
+  p_alias: alias,
+  p_city: city,
+  p_belt: belt,
+  p_interest: interest,
+  p_contact_consent: consent,
+  p_academy: academy,
+  p_discipline: discipline,
+  p_footage_url: footageUrl
+});
+```
+
+The server derives the contact email from the verified account and the suggested realm from the selected belt. Unmapped ranks go to staff for review. Show a receipt only after a successful response. The same request ID with changed details returns a conflict.
+
+| Function | Purpose |
+|---|---|
+| `rb_my_profile()` | Prefill the signed-in athlete’s current details. |
+| `rb_my_applications()` | Show their receipts and current statuses. |
+| `rb_review_queue()` | Staff list of submitted records with contact details. Use range pagination for larger queues. |
+| `rb_review_application(p_id, p_expected_status, p_new_status)` | Move a submission into review, invite the athlete or close the application. A stale status requires a refresh. |
+
+A project administrator assigns staff by inserting a verified staff account UUID into `rb_intake.reviewers(user_id)`. Keep this schema outside the exposed API schemas. Staff membership is managed in the database. The migration leaves new memberships empty.
+
+### Verification and rollout
+
+The SQL checks in `supabase/tests/intake.sql` run in a rollback-only transaction on a test database with Supabase Auth. They cover retry behavior, realm assignment, athlete isolation and staff review. Run with `psql -v ON_ERROR_STOP=1 -f supabase/tests/intake.sql` after applying the migration to a test project.
+
+The public application form currently prepares an email. The next frontend release should add bilingual sign-in, verification and recovery at `competir.html`, restore belt and interest after sign-in, submit using the RPC above, and display the receipt and status. Keep public browsing available to spectators.
