@@ -592,7 +592,7 @@ test('roster members clicking Compete go to their portal without repeating fight
   await expect(page.locator('#priorCompeted')).toHaveText('—');
 });
 
-test('private portal updates self-reported record without changing verified fight donut', async ({page}) => {
+test('private portal updates self-reported totals without changing fight-by-fight donut', async ({page}) => {
   const id='00000000-0000-4000-8000-000000000093';
   const user={id,email:'prior@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
   const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
