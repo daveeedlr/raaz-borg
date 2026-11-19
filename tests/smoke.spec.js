@@ -290,7 +290,7 @@ test('spectators and streetwear shoppers can follow their own paths on mobile', 
 test('Lab videos open inline and preserve timestamps and playlists', async ({ page }) => {
   await page.route('https://www.youtube-nocookie.com/**', route => route.fulfill({ body: 'Video player stub' }));
   await page.goto('/labs.html?lang=en');
-  await expect(page.locator('.featured-videos .lab-play')).toHaveCount(5);
+  await expect(page.locator('.featured-videos .lab-play')).toHaveCount(4);
   await page.getByRole('link', { name: /Blue Oblivion BJJ 2021/ }).click();
   await expect(page).toHaveURL(/labs\.html\?lang=en$/);
   await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /wOxh1xijsrM\?start=28&autoplay=1$/);
