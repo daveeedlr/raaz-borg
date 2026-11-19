@@ -147,3 +147,8 @@ Optional previous fight record (total competed, won, lost, drawn) is stored in f
 Private optional fighter photos are stored in a separate **non-public** `roster-avatars` Storage bucket (2 MB max; JPEG, PNG or WebP). RLS restricts file paths to the authenticated athlete's UUID prefix. The server validates ownership before storing `avatar_path` in the private profile; the client renders it through a short-lived signed URL. Uploads during registration are optional and, on a failed upload, the completed registration still routes to the portal for retry. Photos can also be changed or removed there. Uploading a photo does not authorize RA'AZ BORG to publish it publicly. The original public `fighter-avatars` bucket is left unchanged for backward compatibility and is not used by the new flow.
 
 Technical identifiers `rb_intake.applications`, `rb_submit_application_v2`, and the existing reviewer status machine are retained for compatibility; new registrations must use `rb_register_roster` and must not re-submit a second application.
+
+
+### Fight-record provenance
+
+The chart reads `public.fighter_fights` (fight-by-fight records) while `prior_competed/prior_won/prior_lost/prior_drawn` are athlete-declared totals. Existing RLS on `fighter_fights` allows athlete ownership-based changes; **do not describe those entries as independently verified** without an explicit staff verification workflow. Keep the two sources separate in all public or private presentations.
