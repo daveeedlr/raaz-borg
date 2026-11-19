@@ -7,7 +7,7 @@
 <meta name="description" content="Envía tu postulación de atleta a RA’AZ BORG en Quito." data-en-content="Send your athlete application to RA’AZ BORG in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=audit-20261119">
+<link rel="stylesheet" href="css/style.css?v=profile-v2">
 <style>
 .join-form-panel { display:grid; gap:1rem; min-width:0 }
 #athlete-interest { scroll-margin-top:145px }
@@ -24,6 +24,15 @@
 .join-progress { color:var(--cyan); font-size:.92rem; line-height:1.65; }
 .required-indicator { color:var(--acid); font-weight:700; }
 #recover[hidden] { display:none; }
+.athlete-fields { margin:0; padding:0; border:0; display:grid; gap:.85rem; min-width:0 }
+.athlete-fields legend { font-weight:700; font-size:1.1rem; margin-bottom:.6rem; color:var(--cyan) }
+.athlete-fields .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.athlete-fields .measure-row { display:flex; align-items:stretch; gap:6px; }
+.athlete-fields .measure-row input { min-width:0; flex:1 }
+.athlete-fields .measure-row select { width:auto; min-width:76px; flex:none; }
+.athlete-fields p { font-size:.85rem; color:var(--grey); margin:0 }
+@media(max-width:520px) { .athlete-fields .field-grid { grid-template-columns:1fr } }
+
 </style>
 </head>
 <body data-lang="es">
@@ -111,10 +120,40 @@
     <p class="account-message" id="feedback" role="status" aria-live="polite"></p>
     <form class="interest-form" id="application" hidden>
       <h2 data-en="Athlete details">Datos del atleta</h2>
-      <label for="alias"><span data-en="Name or alias">Nombre o alias</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
-      <label for="city"><span data-en="City">Ciudad</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
-      <label for="academy"><span data-en="Academy or team (optional)">Academia o equipo (opcional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
-      <label for="discipline"><span data-en="Discipline (optional)">Disciplina (opcional)</span><input id="discipline" name="discipline" type="text" maxlength="100"></label>
+      <p class="application-note" data-en="Complete your athlete profile once. On future applications, your saved details will be prefilled. Your email comes from your verified account.">Completa tu perfil una sola vez. En futuras postulaciones, tus datos aparecerán automáticamente. Tu correo se obtiene de tu cuenta verificada.</p>
+      <fieldset class="athlete-fields">
+        <legend data-en="Identity">Identidad</legend>
+        <div class="field-grid">
+          <label for="first_name"><span data-en="First name">Nombre</span> <span class="required-indicator" aria-hidden="true">*</span><input id="first_name" name="first_name" autocomplete="given-name" maxlength="80" required></label>
+          <label for="last_name"><span data-en="Last name">Apellido</span> <span class="required-indicator" aria-hidden="true">*</span><input id="last_name" name="last_name" autocomplete="family-name" maxlength="80" required></label>
+        </div>
+        <div class="field-grid">
+          <label for="alias"><span data-en="Fighter name / alias">Nombre de peleador o alias</span> <span class="required-indicator" aria-hidden="true">*</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
+          <label for="username"><span data-en="Username (optional)">Usuario (opcional)</span><input id="username" name="username" maxlength="40" minlength="3" pattern="[A-Za-z0-9_.-]{3,40}" autocomplete="username" title="3–40: letras, números, punto, guion o guion bajo"></label>
+        </div>
+        <label for="date_of_birth"><span data-en="Date of birth (optional)">Fecha de nacimiento (opcional)</span><input id="date_of_birth" name="date_of_birth" type="date" min="1900-01-01"></label>
+        <p data-en="Your age is calculated from your date of birth; you do not need to enter it twice.">Calculamos tu edad a partir de tu fecha de nacimiento; no necesitas ingresarla dos veces.</p>
+      </fieldset>
+      <fieldset class="athlete-fields">
+        <legend data-en="Training and division">Entrenamiento y división</legend>
+        <label for="academy"><span data-en="Academy / gym (optional)">Academia o gimnasio (opcional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
+        <div class="field-grid">
+          <label for="discipline"><span data-en="Discipline (optional)">Disciplina (opcional)</span><input id="discipline" name="discipline" type="text" maxlength="100"></label>
+          <label for="belt_stripes"><span data-en="Belt stripes (optional)">Franjas del cinturón (opcional)</span><select id="belt_stripes" name="belt_stripes"><option value="" data-en="Not specified">Sin especificar</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+        </div>
+        <div class="field-grid">
+          <label for="weight"><span data-en="Weight (optional)">Peso (opcional)</span><span class="measure-row"><input id="weight" name="weight" type="number" step="0.1" min="0.1" max="1499" inputmode="decimal"><select id="weight_unit" name="weight_unit" aria-label="Unidad de peso" data-en-label="Weight unit"><option value="kg">kg</option><option value="lb">lb</option></select></span></label>
+          <label for="height"><span data-en="Height (optional)">Estatura (opcional)</span><span class="measure-row"><input id="height" name="height" type="number" step="0.1" min="0.1" max="349" inputmode="decimal"><select id="height_unit" name="height_unit" aria-label="Unidad de estatura" data-en-label="Height unit"><option value="cm">cm</option><option value="in">in</option></select></span></label>
+        </div>
+      </fieldset>
+      <fieldset class="athlete-fields">
+        <legend data-en="Location">Ubicación</legend>
+        <div class="field-grid">
+          <label for="country"><span data-en="Country">País</span> <span class="required-indicator" aria-hidden="true">*</span><input id="country" name="country" required maxlength="80" autocomplete="country-name" value="Ecuador"></label>
+          <label for="state_province"><span data-en="Province / state (optional)">Provincia o estado (opcional)</span><input id="state_province" name="state_province" maxlength="80" autocomplete="address-level1"></label>
+        </div>
+        <label for="city"><span data-en="City">Ciudad</span> <span class="required-indicator" aria-hidden="true">*</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
+      </fieldset>
       <label for="footage"><span data-en="Profile or footage link (optional)">Enlace a tu perfil o video (opcional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
       <label class="contact-ok"><input type="checkbox" name="contact" required><span data-en="I agree to be contacted by RA’AZ BORG about this application.">Acepto que RA’AZ BORG me contacte sobre esta postulación.</span></label>
       <p class="application-note" data-en="Applying shows your interest; it does not guarantee a Grand Prix spot or confirm a fight. Our team will contact you by email.">Tu postulación expresa interés; no garantiza un cupo en el Grand Prix ni confirma un combate. Te contactaremos por correo.</p>
@@ -143,6 +182,6 @@
 
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
-<script src="js/interest.js?v=audit-20261119"></script>
+<script src="js/interest.js?v=profile-v2"></script>
 </body>
 </html>
