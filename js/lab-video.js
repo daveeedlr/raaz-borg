@@ -1,12 +1,9 @@
 (() => {
-  let active;
-
-  function closePlayer() {
-    if (!active) return;
-    active.panel.remove();
-    active.link.hidden = false;
-    active = null;
-  }
+  const dialog = document.querySelector('.lab-player');
+  const frame = dialog.querySelector('iframe');
+  const heading = dialog.querySelector('h2');
+  const fallback = dialog.querySelector('.lab-player-fallback');
+  let trigger;
 
   for (const link of document.querySelectorAll('.lab-play')) {
     link.addEventListener('click', event => {
@@ -23,44 +20,22 @@
       embed.searchParams.set('autoplay', '1');
 
       event.preventDefault();
-      closePlayer();
-      const panel = document.createElement('div');
-      panel.className = 'lab-player';
-      const frame = document.createElement('iframe');
+      trigger = link;
       const title = link.querySelector('h3') || document.getElementById(link.getAttribute('aria-labelledby'));
-      frame.title = title.textContent.trim();
+      heading.textContent = title.textContent.trim();
+      frame.title = heading.textContent;
       frame.src = embed.href;
-      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-      frame.referrerPolicy = 'strict-origin-when-cross-origin';
-
-      const actions = document.createElement('div');
-      actions.className = 'lab-player-actions';
-      const close = document.createElement('button');
-      close.type = 'button';
-      close.className = 'text-link';
-      const fallback = document.createElement('a');
-      fallback.className = 'text-link';
       fallback.href = watch.href;
-      fallback.target = '_blank';
-      fallback.rel = 'noopener';
-      actions.append(close, fallback);
-      panel.append(frame, actions);
-
-      const translate = () => {
-        const english = document.documentElement.lang === 'en';
-        close.textContent = english ? 'Close player' : 'Cerrar reproductor';
-        fallback.textContent = english ? 'Open on YouTube' : 'Abrir en YouTube';
-      };
-      close.addEventListener('click', () => {
-        closePlayer();
-        link.focus();
-      });
-      active = { link, panel, translate };
-      translate();
-      link.hidden = true;
-      link.after(panel);
-      frame.focus();
+      dialog.showModal();
     });
   }
-  document.addEventListener('languagechange', () => active?.translate());
+
+  dialog.querySelector('.lab-player-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    frame.removeAttribute('src');
+    trigger?.focus({ preventScroll: true });
+  });
 })();

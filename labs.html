@@ -7,7 +7,7 @@
 <meta name="description" content="Börg Lab, el espacio de entrenamiento y producción audiovisual de RA’AZ BORG en Quito." data-en-content="Börg Lab, the RA’AZ BORG training and media space in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=lab-hover-1">
+<link rel="stylesheet" href="css/style.css?v=lab-player-2">
 </head>
 <body data-lang="es">
 
@@ -305,6 +305,17 @@
   </div>
 </dialog>
 
+<dialog class="lab-player" aria-labelledby="lab-player-title">
+  <div class="lab-player-header">
+    <h2 id="lab-player-title"></h2>
+    <button type="button" class="text-link lab-player-close" autofocus data-en="Close player">Cerrar reproductor</button>
+  </div>
+  <iframe title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <div class="lab-player-actions">
+    <a class="text-link lab-player-fallback" target="_blank" rel="noopener" data-en="Open on YouTube">Abrir en YouTube</a>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
@@ -318,7 +329,7 @@
 </footer>
 
 <script src="js/main.js?v=visitor-flow-1"></script>
-<script src="js/lab-video.js?v=1" defer></script>
+<script src="js/lab-video.js?v=2" defer></script>
 <script src="js/visual-gallery.js" defer></script>
 </body>
 </html>

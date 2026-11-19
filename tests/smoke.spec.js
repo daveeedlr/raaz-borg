@@ -287,13 +287,22 @@ test('spectators and streetwear shoppers can follow their own paths on mobile', 
   await expect(page.locator('#conjunto-urbano button[data-size="L"]')).toHaveClass(/selected/);
 });
 
-test('Lab videos open inline and preserve timestamps and playlists', async ({ page }) => {
+test('Lab videos open in a larger player and preserve timestamps and playlists', async ({ page }) => {
   await page.route('https://www.youtube-nocookie.com/**', route => route.fulfill({ body: 'Video player stub' }));
   await page.goto('/labs.html?lang=en');
   await expect(page.locator('.featured-videos .lab-play')).toHaveCount(4);
   await page.getByRole('link', { name: /Blue Oblivion BJJ 2021/ }).click();
   await expect(page).toHaveURL(/labs\.html\?lang=en$/);
   await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /wOxh1xijsrM\?start=28&autoplay=1$/);
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  const card = page.locator('.lab-play[href*="wOxh1xijsrM"]');
+  const frame = dialog.locator('iframe');
+  expect((await frame.boundingBox()).width).toBeGreaterThan((await card.boundingBox()).width);
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+  await expect(card).toBeFocused();
+  await expect(page.locator('.lab-player iframe')).not.toHaveAttribute('src', /youtube/);
   await page.locator('#transmisiones .lab-play[href*="list="]').click();
   await expect(page.locator('.lab-player iframe')).toHaveCount(1);
   await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg/);

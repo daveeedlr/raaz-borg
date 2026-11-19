@@ -879,8 +879,24 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 #transmisiones { scroll-margin-top:135px }
 .transmissions-intro { margin-bottom:1.25rem; color:var(--text-2) }
 .transmission { max-width:720px }
-.lab-player { min-width:0; background:var(--carbon); border:1px solid var(--smoke) }
-.lab-player iframe { display:block; width:100%; aspect-ratio:16/9; border:0 }
+.lab-player {
+  position:fixed;
+  inset:0;
+  margin:auto;
+  width:min(94vw, 1160px, max(280px, calc((100dvh - 7.5rem) * 16 / 9)));
+  max-width:94vw;
+  max-height:96dvh;
+  padding:0;
+  background:var(--carbon);
+  color:var(--text);
+  border:1px solid var(--control-border);
+  border-radius:10px;
+}
+.lab-player::backdrop { background:rgba(6,6,10,.88) }
+.lab-player-header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.75rem }
+.lab-player-header h2 { font-size:clamp(1.1rem,2.6vw,1.8rem); line-height:1.1; overflow-wrap:anywhere }
+.lab-player-close { flex-shrink:0 }
+.lab-player iframe { display:block; width:100%; aspect-ratio:16/9; border:0; background:#080808 }
 .lab-player-actions { display:flex; flex-wrap:wrap; gap:.5rem; padding:.75rem }
 .lab-player-actions button { cursor:pointer }
 
@@ -943,3 +959,5 @@ h1[data-heading-outline]::before {
   .lab-video-thumb img, .lab-video-thumb .corner { transition:none }
   .lab-play:hover .lab-video-thumb img, .lab-play:focus-visible .lab-video-thumb img { transform:none }
 }
+
+body:has(.lab-player[open]) { overflow:hidden }
