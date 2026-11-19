@@ -164,6 +164,7 @@ body:not(.roster-gate-pending) #roster-gate { display:none !important; }
         <button id="auth-signin" type="button" aria-pressed="false" data-en="I have an account">Ya tengo cuenta</button>
       </div>
       <p class="auth-explainer" id="auth-explainer" aria-live="polite"></p>
+      <p class="auth-explainer" data-en="Notification emails follow your selected language (English or Spanish). You can change it later in your fighter portal.">Los correos de notificación se enviarán en el idioma que elijas (español o inglés). Puedes cambiarlo después desde tu portal de peleador.</p>
       <label for="email"><span data-en="Email address">Correo electrónico</span> <span class="required-indicator" aria-hidden="true">*</span><input id="email" type="email" autocomplete="email" required></label>
       <label for="password"><span data-en="Password">Contraseña</span> <span class="required-indicator" aria-hidden="true">*</span><input id="password" type="password" autocomplete="new-password" minlength="8" required></label>
       <button class="btn btn-acid" type="submit" id="primary-auth" data-en="Create account">Crear cuenta</button>
@@ -263,6 +264,7 @@ body:not(.roster-gate-pending) #roster-gate { display:none !important; }
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
 <script src="js/roster-avatar.js?v=roster-v1"></script>
-<script src="js/interest.js?v=roster-gate-v2"></script>
+<script src="js/athlete-language.js?v=langpref-v1"></script>
+<script src="js/interest.js?v=langpref-v1"></script>
 </body>
 </html>

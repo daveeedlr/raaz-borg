@@ -26,31 +26,37 @@ async function rpc(name:string,args:Record<string,unknown>,token:string) {
   if(!response.ok())throw new Error("Protected RPC failed "+response.status+" "+name);
   return response.json();
 }
-function emailTemplate(data:{alias?:string,realm?:string,belt?:string}) {
-  const who=escapeHtml(data.alias||"atleta");
-  const realm=escapeHtml(data.realm||"división por definir");
+function emailTemplate(data:{alias?:string,realm?:string,belt?:string,preferred_language?:string}) {
+  const en=data.preferred_language==="en";
+  const who=escapeHtml(data.alias|| (en?"fighter":"atleta"));
+  const realm=escapeHtml(data.realm|| (en?"division to be confirmed":"división por definir"));
   const belt=escapeHtml(data.belt||"—");
+  const heading=en?"Fighter registration received":"Registro de peleador recibido";
+  const greeting=en?"Hello ":"Hola ";
+  const explanation=en
+    ? "The RA’AZ BORG team confirms that your fighter roster registration has been received and reviewed. Your registered division is "
+    : "El equipo de RA’AZ BORG confirma que recibió y revisó tu inscripción al roster. Tu categoría registrada es ";
+  const label=en?" (belt: ":" (cinturón: ";
+  const nextSteps=en
+    ? " We will keep you informed about the next steps. <strong>If a fight is scheduled, we will notify you of your opponent, date and location.</strong> No fight is confirmed at this stage."
+    : " Te mantendremos informado sobre los siguientes pasos. <strong>Si se programa un combate, te notificaremos el rival, la fecha y el lugar.</strong> Por ahora no tienes un combate confirmado.";
+  const button=en?"My fighter portal":"Mi portal de peleador";
   const html=[
-    '<!doctype html><html><head><meta charset="utf-8"></head><body style="background:#111017;margin:0;padding:30px 14px;font:16px Arial,sans-serif;color:#fff">',
+    '<!doctype html><html lang="',en?"en":"es",'"><head><meta charset="utf-8"></head><body style="background:#111017;margin:0;padding:30px 14px;font:16px Arial,sans-serif;color:#fff">',
     '<main style="max-width:580px;margin:auto;padding:30px;background:#24212c;border-top:5px solid #c8f542">',
     '<p style="color:#c8f542;font-size:12px;letter-spacing:.14em">RA’AZ BORG · COMBAT RE-CODED</p>',
-    '<h1 style="font-size:27px;line-height:1.2">Registro recibido / Registration received</h1>',
-    '<p>Hola ',who,',</p>',
-    '<p>El equipo de RA’AZ BORG confirma que recibió y revisó tu inscripción al roster. Tu categoría registrada es <strong>',
-    realm,'</strong> (cinturón: ',belt,'). Te mantendremos informado sobre los siguientes pasos. ',
-    '<strong>Si se programa un combate, te notificaremos el rival, la fecha y el lugar.</strong>',
-    ' Por ahora no tienes un combate confirmado.</p>',
-    '<p>Hello ',who,',</p>',
-    '<p>The RA’AZ BORG team confirms that your roster registration has been received and reviewed.',
-    ' Your recorded division is <strong>',realm,'</strong> (belt: ',belt,'). ',
-    'We will keep you informed of the next steps. <strong>If a fight is scheduled,',
-    ' we will notify you of the opponent, date and location.</strong> No fight is confirmed yet.</p>',
+    '<h1 style="font-size:27px;line-height:1.2">',escapeHtml(heading),'</h1>',
+    '<p>',greeting,who,',</p><p>',explanation,'<strong>',realm,'</strong>',label,belt,').',
+    nextSteps,'</p>',
     '<a href="',SITE,'" style="display:inline-block;padding:13px 20px;background:#c8f542;color:#111;text-decoration:none;font-weight:bold">',
-    'Mi portal / My fighter portal</a>',
+    button,'</a>',
     '<p style="font-size:12px;color:#d8d3db;margin-top:25px">RA’AZ BORG · Quito, Ecuador</p>',
     '</main></body></html>'
   ].join("");
-  return {subject:"RA’AZ BORG · Registro recibido / Fighter registration acknowledged",html};
+  return {
+    subject:en?"RA’AZ BORG · Fighter registration acknowledged":"RA’AZ BORG · Registro de peleador recibido",
+    html
+  };
 }
 Deno.serve(async(req:Request)=>{
   if(req.method==="OPTIONS")return new Response(null,{status:204,headers});
@@ -73,7 +79,7 @@ Deno.serve(async(req:Request)=>{
   const sender=Deno.env.get("RAAZ_EMAIL_FROM");
   if(!provider||!sender)return respond({sent:false,queued:true,configured:false,
     message:"Receipt saved in fighter portal. Sender not configured."});
-  let email:{email?:string,alias?:string,realm?:string,belt?:string}|null=null;
+  let email:{email?:string,alias?:string,realm?:string,belt?:string,preferred_language?:string}|null=null;
   try{email=await rpc("rb_claim_ack_email",{p_application_id:id},token);}
   catch{return respond({error:"Could not claim registration email"},403);}
   if(!email)return respond({sent:false,claimed:false,

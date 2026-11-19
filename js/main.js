@@ -41,16 +41,33 @@
     try { localStorage.setItem("rb-lang", lang); } catch {}
   }
 
+  // Language selected by the user is distinct from a language restored from Supabase.
+  // Authenticated pages save user changes through a separate protected RPC.
+  function setLanguage(lang, source = "account") {
+    if (!["es", "en"].includes(lang)) return;
+    const changed = document.documentElement.lang !== lang;
+    remember(lang);
+    const url = new URL(location.href);
+    if (url.searchParams.get("lang") !== lang) {
+      url.searchParams.set("lang", lang);
+      history.replaceState(null, "", url);
+    }
+    if (!changed && source !== "user") return;
+    apply(lang);
+    document.dispatchEvent(new CustomEvent("languagechange", {
+      detail: { language: lang, source }
+    }));
+  }
+  window.RaazLang = Object.freeze({
+    get: () => document.documentElement.lang,
+    set: setLanguage
+  });
+
   apply(initial);
   if (query === initial) remember(initial);
   toggle?.addEventListener("click", () => {
     const lang = document.body.dataset.lang === "es" ? "en" : "es";
-    remember(lang);
-    const url = new URL(location.href);
-    url.searchParams.set("lang", lang);
-    history.replaceState(null, "", url);
-    apply(lang);
-    document.dispatchEvent(new Event("languagechange"));
+    setLanguage(lang, "user");
   });
 })();
 

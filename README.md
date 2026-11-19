@@ -169,3 +169,16 @@ Protected database functions: `public.rb_review_queue_v3` (staff queue with ackn
 Configure sending secrets using the project Edge Function Secrets settings; do not commit the provider key or service-role key to GitHub. For replies, the transactional email specifies `raazborgstudios@gmail.com`.
 
 **QA**: SQL tests verify reviewer-only access, idempotence, recipient derivation, single-claim delivery, and athlete-scoped visibility; Playwright tests verify the review button and the fighter's acknowledgement in Spanish and English. Email deliverability still requires a real provider-configured end-to-end test.
+
+## Saved athlete email language (Spanish / English)
+
+Every authenticated RA’AZ BORG account has a durable email-language preference in Supabase. The canonical private record is `rb_intake.athlete_language_preferences(athlete_id, preferred_language, updated_at)`, and `rb_intake.profiles.preferred_language` mirrors it once the athlete has submitted their roster registration. The allowed values are `es` and `en`; older accounts default to Spanish until changed.
+
+- **At signup:** the page includes `preferred_language` in non-sensitive Supabase Auth signup metadata. The `rb_language_on_signup` trigger saves it immediately, even when the fighter has not completed the registration form yet.
+- **At registration:** `rb_register_roster` saves the language chosen on the roster form; the new athlete profile automatically mirrors it.
+- **Across devices:** `public.rb_my_language()` retrieves the saved language when an authenticated user visits `competir.html` or `fighter-dashboard.html`; `window.RaazLang.set(..., 'account')` restores it without triggering a second write.
+- **On future changes:** using the Spanish/English switch on the registration or fighter-portal page invokes `public.rb_set_language(p_language)` to update the saved preference. `rb_set_language` uses `auth.uid()` and validates `es`/`en`, so a user cannot update another account. The portal displays the saved email language under Athlete Identity. The website still remembers the display language locally on other public pages.
+- **Emails:** both the signup/welcome and successful-login messages in `supabase/functions/athlete-notify/index.ts`, and the staff acknowledgement in `supabase/functions/roster-ack-email/index.ts`, now render **only the saved language**, including their subjects and action links. The authenticated staff-acknowledgement claim returns the target fighter's saved language; the athlete notification function obtains it through a service-role-only RPC.
+- **Delivery configuration remains separate:** `RESEND_API_KEY` and `RAAZ_EMAIL_FROM` with a verified sender are still required for actual delivery. Saving the preference does not send test emails or imply provider setup.
+
+A user who wants to change their notification language should sign in and use the language toggle on their **fighter portal**, where the preference label shows Spanish or English. New users can simply choose the language on the initial roster registration page.

@@ -17,6 +17,7 @@
   let checkingRoster = false;
   let loadNumber = 0;
   let requestKey = null;
+  const languagePreference = window.RaazAthleteLanguage.connect(client, () => user);
   const initial = new URL(location.href);
 
   for (const field of [belt, interest]) {
@@ -186,7 +187,12 @@
         if (user?.id === next.id) client.rpc('rb_queue_sign_in_alert').catch(() => {});
       }, 0);
     }
-    if (changed && user) setTimeout(() => { if (user) load(true); }, 0);
+    if (changed && user) setTimeout(() => {
+      if (user) {
+        void languagePreference.restore();
+        void load(true);
+      }
+    }, 0);
   });
   function callbackUrl() {
     const url = new URL(location.pathname, location.origin);
@@ -218,7 +224,7 @@
     action($('primary-auth'), async () => {
       const credentials = {email:$('email').value.trim(), password:$('password').value};
       const result = signingUp
-        ? await client.auth.signUp({...credentials, options:{emailRedirectTo:callbackUrl()}})
+        ? await client.auth.signUp({...credentials, options:{emailRedirectTo:callbackUrl(),data:{preferred_language:document.documentElement.lang}}})
         : await client.auth.signInWithPassword(credentials);
       if (result.error) {
         if (result.error.status === 429) say('Demasiados intentos. Espera un momento.','Too many attempts. Please wait a moment.','error');
@@ -293,6 +299,7 @@
           return;
         }
       }
+      profile.preferred_language = document.documentElement.lang;
       payload.p_profile = profile;
       const priorNames = ['prior_competed','prior_won','prior_lost','prior_drawn'];
       const priorValues = priorNames.map(name => form.elements[name].value.trim());

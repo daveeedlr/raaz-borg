@@ -118,6 +118,13 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
   let signinAlertQueued = false;
   await page.route('https://*.supabase.co/**', async route => {
     const path = new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/token')) data = {user,access_token:token,refresh_token:'test-session',token_type:'bearer',expires_in:3600};
     else if(path.endsWith('/user')) data = user;
@@ -200,6 +207,13 @@ test('fighter record donut shows real registered win/loss/draw proportions', asy
   const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user'))data=user;
     else if(path.endsWith('/rb_my_acknowledgement'))data=null;
@@ -517,6 +531,13 @@ test('reviewer dashboard denies unauthorised users and only exposes a verified q
   const rows=[record];
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/token')) data={user,access_token:token,refresh_token:'staff-session',token_type:'bearer',expires_in:3600};
     else if(path.endsWith('/user')) data=user;
@@ -565,6 +586,13 @@ test('roster members clicking Compete go to their portal without repeating fight
   const rows=[{id:'00000000-0000-4000-8000-000000000092',status:'submitted',interest:'gp',belt:'blue',submitted_at:new Date().toISOString()}];
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user'))data=user;
     else if(path.endsWith('/rb_my_profile_v2'))data=[{alias:'Returning',belt:'blue',city:'Quito'}];
@@ -604,6 +632,13 @@ test('roster screen never flashes while checking an authenticated returning figh
   const lookupGate=new Promise(resolve=>{releaseLookup=resolve;});
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     if(path.endsWith('/user'))return route.fulfill({json:user});
     if(path.endsWith('/rb_my_applications')) {
       await lookupGate;
@@ -658,6 +693,13 @@ test('private portal updates self-reported totals without changing fight-by-figh
   let savedPrior=null;
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user'))data=user;
     else if(path.endsWith('/rb_my_acknowledgement'))data=null;
@@ -710,6 +752,13 @@ test('private fighter photo uploads to the owner folder and can be removed from 
   const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4//8/AwAI/AL+ZykvAAAAAElFTkSuQmCC','base64');
   await page.route('https://*.supabase.co/**',async route=>{
     const u=new URL(route.request().url()),path=u.pathname,method=route.request().method();
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user')) data=user;
     else if(path.endsWith('/rb_my_acknowledgement'))data=null;
@@ -772,6 +821,13 @@ test('reviewer acknowledgement creates one receipt and reports email as queued i
   let acknowledgements=0,mailRequests=0;
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user'))data=user;
     else if(path.endsWith('/rb_review_queue_v3'))data=[record];
@@ -820,6 +876,13 @@ test('fighter sees a manual team receipt confirmation in the private portal', as
   const now=new Date().toISOString();
   await page.route('https://*.supabase.co/**',async route=>{
     const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/rb_my_language')) {
+      const chosen=new URL(page.url()).searchParams.get('lang');
+      return route.fulfill({json:chosen==='en' ? 'en' : 'es'});
+    }
+    if(path.endsWith('/rb_set_language')) {
+      return route.fulfill({json:route.request().postDataJSON().p_language});
+    }
     let data;
     if(path.endsWith('/user'))data=user;
     else if(path.endsWith('/rb_my_acknowledgement'))data={acknowledged_at:now,email_state:'pending'};
@@ -849,4 +912,78 @@ test('fighter sees a manual team receipt confirmation in the private portal', as
   await page.locator('#langToggle').click();
   await expect(page.locator('#acknowledgement-copy')).toContainText('If a fight is scheduled');
   await expect(page.locator('#winPercentage')).toHaveText('—');
+});
+
+test('athlete notification language follows saved account preference across sessions', async ({page})=>{
+  const id='00000000-0000-4000-8000-000000000111';
+  const user={id,email:'language@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[encode({alg:'HS256'}),encode({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'sig'].join('.');
+  let savedLanguage='en';
+  const saved=[];
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_language'))data=savedLanguage;
+    else if(path.endsWith('/rb_set_language')){
+      savedLanguage=route.request().postDataJSON().p_language;
+      saved.push(savedLanguage);
+      data=savedLanguage;
+    }
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
+    else if(path.endsWith('/rb_my_fighter_portal'))data={
+      email:user.email,username:'language_qa',name:'Language QA',preferred_language:savedLanguage,
+      application:{id:'00000000-0000-4000-8000-000000000112',status:'submitted',interest:'gp',realm:'Zaphire Trials'},
+      messages:[{kind:'welcome',created_at:new Date().toISOString()}],
+      stats:{wins:0,losses:0,draws:0,total:0},recent_fights:[]
+    };
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected language route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user
+    }));
+  },{user,token});
+  await page.goto('/fighter-dashboard.html?lang=es');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  // Server-selected English restores even on a device whose URL begins in Spanish.
+  await expect(page.locator('html')).toHaveAttribute('lang','en');
+  await expect(page.locator('#emailLanguageValue')).toHaveText('English');
+  await page.locator('#langToggle').click();
+  await expect.poll(()=>savedLanguage).toBe('es');
+  await expect(page.locator('#emailLanguageValue')).toHaveText('Español');
+  expect(saved).toEqual(['es']);
+  await page.goto('/fighter-dashboard.html?lang=en');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang','es');
+  await expect(page.locator('#emailLanguageValue')).toHaveText('Español');
+  expect(saved).toEqual(['es']); // Restoring a saved preference does not overwrite it.
+});
+
+test('new athlete signup sends the selected notification language in Auth metadata', async ({page})=>{
+  let signupBody=null;
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/signup')){
+      signupBody=route.request().postDataJSON();
+      return route.fulfill({json:{
+        user:{id:'00000000-0000-4000-8000-000000000113',
+              email:'language-signup@example.invalid',identities:[{id:'00000000-0000-4000-8000-000000000114'}]},
+        session:null
+      }});
+    }
+    throw Error('Unexpected signup request '+path);
+  });
+  await page.goto('/competir.html?lang=en');
+  await expect(page.locator('#roster-gate')).toBeHidden();
+  await page.locator('#email').fill('language-signup@example.invalid');
+  await page.locator('#password').fill('StrongQA-password-2026');
+  await page.locator('#primary-auth').click();
+  await expect.poll(()=>signupBody).not.toBeNull();
+  expect(signupBody.data.preferred_language).toBe('en');
+  expect(signupBody.email).toBe('language-signup@example.invalid');
 });

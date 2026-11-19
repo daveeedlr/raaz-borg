@@ -21,17 +21,26 @@ begin
   update auth.users set email_confirmed_at=now() where id=athlete;
   assert (select email_verified=true from public.fighter_registrations where user_id=athlete);
   insert into rb_intake.reviewers values(other_user);
+  assert (select preferred_language='es' from rb_intake.athlete_language_preferences where athlete_id=athlete);
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   perform set_config('request.jwt.claims',jsonb_build_object('sub',athlete,'session_id',gen_random_uuid(),'role','authenticated')::text,true);
   set local role authenticated;
   assert public.rb_queue_sign_in_alert() is true;
   assert public.rb_queue_sign_in_alert() is true;
+  assert public.rb_my_language()='es';
+  assert public.rb_set_language('en')='en';
+  assert public.rb_my_language()='en';
+  begin
+    perform public.rb_set_language('fr');
+    raise exception 'Invalid notification language was accepted';
+  exception when invalid_parameter_value then null; end;
   receipt := public.rb_submit_application(request,'Test','Quito','white','gp',true);
   assert receipt = public.rb_submit_application(request,'Test','Quito','white','gp',true);
   assert (select count(*)=1 from public.rb_my_applications() where suggested_realm='White Carbon Combat');
   assert (select (public.rb_my_fighter_portal()#>>'{application,status}')='submitted');
   assert (select (public.rb_my_fighter_portal()#>>'{stats,total}')::int=0);
   assert (select jsonb_array_length(public.rb_my_fighter_portal()->'messages')=1);
+  assert (public.rb_my_fighter_portal()->>'preferred_language')='en';
   assert public.rb_my_acknowledgement() is null;
   begin
     perform public.rb_acknowledge_roster(receipt);
@@ -40,6 +49,7 @@ begin
   perform public.rb_submit_application_v2(gen_random_uuid(), 'Test', 'Quito', 'blue', 'gp', true,
     'Academy', null, null, '{"first_name":"Ana","last_name":"Test","country":"Ecuador","weight":58,"weight_unit":"kg","height":162,"height_unit":"cm","belt_stripes":2}'::jsonb);
   assert (select count(*)=1 from public.rb_my_profile_v2() where first_name='Ana' and weight=58 and belt_stripes=2);
+  assert (select preferred_language='en' from rb_intake.profiles where athlete_id=athlete);
   assert (select count(*)=1 from public.fighter_registrations
     where user_id=athlete and first_name='Ana' and last_name='Test' and
       realm='Zaphire Trials' and weight=58 and height=162 and
@@ -73,6 +83,7 @@ begin
   assert (select count(*)=1 from public.rb_review_queue_v3()
     where id=receipt and acknowledged_at is not null and ack_email_state='pending');
   ack_email:=public.rb_claim_ack_email(receipt);
+  assert ack_email->>'preferred_language'='en';
   assert ack_email->>'email'=athlete::text||'@example.invalid';
   assert ack_email->>'realm'='White Carbon Combat';
   assert public.rb_claim_ack_email(receipt) is null;
@@ -111,6 +122,21 @@ begin
   assert (select status='in_review' from public.rb_my_applications() where id=receipt);
   assert public.rb_my_acknowledgement()->>'email_state'='sent';
   assert not has_function_privilege('anon','public.rb_acknowledge_roster(uuid)','execute');
+  -- Signup can carry a preference even before the athlete joins the roster.
+  declare v_language_user uuid:=gen_random_uuid();
+  begin
+    reset role;
+    insert into auth.users(id,email,email_confirmed_at,raw_user_meta_data)
+      values(v_language_user,v_language_user::text||'@example.invalid',now(),
+        '{"preferred_language":"en"}'::jsonb);
+    set local role authenticated;
+    perform set_config('request.jwt.claim.sub',v_language_user::text,true);
+    assert public.rb_my_language()='en';
+    perform set_config('request.jwt.claim.sub',athlete::text,true);
+  end;
+  assert not has_function_privilege('anon','public.rb_set_language(text)','execute');
+  assert not has_function_privilege('anon','public.rb_my_language()','execute');
+  assert not has_function_privilege('authenticated','public.rb_notification_language(uuid)','execute');
   assert not has_function_privilege('anon','public.rb_my_applications()','execute');
   assert not has_function_privilege('anon','public.rb_my_fighter_portal()','execute');
   assert not has_function_privilege('authenticated','public.rb_claim_athlete_emails(uuid,integer)','execute');

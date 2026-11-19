@@ -9,6 +9,16 @@
   const tr = (es,en) => document.documentElement.lang === 'en' ? en : es;
   let user = null, snapshot = null, loadSeq = 0, initialized = false;
   let photoSeq = 0, priorEditing = false, uploadingPhoto = false;
+  const languagePreference = window.RaazAthleteLanguage.connect(client, () => user, (lang, saved) => {
+    if (snapshot) {
+      snapshot.preferred_language = lang;
+      render();
+    }
+    if ($('emailLanguageSaving')) {
+      $('emailLanguageSaving').textContent = saved ? '' :
+        (document.documentElement.lang === 'en' ? ' · Saving…' : ' · Guardando…');
+    }
+  });
 
   const statuses = {
     submitted: {
@@ -248,6 +258,8 @@
     put('fighterDisplayName',display);
     put('fighterName',p.name);
     put('fighterUsername',p.username?'@'+p.username:null);
+    put('emailLanguageValue',p.preferred_language==='en'
+      ? tr('Inglés','English') : tr('Español','Spanish'));
     put('fighterFirstName',p.first_name);
     put('fighterLastName',p.last_name);
     put('fighterAlias',p.alias);
@@ -310,7 +322,10 @@
     initialized=true;
     user=next;
     if(!next){snapshot=null;++loadSeq;++photoSeq;visible('signin');return;}
-    if(changed)load();
+    if(changed) {
+      void languagePreference.restore();
+      void load();
+    }
   }
   $('portal-refresh').onclick=load;
   $('portal-photo-save').onclick=savePhoto;

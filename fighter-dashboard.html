@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=profile-v2">
 <link rel="stylesheet" href="css/fighter-dashboard.css?v=portal-1">
+<style>.portal-language-note{color:#e5dfea;font:600 12px/1.6 var(--mono);margin:.4rem 0 0;overflow-wrap:anywhere}.portal-language-note strong{color:var(--portal-win)}#emailLanguageSaving{color:#b1e9fc}</style>
 </head>
 <body data-lang="es">
 <a class="skip-link" href="#contenido" data-en="Skip to content">Saltar al contenido</a>
@@ -109,6 +110,7 @@
             <div>
               <h2 id="fighterName">—</h2>
               <p id="fighterUsername" class="portal-username">—</p>
+              <p class="portal-language-note"><span data-en="Email language">Idioma de correos</span>: <strong id="emailLanguageValue">Español</strong><span id="emailLanguageSaving" aria-live="polite"></span></p>
             </div>
           </div>
           <dl class="portal-profile-facts">
@@ -210,6 +212,7 @@
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
 <script src="js/roster-avatar.js?v=roster-v1"></script>
-<script src="js/fighter-dashboard.js?v=ack-receipt-v1"></script>
+<script src="js/athlete-language.js?v=langpref-v1"></script>
+<script src="js/fighter-dashboard.js?v=langpref-v1"></script>
 </body>
 </html>
