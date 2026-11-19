@@ -66,7 +66,7 @@ test('shop product lightbox still opens and closes', async ({ page }) => {
   await page.goto('/shop.html');
   const lightbox = page.locator('#productLightbox');
   await expect(lightbox).toBeHidden();
-  await page.locator('.product-gallery img').first().click();
+  await page.locator('#white-main').click();
   await expect(lightbox).toBeVisible();
   await expect(lightbox.locator('#lightboxImage')).toHaveAttribute('src', /white-set\.png/);
   await lightbox.locator('.lightbox-close').click();
@@ -81,7 +81,7 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await expect(page.getByRole('link', { name: 'Explorar los reinos', exact: true })).toHaveAttribute('href', '#reinos');
   await expect(page.locator('.realm-preview')).toHaveCount(7);
   await expect(page.locator('.realm-preview img')).toHaveCount(7);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('en Quito');
+  await expect(page.locator('.show-cover .kicker')).toContainText('QUITO');
   await page.locator('#langToggle').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.locator('#burger').click();
@@ -111,7 +111,7 @@ test('Spanish-first realm map, English links and saved preference work on mobile
 
 test('athlete inquiry validates, prepares a private email draft and supports both languages', async ({ page }) => {
   await page.goto('/');
-  await page.locator('.hero-ctas').getByRole('link', { name: 'Quiero competir' }).click();
+  await page.getByRole('navigation').getByRole('link', { name: 'Competir', exact: true }).click();
   await page.getByRole('button', { name: 'Preparar correo' }).click();
   await expect(page.locator('#email-preview')).toBeHidden();
   await page.getByLabel('Nombre o alias').fill('Atleta de prueba');
@@ -260,4 +260,29 @@ test('a visitor can find a belt on mobile and carry it into an inquiry', async (
   await page.goto('/labs.html?lang=es');
   await page.getByRole('link', { name: 'Consultar por entrenamientos' }).click();
   await expect(page.locator('#interest')).toHaveValue('lab');
+});
+
+test('spectators and streetwear shoppers can follow their own paths on mobile', async ({ page }) => {
+  await assertResponsive(page, '/?lang=es');
+  const trailer = page.locator('.show-film video');
+  await expect(trailer).toHaveAttribute('controls', '');
+  await expect(trailer).not.toHaveAttribute('autoplay', '');
+  const source = await trailer.locator('source').getAttribute('src');
+  expect((await page.request.head('/' + source)).ok()).toBeTruthy();
+  await page.getByRole('link', { name: 'Quiero ir al show' }).click();
+  await expect(page).toHaveURL(/clashes\.html#publico$/);
+  await expect(page.getByRole('link', { name: 'Consultar por el show en Instagram' })).toHaveAttribute('href', 'https://www.instagram.com/raazborg/');
+  await page.goto('/?lang=en');
+  await page.getByRole('link', { name: 'Shop streetwear' }).click();
+  await expect(page.locator('#ropa-urbana h2')).toBeInViewport();
+  await expect(page.locator('#ropa-urbana .p-card')).toHaveCount(2);
+  await page.goto('/?lang=en');
+  await page.getByRole('link', { name: 'Dragon Kimono', exact: true }).click();
+  await expect(page.locator('#kimono-dragon')).toBeInViewport();
+  await expect(page.locator('#kimono-dragon .order-product')).toHaveCount(2);
+  await page.goto('/?lang=es');
+  await page.getByRole('link', { name: 'Conjunto urbano', exact: true }).click();
+  await expect(page.locator('#conjunto-urbano')).toBeInViewport();
+  await page.locator('#conjunto-urbano button[data-size="L"]').click();
+  await expect(page.locator('#conjunto-urbano button[data-size="L"]')).toHaveClass(/selected/);
 });

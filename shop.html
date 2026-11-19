@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-en="Shop — RAAZ BORG">Tienda — RAAZ BORG</title>
-<meta name="description" content="Indumentaria oficial de RA’AZ BORG en Quito, Ecuador." data-en-content="Official RA’AZ BORG combatwear in Quito, Ecuador.">
+<meta name="description" content="Ropa urbana y de entrenamiento de RA’AZ BORG en Quito." data-en-content="RA’AZ BORG streetwear and training gear in Quito, Ecuador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=visitor-flow-1">
+<link rel="stylesheet" href="css/style.css?v=show-street-1">
 </head>
 <body data-lang="es">
 
@@ -33,16 +33,137 @@
   <div class="scanlines"></div>
   <div class="wrap">
     <span class="kicker">RA’AZ BORG · Quito</span>
-    <h1 data-en="Combatwear shop">Tienda de grappling</h1>
+    <h1 data-en="Streetwear and training gear">Ropa urbana y de entrenamiento</h1>
     <p class="lead" data-en="Choose a garment and size, then contact us by email or Instagram to check availability and place your order.">Elige una prenda y tu talla. Escríbenos por correo o Instagram para consultar la disponibilidad y hacer tu pedido.</p>
+    <div class="event-actions">
+      <a class="text-link" href="#ropa-urbana" data-en="View streetwear">Ver ropa urbana</a>
+      <a class="text-link" href="#entrenamiento" data-en="View training gear">Ver ropa de entrenamiento</a>
+    </div>
   </div>
 </header>
 
 <div class="shop-background">
 <section id="drop" aria-label="Catálogo" data-en-label="Catalog">
   <div class="wrap">
-    <div class="p-grid reveal">
+    <div class="shop-range" id="ropa-urbana">
+      <h2 data-en="Streetwear">Ropa urbana</h2>
+      <div class="p-grid">
+      <!-- DRAGON KIMONO -->
+      <div class="p-card" id="kimono-dragon">
+        <span class="p-badge">UNISEX</span>
 
+        <div class="p-photo product-gallery">
+          <img id="dragon-kimono" src="assets/dragon-kimono-front.png" alt="Kimono negro Dragón de RAAZ BORG" data-en-alt="RAAZ BORG black dragon kimono">
+        </div>
+
+        <div class="product-thumbnails">
+          <button type="button" class="thumb">
+            <img src="assets/dragon-kimono-front.png" alt="Frente" data-en-alt="Front">
+          </button>
+          <button type="button" class="thumb">
+            <img src="assets/dragron-kimono-back.png" alt="Vista en ángulo" data-en-alt="Angle">
+          </button>
+        </div>
+
+        <div class="p-info">
+          <h3 data-en="DRAGON KIMONO">KIMONO DRAGÓN</h3>
+          <span class="p-type">
+            <span class="lang-en">Unisex streetwear kimono</span>
+            <span class="lang-es">Kimono urbano unisex</span>
+          </span>
+
+          <p class="stock-status">
+            <span class="lang-en">ONE SIZE — UNISEX</span>
+            <span class="lang-es">TALLA ÚNICA — UNISEX</span>
+          </p>
+
+          <div class="size-row selectable-sizes" data-product="Dragon Kimono">
+            <button type="button" class="selected" data-size="One Size" data-en="ONE SIZE">TALLA ÚNICA</button>
+          </div>
+
+          <div class="p-row">
+            <span class="p-price">
+              <span class="lang-en">INQUIRE</span>
+              <span class="lang-es">CONSULTAR</span>
+            </span>
+            <div class="order-options">
+              <button type="button" class="p-cart order-product"
+                      data-method="email">
+                <span class="lang-en">EMAIL </span>
+                <span class="lang-es">EMAIL</span>
+              </button>
+
+              <button type="button" class="p-cart order-product"
+                      data-method="instagram">
+                <span class="lang-en">INSTAGRAM DM</span>
+                <span class="lang-es">MENSAJE INSTAGRAM</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACK SUIT -->
+      <div class="p-card" id="conjunto-urbano">
+        <span class="p-badge" data-en="TRACK SUIT">CONJUNTO DEPORTIVO</span>
+
+        <div class="p-photo product-gallery">
+          <img id="tracksuit" src="assets/tracksuit-front.png" alt="Conjunto deportivo de RAAZ BORG" data-en-alt="RAAZ BORG tracksuit">
+        </div>
+
+        <div class="product-thumbnails">
+          <button type="button" class="thumb">
+            <img src="assets/tracksuit-front.png" alt="Conjunto deportivo de frente" data-en-alt="Tracksuit front">
+          </button>
+          <button type="button" class="thumb">
+            <img src="assets/tracksuit-back.png" alt="Conjunto deportivo de espalda" data-en-alt="Tracksuit back">
+          </button>
+        </div>
+
+        <div class="p-info">
+          <h3 data-en="URBANWEAR TRACKSUIT">CONJUNTO DEPORTIVO URBANO</h3>
+          <span class="p-type">
+            <span class="lang-en">HOODIE + MATCHING SWEATPANTS</span>
+            <span class="lang-es">CHOMPA CON CAPUCHA + JOGGER</span>
+          </span>
+
+          <p class="stock-status">
+            <span class="lang-en">AVAILABLE — M,XL SOLD OUT</span>
+            <span class="lang-es">DISPONIBLE — M,XL AGOTADA</span>
+          </p>
+
+          <div class="size-row selectable-sizes" data-product="Urbanwear Tracksuit">
+            <button type="button" class="selected" data-size="S">S</button>
+            <button type="button" disabled="M">M</button>
+            <button type="button" data-size="L">L</button>
+            <button type="button" disabled>XL</button>
+          </div>
+
+          <div class="p-row">
+            <span class="p-price">
+              <span class="lang-en">INQUIRE</span>
+              <span class="lang-es">CONSULTAR</span>
+            </span>
+            <div class="order-options">
+              <button type="button" class="p-cart order-product"
+                      data-method="email">
+                <span class="lang-en">EMAIL</span>
+                <span class="lang-es">EMAIL</span>
+              </button>
+              <button type="button" class="p-cart order-product"
+                      data-method="instagram">
+                <span class="lang-en">INSTAGRAM DM</span>
+                <span class="lang-es">MENSAJE INSTAGRAM</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="shop-range" id="entrenamiento">
+      <h2 data-en="Training gear">Ropa de entrenamiento</h2>
+      <div class="p-grid">
       <!-- WHITE RASHGUARD SET -->
       <div class="p-card">
         <span class="p-badge" data-en="COMBAT SET">CONJUNTO DE COMBATE</span>
@@ -90,7 +211,7 @@
               <span class="lang-en">INQUIRE</span>
               <span class="lang-es">CONSULTAR</span>
             </span>
-                      
+
             <div class="order-options">
               <button type="button" class="p-cart order-product"
                       data-method="email">
@@ -175,117 +296,6 @@
           </div>
         </div>
       </div>
-
-      <!-- DRAGON KIMONO -->
-      <div class="p-card">
-        <span class="p-badge">UNISEX</span>
-
-        <div class="p-photo product-gallery">
-          <img id="dragon-kimono" src="assets/dragon-kimono-front.png" alt="Kimono negro Dragón de RAAZ BORG" data-en-alt="RAAZ BORG black dragon kimono">
-        </div>
-
-        <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/dragon-kimono-front.png" alt="Frente" data-en-alt="Front">
-          </button>
-          <button type="button" class="thumb">
-            <img src="assets/dragron-kimono-back.png" alt="Vista en ángulo" data-en-alt="Angle">
-          </button>
-        </div>
-
-        <div class="p-info">
-          <h3 data-en="DRAGON KIMONO">KIMONO DRAGÓN</h3>
-          <span class="p-type">
-            <span class="lang-en">Unisex streetwear kimono</span>
-            <span class="lang-es">Kimono urbano unisex</span>
-          </span>
-
-          <p class="stock-status">
-            <span class="lang-en">ONE SIZE — UNISEX</span>
-            <span class="lang-es">TALLA ÚNICA — UNISEX</span>
-          </p>
-
-          <div class="size-row selectable-sizes" data-product="Dragon Kimono">
-            <button type="button" class="selected" data-size="One Size" data-en="ONE SIZE">TALLA ÚNICA</button>
-          </div>
-
-          <div class="p-row">
-            <span class="p-price">
-              <span class="lang-en">INQUIRE</span>
-              <span class="lang-es">CONSULTAR</span>
-            </span>
-            <div class="order-options">
-              <button type="button" class="p-cart order-product"
-                      data-method="email">
-                <span class="lang-en">EMAIL </span>
-                <span class="lang-es">EMAIL</span>
-              </button>
-
-              <button type="button" class="p-cart order-product"
-                      data-method="instagram">
-                <span class="lang-en">INSTAGRAM DM</span>
-                <span class="lang-es">MENSAJE INSTAGRAM</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRACK SUIT -->
-      <div class="p-card">
-        <span class="p-badge" data-en="TRACK SUIT">CONJUNTO DEPORTIVO</span>
-      
-        <div class="p-photo product-gallery">
-          <img id="tracksuit" src="assets/tracksuit-front.png" alt="Conjunto deportivo de RAAZ BORG" data-en-alt="RAAZ BORG tracksuit">
-        </div>
-      
-        <div class="product-thumbnails">
-          <button type="button" class="thumb">
-            <img src="assets/tracksuit-front.png" alt="Conjunto deportivo de frente" data-en-alt="Tracksuit front">
-          </button>
-          <button type="button" class="thumb">
-            <img src="assets/tracksuit-back.png" alt="Conjunto deportivo de espalda" data-en-alt="Tracksuit back">
-          </button>
-        </div>
-      
-        <div class="p-info">
-          <h3 data-en="URBANWEAR TRACKSUIT">CONJUNTO DEPORTIVO URBANO</h3>
-          <span class="p-type">
-            <span class="lang-en">HOODIE + MATCHING SWEATPANTS</span>
-            <span class="lang-es">SUDADERA + PANTALON</span>
-          </span>
-      
-          <p class="stock-status">
-            <span class="lang-en">AVAILABLE — M,XL SOLD OUT</span>
-            <span class="lang-es">DISPONIBLE — M,XL AGOTADA</span>
-          </p>
-      
-          <div class="size-row selectable-sizes" data-product="Urbanwear Tracksuit">
-            <button type="button" class="selected" data-size="S">S</button>
-            <button type="button" disabled="M">M</button>
-            <button type="button" data-size="L">L</button>
-            <button type="button" disabled>XL</button>
-          </div>
-      
-          <div class="p-row">
-            <span class="p-price">
-              <span class="lang-en">INQUIRE</span>
-              <span class="lang-es">CONSULTAR</span>
-            </span>
-            <div class="order-options">
-              <button type="button" class="p-cart order-product"
-                      data-method="email">
-                <span class="lang-en">EMAIL</span>
-                <span class="lang-es">EMAIL</span>
-              </button>
-              <button type="button" class="p-cart order-product"
-                      data-method="instagram">
-                <span class="lang-en">INSTAGRAM DM</span>
-                <span class="lang-es">MENSAJE INSTAGRAM</span>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
