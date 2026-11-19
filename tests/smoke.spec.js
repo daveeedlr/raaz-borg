@@ -99,7 +99,14 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await oxide.locator('summary').click();
   await expect(oxide).toHaveAttribute('open', '');
   await expect(oxide.locator('.realm-rank')).toHaveText('Experto');
-  await expect(page.locator('#realm-deck a')).toHaveCount(0);
+  await expect(page.locator('#realm-deck a')).toHaveCount(7);
+  const channel = 'https://www.youtube.com/@raazborg2020/featured';
+  const video = 'https://www.youtube.com/watch?v=QzLvQCTzAXY&list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg';
+  await expect(oxide.getByRole('link', { name: 'Ver Oxide en YouTube' })).toHaveAttribute('href', video);
+  const otherCards = page.locator('.realm-preview:not(#realm-oxide)');
+  for (const card of await otherCards.all()) {
+    await expect(card.locator('.realm-reverse a')).toHaveAttribute('href', channel);
+  }
   await page.goto('/clashes.html#gp-oxide-overdrive');
   await expect(page.locator('#gpArchiveTitle')).toHaveText('Oxide Overdrive');
   await expect(page.locator('#gpArchiveOverlay')).toBeVisible();
@@ -165,6 +172,14 @@ test.describe('mobile realm navigation', () => {
     await page.goto('/?lang=es#reinos');
     const card = page.locator('.realm-preview').first();
     await card.locator('summary').tap();
+    const channelLink = card.getByRole('link', { name: 'Ver el canal de YouTube' });
+    await page.context().route('https://www.youtube.com/**', route => route.fulfill({ contentType: 'text/html', body: '' }));
+    const popupPromise = page.waitForEvent('popup');
+    await channelLink.tap();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL('https://www.youtube.com/@raazborg2020/featured');
+    await popup.close();
+    await expect(card).toHaveAttribute('open', '');
     await card.locator('.realm-reverse p').tap();
     await expect(card).not.toHaveAttribute('open', '');
     const routes = page.locator('.atlas-related');
@@ -188,6 +203,7 @@ test('Clashes points to one bilingual set of realm cards and old realm bookmarks
   await page.goto('/clashes.html?lang=en#realm-oxide');
   await expect(page).toHaveURL(/index\.html\?lang=en#realm-oxide$/);
   await expect(page.locator('#realm-oxide')).toHaveAttribute('open', '');
+  await expect(page.locator('#realm-oxide').getByRole('link', { name: 'Watch Oxide on YouTube' })).toBeVisible();
   const oxideSummary = page.locator('#realm-oxide .realm-reverse p [data-en]');
   await expect(oxideSummary).toBeVisible();
   await expect(oxideSummary).toHaveAttribute('data-en', /\S/);
