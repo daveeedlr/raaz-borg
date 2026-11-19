@@ -809,3 +809,15 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   .shop-range .p-grid, .screen-archive { grid-template-columns:1fr }
   #ediciones, .shop-range, .shop-range .p-card { scroll-margin-top:85px }
 }
+
+/* Börg Lab video archive */
+#encuentros { scroll-margin-top:135px }
+.encounter { display:flex; flex-direction:column; min-width:0; color:var(--text); text-decoration:none; border:1px solid var(--smoke); background:var(--carbon) }
+.encounter img { display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; background:#101117 }
+.encounter-caption { flex:1; display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between; gap:.65rem; padding:1rem }
+.encounter-caption h3 { font-size:clamp(1.375rem,2vw,1.85rem); line-height:1.15; text-wrap:balance }
+.encounter-vs, .encounter-watch { color:var(--cyan) }
+.encounter-watch { font:500 .875rem/1.5 var(--body) }
+.encounter:hover, .encounter:focus-visible { border-color:var(--cyan) }
+.encounter:hover .encounter-watch, .encounter:focus-visible .encounter-watch { text-decoration:underline; text-underline-offset:.2em }
+@media (max-width:650px) { #encuentros { scroll-margin-top:80px } }
