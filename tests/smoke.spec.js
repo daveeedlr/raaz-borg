@@ -136,7 +136,7 @@ test('athletes sign in, submit, return to their status and sign out in both lang
   await page.goto('/competir.html?belt=blue&interest=gp&lang=es');
   await page.locator('#auth-signin').click();
   await page.getByLabel('Correo electrónico').fill(user.email);
-  await page.getByLabel('Contraseña', {exact:true}).fill('test-password');
+  await page.locator('#password').fill('test-password');
   await page.getByRole('button',{name:'Iniciar sesión'}).click();
   await page.getByLabel('Nombre o alias').fill('Test');
   await page.getByLabel('Ciudad',{exact:true}).fill('Quito');
