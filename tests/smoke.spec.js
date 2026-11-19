@@ -286,3 +286,17 @@ test('spectators and streetwear shoppers can follow their own paths on mobile', 
   await page.locator('#conjunto-urbano button[data-size="L"]').click();
   await expect(page.locator('#conjunto-urbano button[data-size="L"]')).toHaveClass(/selected/);
 });
+
+test('Lab videos open inline and preserve timestamps and playlists', async ({ page }) => {
+  await page.route('https://www.youtube-nocookie.com/**', route => route.fulfill({ body: 'Video player stub' }));
+  await page.goto('/labs.html?lang=en');
+  await expect(page.locator('.featured-videos .lab-play')).toHaveCount(5);
+  await page.getByRole('link', { name: /Blue Oblivion BJJ 2021/ }).click();
+  await expect(page).toHaveURL(/labs\.html\?lang=en$/);
+  await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /wOxh1xijsrM\?start=28&autoplay=1$/);
+  await page.locator('#transmisiones .lab-play').click();
+  await expect(page.locator('.lab-player iframe')).toHaveCount(1);
+  await expect(page.locator('.lab-player iframe')).toHaveAttribute('src', /list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg/);
+  await page.getByRole('button', { name: 'Close player' }).click();
+  await expect(page.locator('#transmisiones .lab-play')).toBeFocused();
+});

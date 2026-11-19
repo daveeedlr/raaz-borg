@@ -872,3 +872,13 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 .featured-video-copy h3 { font-size:clamp(1.5rem,3vw,2.25rem) }
 .featured-video-copy p { color:var(--text-2); margin-top:.55rem; max-width:57ch }
 @media (max-width:680px) { .featured-video-grid { grid-template-columns:1fr } }
+
+.lab-play[hidden] { display:none }
+.lab-transmissions { padding-block:clamp(32px,5vw,72px); border-top:1px solid var(--smoke) }
+#transmisiones { scroll-margin-top:135px }
+.transmissions-intro { margin-bottom:1.25rem; color:var(--text-2) }
+.transmission { max-width:720px }
+.lab-player { min-width:0; background:var(--carbon); border:1px solid var(--smoke) }
+.lab-player iframe { display:block; width:100%; aspect-ratio:16/9; border:0 }
+.lab-player-actions { display:flex; flex-wrap:wrap; gap:.5rem; padding:.75rem }
+.lab-player-actions button { cursor:pointer }
