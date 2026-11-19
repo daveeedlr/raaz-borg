@@ -117,8 +117,8 @@
       put('winPercentage','—');
       donut.setAttribute('aria-label',tr('No hay combates registrados','No fights recorded'));
       $('record-caption').textContent=tr(
-        'Todavía no se han registrado resultados de combates aquí. El gráfico permanece gris; tu historial previo declarado aparece en Identidad del atleta.',
-        'No confirmed fight results have been recorded here yet. The donut remains grey; your self-reported previous record appears under Athlete Identity.'
+        'Todavía no se han registrado resultados individuales de combates aquí. El gráfico permanece gris; tu historial previo declarado aparece en Identidad del atleta.',
+        'No fight-by-fight results have been recorded here yet. The donut stays grey; your self-reported previous record appears under Athlete Identity.'
       );
       return;
     }
