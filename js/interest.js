@@ -62,7 +62,7 @@
     const box = $('receipts');
     box.replaceChildren();
     if (!user || !historyRows) return;
-    if (!historyRows.length) box.textContent = tr('Aún no tienes postulaciones.','You have no applications yet.');
+    if (!historyRows.length) box.textContent = tr('Tu cuenta ya existe, pero todavía no has enviado una postulación. Completa los datos de atleta más abajo y pulsa Enviar postulación para registrarla.','Your account already exists, but you have not submitted an athlete application yet. Complete the athlete details below and press Submit application to save one.');
     for (const row of historyRows) {
       const entry = document.createElement('article');
       const option = Array.from(interest.options).find(o => o.value === row.interest);
@@ -147,12 +147,12 @@
         : await client.auth.signInWithPassword(credentials);
       if (result.error) {
         if (result.error.status === 429) say('Demasiados intentos. Espera un momento.','Too many attempts. Please wait a moment.');
-        else if (signingUp) say('No se pudo crear la cuenta. Comprueba el correo y usa una contraseña de al menos ocho caracteres.','Could not create the account. Check your email address and use a password of at least eight characters.');
-        else say('Comprueba tus credenciales y confirma tu correo antes de iniciar sesión.','Check your credentials and confirm your email before signing in.');
+        else if (signingUp) say('No se pudo completar el registro. Verifica los datos; si ya registraste ese correo, pulsa Ya tengo cuenta o recupera tu contraseña.','Could not complete registration. Check your details; if you already registered this email, choose I have an account or recover your password.');
+        else say('No pudimos iniciar sesión. Revisa correo y contraseña o pulsa ¿Olvidaste tu contraseña? para recuperar el acceso.','Could not sign in. Check your email and password or select Forgot your password? to recover access.');
       } else if (!result.data.session) {
         signingUp = false;
         render();
-        say('Revisa tu correo para confirmar tu cuenta. Luego inicia sesión aquí.','Check your email to confirm your account. Then sign in here.');
+        say('Si es una cuenta nueva, revisa el correo para confirmar tu dirección. Si ese correo ya estaba registrado, inicia sesión o recupera tu contraseña.','If this is a new account, check your email for a confirmation link. If you already registered this address, sign in or use password recovery.');
       }
     });
   };
