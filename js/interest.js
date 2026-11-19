@@ -85,7 +85,7 @@
     if (info?.data?.[0]) {
       const saved = info.data[0];
       for (const name of ['alias','city','academy','discipline','first_name','last_name','date_of_birth','weight','height','belt_stripes','country','state_province','username']) {
-        if (!form.elements[name].value) form.elements[name].value = saved[name] || '';
+        if (name === 'country' ? Boolean(saved[name]) : !form.elements[name].value) form.elements[name].value = saved[name] || '';
       }
       for (const unit of ['weight_unit','height_unit']) {
         if (saved[unit]) form.elements[unit].value = saved[unit];
