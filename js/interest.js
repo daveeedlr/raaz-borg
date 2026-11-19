@@ -50,12 +50,12 @@
     $('feedback').textContent = message.length ? tr(...message) : '';
     drawHistory();
   }
-  const statuses = {submitted:['Recibida','Submitted'],in_review:['En revisión','In review'],invited:['Invitación enviada','Invited'],closed:['Cerrada','Closed']};
+  const statuses = {submitted:['Postulación recibida','Application received'],in_review:['En revisión','In review'],invited:['Invitación enviada','Invited'],closed:['Cerrada','Closed']};
   function drawHistory() {
     const box = $('receipts');
     box.replaceChildren();
     if (!user || !historyRows) return;
-    if (!historyRows.length) box.textContent = tr('Aún no tienes solicitudes.','You have no applications yet.');
+    if (!historyRows.length) box.textContent = tr('Aún no tienes postulaciones.','You have no applications yet.');
     for (const row of historyRows) {
       const entry = document.createElement('article');
       const option = Array.from(interest.options).find(o => o.value === row.interest);
@@ -181,7 +181,10 @@
       form.elements.contact.checked = false;
       await load(false);
       if (user?.id !== owner) return;
-      say('Solicitud recibida. Comprobante '+id,'Application received. Receipt '+id);
+      say(
+        '¡Gracias por postularte! Recibimos tu postulación. Nuestro equipo la revisará y te escribirá al correo de tu cuenta para contarte qué sigue. Puedes volver aquí para consultar tu estado.',
+        'Thanks for applying! We received your application. Our team will review it and email you directly about the next steps. You can sign back in anytime to check your status.'
+      );
       $('feedback').scrollIntoView({block:'center'});
     });
   };
