@@ -109,13 +109,14 @@ to { transform:translateX(-50%) }
 .f-grid.cols3 { grid-template-columns:repeat(3,1fr) }
 .f-card { position:relative; background:var(--carbon); border:1px solid var(--smoke); overflow:hidden; text-decoration:none; color:var(--text) }
 .f-card .f-photo { aspect-ratio:3/4; overflow:hidden; position:relative }
-.f-card .f-photo img { width:100%; height:100%; object-fit:cover; filter:grayscale(.55) contrast(1.05); transition:filter .35s,transform .45s }
-.f-card:hover .f-photo img { filter:grayscale(0) saturate(1.2); transform:scale(1.045) }
+.f-card .f-photo img, .lab-video-thumb img { width:100%; height:100%; object-fit:cover; filter:grayscale(.55) contrast(1.05); transition:filter .35s,transform .45s }
+.f-card:hover .f-photo img,
+.lab-play:hover .lab-video-thumb img, .lab-play:focus-visible .lab-video-thumb img { filter:grayscale(0) saturate(1.2); transform:scale(1.045) }
 .f-card .f-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(to top,rgba(8,8,10,.92) 0%,transparent 45%) }
-.f-card .corner { position:absolute; width:22px; height:22px; border:2px solid var(--cyan); z-index:3; opacity:0; transition:opacity .25s }
-.f-card .c-tl { top:10px; left:10px; border-right:none; border-bottom:none }
-.f-card .c-br { bottom:10px; right:10px; border-left:none; border-top:none }
-.f-card:hover .corner { opacity:1 }
+.f-card .corner, .lab-video-thumb .corner { position:absolute; width:22px; height:22px; border:2px solid var(--cyan); z-index:3; opacity:0; transition:opacity .25s }
+.f-card .c-tl, .lab-video-thumb .c-tl { top:10px; left:10px; border-right:none; border-bottom:none }
+.f-card .c-br, .lab-video-thumb .c-br { bottom:10px; right:10px; border-left:none; border-top:none }
+.f-card:hover .corner, .lab-play:hover .corner, .lab-play:focus-visible .corner { opacity:1 }
 .f-card .f-tag { position:absolute; top:14px; left:14px; z-index:2; font-family:var(--mono); font-size:10px; letter-spacing:.22em; color:var(--void); background:var(--cyan); padding:4px 10px }
 .f-card .f-info { position:absolute; bottom:0; left:0; right:0; z-index:2; padding:20px }
 .f-card h3 { font-size:30px; margin-bottom:4px }
@@ -929,4 +930,16 @@ h1[data-heading-outline]::before {
   [data-heading-outline]::before {
     -webkit-text-stroke-color:rgba(184,160,184,.16);
   }
+}
+
+/* Lab thumbnails use the same image and corner treatment as the fighter cards. */
+.lab-video-thumb { display:block; position:relative; overflow:hidden; aspect-ratio:16/9 }
+.lab-video-thumb img { height:100% }
+.featured-video-cover .encounter-watch { z-index:4 }
+@media (hover:none) {
+  .lab-video-thumb img { filter:none }
+}
+@media (prefers-reduced-motion:reduce) {
+  .lab-video-thumb img, .lab-video-thumb .corner { transition:none }
+  .lab-play:hover .lab-video-thumb img, .lab-play:focus-visible .lab-video-thumb img { transform:none }
 }
