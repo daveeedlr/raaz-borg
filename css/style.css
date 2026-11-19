@@ -789,8 +789,15 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 }
 .cover-layout, .street-layout { display:grid; align-items:center; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(1.75rem,5vw,5rem) }
 .cover-copy .kicker, .street-intro .kicker { color:#72e2e8; letter-spacing:.16em; font-size:.875rem; margin-bottom:.85rem }
-.cover-copy h1 { font-size:clamp(3.3rem,6.5vw,6.5rem); line-height:.98 }
-.cover-copy h1 em { display:block; color:#fa86b6; font-style:normal }
+.cover-copy h1 {
+  font-family:"Barlow Condensed","Arial Narrow",var(--body);
+  font-size:clamp(3.15rem,6.8vw,6.5rem);
+  font-weight:700;
+  line-height:.92;
+  letter-spacing:-.02em;
+  text-transform:none;
+}
+.cover-line { display:block; color:#e8a5bc }
 .cover-intro, .street-intro > p:last-child { color:var(--text-2); font-size:clamp(1rem,1.3vw,1.15rem); line-height:1.6; max-width:47ch; margin-top:1.15rem }
 .cover-actions, .event-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.75rem 1rem; margin-top:1.5rem }
 .cover-actions .btn, .event-actions .btn { font-size:.875rem; padding:.8rem 1.1rem }
@@ -851,3 +858,17 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   border-color:#a5a0a0;
 }
 .selectable-sizes button.selected { background:var(--control-fill); color:var(--control-ink); border-color:var(--control-fill) }
+
+/* Featured media leads into the Lab encounter archive. */
+.featured-videos, #encuentros { padding-block:clamp(32px,5vw,72px) }
+.featured-video-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(16px,2.5vw,32px) }
+.featured-video { min-width:0; background:var(--carbon); border:1px solid var(--smoke); border-radius:var(--control-radius); overflow:hidden }
+.featured-video video, .featured-video-cover img { display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; background:#101117 }
+.featured-video-cover { display:block; position:relative }
+.featured-video-cover .encounter-watch { position:absolute; inset:auto auto .85rem .85rem }
+.featured-video-cover:hover .encounter-watch, .featured-video-cover:focus-visible .encounter-watch { background:var(--control-hover); border-color:#a5a0a0 }
+.featured-video-cover:focus-visible { outline:2px solid var(--control-fill); outline-offset:-3px }
+.featured-video-copy { padding:clamp(.9rem,2vw,1.5rem) }
+.featured-video-copy h3 { font-size:clamp(1.5rem,3vw,2.25rem) }
+.featured-video-copy p { color:var(--text-2); margin-top:.55rem; max-width:57ch }
+@media (max-width:680px) { .featured-video-grid { grid-template-columns:1fr } }
