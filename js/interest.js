@@ -127,6 +127,13 @@
     }
     user = next;
     render();
+    // SIGNED_IN may precede resolution of signInWithPassword().
+    // Queue once per actual Auth session; the database rejects duplicate session alerts.
+    if (event === 'SIGNED_IN' && next) {
+      setTimeout(() => {
+        if (user?.id === next.id) client.rpc('rb_queue_sign_in_alert').catch(() => {});
+      }, 0);
+    }
     if (changed && user) setTimeout(() => { if (user) load(true); }, 0);
   });
   function callbackUrl() {
