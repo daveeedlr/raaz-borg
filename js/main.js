@@ -1027,3 +1027,36 @@ render();
   });
 
 })();
+/* On narrow screens the realm cards form a swipeable row. */
+(() => {
+  const deck = document.getElementById("realm-deck");
+  if (!deck) return;
+  const pager = document.querySelector(".deck-pager");
+  const previous = pager.querySelector('[data-step="-1"]');
+  const next = pager.querySelector('[data-step="1"]');
+  const cards = Array.from(deck.children);
+
+  function updatePager() {
+    previous.disabled = deck.scrollLeft <= 1;
+    next.disabled = deck.scrollLeft + deck.clientWidth >= deck.scrollWidth - 1;
+  }
+
+  function moveCard(direction) {
+    const firstLeft = cards[0].offsetLeft;
+    const current = cards.reduce((nearest, card, index) => {
+      const distance = Math.abs(card.offsetLeft - firstLeft - deck.scrollLeft);
+      const nearestDistance = Math.abs(cards[nearest].offsetLeft - firstLeft - deck.scrollLeft);
+      return distance < nearestDistance ? index : nearest;
+    }, 0);
+    const index = Math.max(0, Math.min(cards.length - 1, current + direction));
+    const left = cards[index].offsetLeft - firstLeft;
+    deck.scrollTo({ left, behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  }
+
+  previous.addEventListener("click", () => moveCard(-1));
+  next.addEventListener("click", () => moveCard(1));
+  deck.addEventListener("scroll", updatePager, { passive:true });
+  new ResizeObserver(updatePager).observe(deck);
+  pager.hidden = false;
+  updatePager();
+})();

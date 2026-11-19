@@ -572,17 +572,155 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 .home-hero .hero-ctas { margin:0 }
 .realm-atlas, .home-lab { padding:clamp(52px,6vw,90px) 0 }
 .realm-atlas h2, .home-lab h2, .join-page h1 { font-size:clamp(42px,6vw,84px) }
-.atlas-intro, .home-lab p { font-size:18px; color:var(--text-2); max-width:750px; margin:1rem 0 2rem }
-.atlas-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr)); gap:16px }
-.realm-preview { display:flex; flex-direction:column; min-width:0; background:var(--carbon); border:1px solid var(--smoke) }
-.realm-preview img { width:100%; aspect-ratio:1.7; object-fit:cover; object-position:center }
-.realm-caption { display:flex; flex:1; flex-direction:column; gap:10px; padding:20px }
-.realm-caption .belt { font:14px var(--mono); color:var(--cyan) }
-.realm-caption h3 { font-size:clamp(24px,2.2vw,34px) }
-.realm-caption p, .join-page p { color:var(--text-2) }
-.realm-links { display:flex; flex-wrap:wrap; gap:8px 16px; padding-top:10px; margin-top:auto }
-.realm-links a, .atlas-related a, .manual-contact a { color:var(--cyan); text-underline-offset:3px }
-.atlas-related { margin-top:24px }
+.home-lab p { font-size:18px; color:var(--text-2); max-width:750px; margin:1rem 0 2rem }
+.join-page p { color:var(--text-2) }
+
+.realm-atlas {
+  background:radial-gradient(ellipse at 50% 46%, #19191f, #0b0b0e 74%);
+  border-block:1px solid var(--smoke);
+}
+.realm-atlas .wrap { max-width:1220px }
+.atlas-heading {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:2rem;
+  margin-bottom:clamp(1.5rem, 4vw, 3rem);
+}
+.atlas-heading h2 { line-height:.99 }
+.atlas-intro { max-width:26rem; color:var(--text-2); font-size:1rem; line-height:1.55 }
+
+.atlas-grid {
+  --gutter:clamp(14px, 2vw, 24px);
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:var(--gutter);
+}
+.realm-preview {
+  --rim:5px;
+  position:relative;
+  flex:0 0 calc((100% - 3 * var(--gutter)) / 4);
+  min-width:0;
+  align-self:start;
+  padding:var(--rim);
+  background:linear-gradient(145deg,#3d3d43,#101014 38%,#202025 87%,#48484c);
+  border:1px solid #55545a;
+  border-radius:8px;
+  box-shadow:0 8px 18px #0006,inset 0 0 0 1px #141416;
+  transition:transform .2s ease,border-color .2s ease;
+}
+.realm-preview[open], .realm-preview:focus-within { border-color:var(--realm-accent) }
+.realm-toggle { display:block; list-style:none; cursor:pointer; border-radius:4px }
+.realm-toggle::-webkit-details-marker { display:none }
+.realm-toggle:focus-visible { outline:3px solid var(--realm-accent); outline-offset:4px }
+.realm-print {
+  display:block;
+  width:100%;
+  aspect-ratio:11 / 15;
+  overflow:hidden;
+  border-radius:3px 3px 0 0;
+  background:#060607;
+}
+.realm-print img { width:100%; height:100%; object-fit:contain; backface-visibility:hidden }
+.realm-preview[open] .realm-print img { transform:perspective(900px) rotateY(180deg) }
+.realm-strip {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 10px;
+  min-height:48px;
+  border-top:2px solid var(--realm-accent);
+  background:#151518;
+  font:500 .875rem/1.3 var(--mono);
+  color:#eae9e9;
+}
+.realm-toggle-mark { position:relative; margin-left:auto; flex:0 0 18px; height:18px; color:var(--realm-accent) }
+.realm-toggle-mark::before, .realm-toggle-mark::after { content:""; position:absolute; inset:50% 2px auto; height:1.5px; background:currentColor }
+.realm-toggle-mark::after { transform:rotate(90deg); transition:transform .2s }
+.realm-preview[open] .realm-toggle-mark::after { transform:rotate(0) }
+
+.realm-reverse {
+  position:absolute;
+  inset:var(--rim) var(--rim) auto;
+  aspect-ratio:11 / 15;
+  display:flex;
+  flex-direction:column;
+  overflow:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--realm-accent) 12%,#18181b),#111114 67%);
+  border-radius:3px 3px 0 0;
+  padding:clamp(14px,1.5vw,24px);
+}
+.realm-preview[open] .realm-reverse { animation:realm-turn .38s ease-out; backface-visibility:hidden }
+@keyframes realm-turn {
+  from { transform:perspective(900px) rotateY(-90deg) }
+  to { transform:perspective(900px) rotateY(0) }
+}
+.realm-seal { font-family:Georgia,serif; font-variant-emoji:text; color:var(--realm-accent); font-size:1.7rem; line-height:1; margin-bottom:.6rem }
+.realm-reverse h3 { font-size:clamp(1.5rem,2vw,2rem); line-height:1.05 }
+.realm-reverse p { color:var(--text-2); font-size:1rem; line-height:1.4; margin:.6rem 0 .9rem }
+.realm-links { list-style:none; margin-top:auto }
+.realm-links a {
+  display:block;
+  padding:.42rem 0;
+  border-top:1px solid #ffffff27;
+  color:#eae9e9;
+  text-decoration:underline;
+  text-decoration-color:color-mix(in srgb,var(--realm-accent) 52%,transparent);
+  text-underline-offset:.2em;
+  font-size:.9rem;
+  line-height:1.35;
+}
+.realm-links a:hover, .realm-links a:focus-visible { color:var(--realm-accent) }
+.atlas-related { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; margin-top:1.5rem }
+.atlas-related a, .manual-contact a { color:var(--cyan); text-underline-offset:3px }
+.deck-pager { display:none }
+@media(prefers-reduced-motion:no-preference) {
+  .realm-print img { transition:transform .3s ease-in-out }
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference) {
+  .realm-preview:has(.realm-toggle:hover) { transform:translateY(-3px); border-color:var(--realm-accent) }
+}
+@media(max-width:1020px) {
+  .realm-preview { flex-basis:calc((100% - 2 * var(--gutter)) / 3) }
+}
+@media(max-width:760px) {
+  .atlas-heading { display:block }
+  .atlas-intro { margin-top:1rem }
+  .realm-preview { flex-basis:calc((100% - var(--gutter)) / 2) }
+}
+@media(max-width:600px) {
+  .atlas-grid {
+    justify-content:start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:8px;
+    scrollbar-width:thin;
+    scrollbar-color:#585762 transparent;
+    padding:8px 8px 16px;
+    margin-inline:-8px;
+  }
+  .realm-preview { flex-basis:min(78vw,320px); scroll-snap-align:start }
+  .deck-pager:not([hidden]) { display:flex; justify-content:end; gap:8px; margin-top:.6rem }
+  .deck-pager button {
+    min-height:44px;
+    padding:.5rem .9rem;
+    border:1px solid #66656b;
+    border-radius:3px;
+    background:transparent;
+    color:var(--text);
+    font:inherit;
+    cursor:pointer;
+  }
+  .deck-pager button:disabled { opacity:.38; cursor:default }
+}
+@media(prefers-reduced-motion:reduce) {
+  .realm-preview, .realm-toggle-mark::after { transition:none }
+  .realm-preview[open] .realm-reverse { animation:none }
+}
 .home-lab h2 { margin-top:12px }
 .join-page { padding:clamp(120px,14vw,180px) 0 75px; background:linear-gradient(130deg,#180d1a,var(--void) 46%) }
 .join-layout { display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(28px,7vw,110px) }

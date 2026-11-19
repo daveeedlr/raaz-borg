@@ -91,7 +91,14 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await page.getByRole('navigation').getByRole('link', { name: 'Fighters' }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.goto('/?lang=es');
-  await page.locator('.realm-links').nth(3).getByRole('link', { name: 'Oxide Overdrive' }).click();
+  const next = page.getByRole('button', { name: 'Siguiente', exact: true });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await next.click();
+  await expect.poll(() => page.locator('#realm-deck').evaluate(deck => deck.scrollLeft)).toBeGreaterThan(150);
+  const oxide = page.locator('.realm-preview').nth(3);
+  await oxide.locator('summary').click();
+  await expect(oxide).toHaveAttribute('open', '');
+  await oxide.getByRole('link', { name: 'Grand Prix · Oxide Overdrive' }).click();
   await expect(page.locator('#gpArchiveTitle')).toHaveText('Oxide Overdrive');
   await expect(page.locator('#gpArchiveOverlay')).toBeVisible();
 });
@@ -114,4 +121,27 @@ test('athlete inquiry validates, prepares a private email draft and supports bot
   await expect(page.locator('#email-body')).toHaveValue(/Interest: Competing in the Grand Prix/);
   await page.getByLabel('City', { exact: true }).fill('Tumbaco');
   await expect(page.locator('#email-preview')).toBeHidden();
+});
+
+
+test('realm cards retain the whole poster and open one accessible reverse at a time', async ({ page }) => {
+  await page.goto('/?lang=en#reinos');
+  const cards = page.locator('.realm-preview');
+  const first = cards.first();
+  const second = cards.nth(1);
+  await expect(first.locator('img')).toHaveCSS('object-fit', 'contain');
+  await expect(first.getByRole('link', { name: 'View classification' })).toBeHidden();
+  const artwork = await first.locator('img').boundingBox();
+  expect(artwork.height).toBeGreaterThan(artwork.width);
+  const front = await first.boundingBox();
+  await first.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(first.getByRole('link', { name: 'View classification' })).toBeVisible();
+  expect((await first.boundingBox()).height).toBeCloseTo(front.height, 0);
+  await second.locator('summary').press('Space');
+  await expect(first).not.toHaveAttribute('open', '');
+  await expect(second).toHaveAttribute('open', '');
+  await expect(second.getByRole('link', { name: 'Grand Prix · Blue Oblivion BJJ' })).toBeVisible();
+  await second.locator('summary').press('Enter');
+  await expect(second).not.toHaveAttribute('open', '');
 });
