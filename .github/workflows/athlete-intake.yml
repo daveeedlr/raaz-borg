@@ -33,7 +33,7 @@ jobs:
           create table auth.users(id uuid primary key, email text, email_confirmed_at timestamptz, created_at timestamptz not null default now());
           create function auth.uid() returns uuid language sql stable as $$
             select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
-          $;
+          $$;
           -- The legacy table predates the repository's intake migrations.
           -- Reconstruct only its shape for disposable migration regression tests.
           create table public.fighter_registrations(
