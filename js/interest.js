@@ -8,7 +8,7 @@
   const interest = $('interest');
   const tr = (es, en) => document.documentElement.lang === 'en' ? en : es;
   let user = null;
-  let signingUp = false;
+  let signingUp = true;
   let recovering = false;
   let busy = false;
   let message = [];
@@ -44,7 +44,14 @@
     $('reset-password').hidden = !recovering || !user;
     $('identity').textContent = user?.email || '';
     $('primary-auth').textContent = signingUp ? tr('Crear cuenta','Create account') : tr('Iniciar sesión','Sign in');
-    $('switch-auth').textContent = signingUp ? tr('Ya tengo cuenta','I have an account') : tr('Crear una cuenta','Create an account');
+    $('auth-create').setAttribute('aria-pressed', String(signingUp));
+    $('auth-signin').setAttribute('aria-pressed', String(!signingUp));
+    $('auth-explainer').textContent = signingUp
+      ? tr('Usa un correo al que tengas acceso. Te enviaremos un enlace de confirmación antes de que puedas postularte.',
+           'Use an email address you can access. We will send a confirmation link before you can apply.')
+      : tr('Ingresa para completar tu postulación o consultar el estado de tus solicitudes.',
+           'Sign in to finish an application or check the status of previous applications.');
+    $('recover').hidden = signingUp;
     $('password').autocomplete = signingUp ? 'new-password' : 'current-password';
     $('password').minLength = signingUp ? 8 : 1;
     $('feedback').textContent = message.length ? tr(...message) : '';
@@ -118,7 +125,16 @@
     catch { say('No se pudo completar la operación. Revisa tu conexión e inténtalo de nuevo.','Could not complete the request. Check your connection and try again.'); }
     finally { busy = button.disabled = false; }
   }
-  $('switch-auth').onclick = () => { signingUp = !signingUp; message = []; render(); $('email').focus(); };
+  function chooseAuthMode(signUp) {
+    if (signingUp === signUp) return;
+    signingUp = signUp;
+    message = [];
+    $('password').value = '';
+    render();
+    $('email').focus();
+  }
+  $('auth-create').onclick = () => chooseAuthMode(true);
+  $('auth-signin').onclick = () => chooseAuthMode(false);
   $('account').onsubmit = event => {
     event.preventDefault();
     action($('primary-auth'), async () => {

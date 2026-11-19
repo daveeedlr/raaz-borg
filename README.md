@@ -73,3 +73,11 @@ A project administrator assigns staff by inserting a verified staff account UUID
 The SQL checks in `supabase/tests/intake.sql` run in a rollback-only transaction on a test database with Supabase Auth. They cover retry behavior, realm assignment, athlete isolation and staff review. Run with `psql -v ON_ERROR_STOP=1 -f supabase/tests/intake.sql` after applying the migration to a test project.
 
 The bilingual Competir page uses the project’s publishable key and a pinned local Supabase JS client. Signed-in athletes can submit and view their own applications. Enable email/password authentication in Supabase and allow the deployed Competir URL with its selection query parameters in Auth redirect URLs (for the fork, `https://jayjayanton.github.io/raaz-borg/competir.html**`). Email confirmation and recovery links depend on these project settings. The public email address remains available for assistance.
+
+## Launch operation checklist (November 2026 audit)
+
+- **Customer flow:** browsing the shop requires no account; prices are published in USD and orders are initiated through email or Instagram. Listed stock is a manual snapshot, not a live inventory feed. Reconcile counts after every sale (especially sizes and sold-out flags).
+- **Athlete flow:** new visitors select a belt and interest, create an account, confirm the email, then sign in and submit their application. Existing users sign in with the same email and can return to their receipt and status. A submission is not acceptance into the GP or a confirmed fight.
+- **Review operations:** the protected reviewer RPCs exist, but reviewer accounts must be added explicitly to `rb_intake.reviewers`. Check the review queue regularly; the public website does not automatically email staff for new applications. Configure a tested notification system before depending on instant outreach.
+- **Authentication setup:** enable email/password, email confirmation, and the complete deployed `competir.html` URL in Supabase Auth redirect allow-list. Verify the business inbox can receive confirmation and recovery mail. Enable leaked-password protection in Supabase Auth if supported by your plan.
+- **Regression:** `npm ci && npm test` runs browser smoke coverage in CI. Database role, idempotency and isolation tests run in the separate athlete-intake workflow.

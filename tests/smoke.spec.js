@@ -134,6 +134,7 @@ test('athletes sign in, submit, return to their status and sign out in both lang
     await route.fulfill({json:data});
   });
   await page.goto('/competir.html?belt=blue&interest=gp&lang=es');
+  await page.locator('#auth-signin').click();
   await page.getByLabel('Correo electrónico').fill(user.email);
   await page.getByLabel('Contraseña', {exact:true}).fill('test-password');
   await page.getByRole('button',{name:'Iniciar sesión'}).click();
@@ -388,4 +389,39 @@ test('the application restores belt and GP or Lab interest together', async ({ p
   await page.reload();
   await expect(page.locator('#interest')).toHaveValue('gp');
   await expect(page.locator('#belt-realm')).toHaveText('Oxide Overdrive');
+});
+
+test('new athletes see clear account creation and existing members can switch to sign in', async ({ page }) => {
+  await page.goto('/competir.html?lang=es&belt=blue&interest=gp');
+  await expect(page.locator('#auth-create')).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('#primary-auth')).toHaveText('Crear cuenta');
+  await expect(page.locator('#auth-explainer')).toContainText('confirmación');
+  await expect(page.locator('#recover')).toBeHidden();
+  await page.locator('#auth-signin').click();
+  await expect(page.locator('#primary-auth')).toHaveText('Iniciar sesión');
+  await expect(page.locator('#recover')).toBeVisible();
+  await expect(page.locator('#belt')).toHaveValue('blue');
+  await page.locator('#langToggle').click();
+  await expect(page.locator('#auth-create')).toHaveText('Create account');
+  await expect(page.locator('#primary-auth')).toHaveText('Sign in');
+  await expect(page.locator('#interest')).toHaveValue('gp');
+});
+
+test('catalog prices and selected sizes are visible before inquiry', async ({ page }) => {
+  await page.goto('/shop.html?lang=en');
+  const cards = page.locator('.p-card');
+  await expect(cards).toHaveCount(4);
+  const prices = ['$30', '$60', '$50', '$60'];
+  for (let i=0;i<4;i++) await expect(cards.nth(i).locator('.p-price')).toContainText(prices[i]);
+  const sizes = page.locator('#conjunto-urbano .size-row');
+  const first = sizes.locator('button[data-size="S"]');
+  const second = sizes.locator('button[data-size="L"]');
+  await expect(first).toHaveAttribute('aria-pressed','true');
+  await second.click();
+  await expect(second).toHaveAttribute('aria-pressed','true');
+  await expect(first).toHaveAttribute('aria-pressed','false');
+  const selectedBackground = await second.evaluate(el=>getComputedStyle(el).backgroundColor);
+  const unselectedBackground = await first.evaluate(el=>getComputedStyle(el).backgroundColor);
+  expect(selectedBackground).not.toEqual(unselectedBackground);
+  await expect(page.locator('#conjunto-urbano .size-selection-status')).toHaveText('Selected size: L');
 });

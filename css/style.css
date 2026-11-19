@@ -1001,3 +1001,28 @@ body:has(dialog[open]) { overflow:hidden }
   .f-card .f-photo img, .f-card .corner, .lab-play, .p-photo img { transition:none }
   .f-card:hover .f-photo img, .f-card:focus-visible .f-photo img, .p-card:hover .p-photo img { transform:none }
 }
+
+/* 2026-11 athlete onboarding and storefront conversion/accessibility refinements */
+.selectable-sizes button.selected,
+.selectable-sizes button[aria-pressed="true"] {
+  background:var(--acid);
+  border:2px solid var(--acid);
+  color:var(--void);
+  font-weight:800;
+  box-shadow:0 0 0 2px rgba(200,245,66,.24);
+}
+.selectable-sizes button:not(:disabled):not(.selected):hover { border-color:var(--acid); color:var(--white); }
+.selectable-sizes button:disabled { opacity:.48; color:var(--text-3); text-decoration:line-through; }
+.size-selection-status { display:block; min-height:1.4em; margin:-.35rem 0 .75rem; font:12px var(--mono); color:var(--acid); }
+.p-price { white-space:nowrap; font-weight:700; }
+.p-price small { font-size:.58em; color:var(--grey); font-weight:500; }
+.shop-price-note, .shop-inventory-note { font:12px/1.6 var(--mono); color:var(--text-2); }
+.shop-inventory-note { margin:2rem 0 0; }
+.order-feedback { margin:.7rem 0 0; padding:.7rem; border:1px solid var(--control-border); color:var(--cyan); font-size:.85rem; line-height:1.5; overflow-wrap:anywhere; }
+.order-copy-field { width:100%; min-height:5.5rem; margin-top:.6rem; resize:vertical; font:12px/1.5 var(--mono); background:var(--void); color:var(--white); border:1px solid var(--smoke); }
+@media(max-width:600px) {
+  .p-row { align-items:flex-start; flex-direction:column; gap:12px; }
+  .order-options { justify-content:flex-start; width:100%; }
+  .order-options .p-cart { min-height:44px; }
+  .size-row { flex-wrap:wrap; }
+}
