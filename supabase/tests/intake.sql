@@ -14,6 +14,10 @@ begin
     where user_id in (athlete, other_user) and registration_status='account_created');
   assert (select count(*)=2 from public.fighter_registrations
     where first_name is null and payment_option is null);
+  update auth.users set email_confirmed_at=null where id=athlete;
+  assert (select email_verified=false from public.fighter_registrations where user_id=athlete);
+  update auth.users set email_confirmed_at=now() where id=athlete;
+  assert (select email_verified=true from public.fighter_registrations where user_id=athlete);
   insert into rb_intake.reviewers values(other_user);
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   set local role authenticated;
