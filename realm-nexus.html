@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realm Nexus — RAAZ BORG</title>
+    <meta name="description" content="Conoce la clasificación y los siete reinos de RA’AZ BORG en Quito." data-en-content="Explore qualification and the seven realms of RA’AZ BORG in Quito.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter&family=JetBrains+Mono&display=swap"
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body data-lang="en">
+<body data-lang="es">
 
     <!-- ============ NAVIGATION ============ -->
     <nav>
@@ -23,11 +24,8 @@
                 <img src="assets/No_Background.png" alt="RAAZ BORG">
             </a>
 
-            <ul class="nav-links">
-                <li><a href="index.html">
-                        <span class="lang-en">UNIVERSE</span>
-                        <span class="lang-es">UNIVERSO</span>
-                    </a></li>
+            <ul class="nav-links" id="main-nav">
+                <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
 
                 <li><a href="fighters.html">
                         <span class="lang-en">FIGHTERS</span>
@@ -36,18 +34,15 @@
 
                 <li><a href="clashes.html" class="active">CLASHES GP</a></li>
                 <li><a href="labs.html">LABS</a></li>
-                <li><a href="shop.html" class="shop-link">SHOP</a></li>
+                <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
             </ul>
 
             <div class="nav-right">
-                <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
+                <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
 
-                <a class="btn btn-acid nav-cta" href="clashes.html">
-                    <span class="lang-en">BACK</span>
-                    <span class="lang-es">VOLVER</span>
-                </a>
+                <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
 
-                <button class="burger" id="burger" aria-label="Menu">MENU</button>
+                <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
             </div>
 
         </div>
@@ -163,7 +158,7 @@
         </div>
     
         <div class="realm-carousel">
-            <button class="realm-arrow" id="prev" aria-label="Previous realm">
+            <button class="realm-arrow" id="prev" aria-label="Reino anterior" data-en-label="Previous realm">
                 &#10094;
             </button>
     
@@ -171,7 +166,7 @@
                 <div class="realm-track" id="track"></div>
             </div>
     
-            <button class="realm-arrow" id="next" aria-label="Next realm">
+            <button class="realm-arrow" id="next" aria-label="Siguiente reino" data-en-label="Next realm">
                 &#10095;
             </button>
         </div>
@@ -186,10 +181,7 @@
 
             <h2 id="realmTitle"></h2>
 
-            <button class="btn btn-acid" id="realmExplore">
-                <span class="lang-en">EXPLORE REALM</span>
-                <span class="lang-es">EXPLORAR REINO</span>
-            </button>
+            <a class="btn btn-acid" id="realmExplore" href="clashes.html#realm-white-carbon"><span class="lang-es">Explorar reino</span><span class="lang-en">Explore realm</span></a>
 
         </div>
 
@@ -202,7 +194,7 @@
             <img src="assets/Isotipo.png" alt="Raaz Borg">
 
             <span class="fm">
-                © 2026 — RA'AZ COMBAT RECODED, QUITO EC
+                © 2026 — RA'AZ COMBAT RECODED, QUITO, ECUADOR
             </span>
 
             <ul class="foot-links">
@@ -211,15 +203,15 @@
                         INSTAGRAM
                     </a>
                 </li>
-                <li><a href="shop.html">SHOP</a></li>
-                <li><a href="index.html">SYSTEM RESET</a></li>
+                <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+                <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
             </ul>
 
         </div>
     </footer>
 
     <!-- ============ JAVASCRIPT ============ -->
-    <script src="js/main.js?v=realm-carousel-fix-20261104"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

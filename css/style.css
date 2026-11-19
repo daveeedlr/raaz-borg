@@ -558,3 +558,61 @@ footer { border-top:1px solid var(--smoke); padding:52px 0 }
 .mosaic .big,.mosaic .tall { grid-column:auto; grid-row:auto }
 section { padding:72px 0 }
  }
+
+/* Keep the translated copy and visual effects out of each other's reading order. */
+body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !important }
+.glitch::before, .glitch::after { content:""; content:attr(data-text) / "" }
+[id^="realm-"], [id^="gp-"], [id^="fighter-"], #reinos, #oxide-media, #nimbol-media { scroll-margin-top:100px }
+.home-hero { min-height:min(780px,90svh) }
+.home-hero .hero-content { width:100%; padding:145px 28px 52px }
+.home-hero .hero-bg::after { background:linear-gradient(90deg,#08080aef 0%,#08080a99 52%,#08080a20),linear-gradient(0deg,var(--void),transparent 44%) }
+.home-hero .hero-title { font-size:clamp(66px,10vw,144px) }
+.home-hero .sub { font-size:clamp(17px,1.7vw,22px); max-width:640px; margin:24px 0 28px; color:var(--white) }
+.home-hero .hero-ctas { margin:0 }
+.realm-atlas, .home-lab { padding:clamp(52px,6vw,90px) 0 }
+.realm-atlas h2, .home-lab h2, .join-page h1 { font-size:clamp(42px,6vw,84px) }
+.atlas-intro, .home-lab p { font-size:18px; color:var(--text-2); max-width:750px; margin:1rem 0 2rem }
+.atlas-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr)); gap:16px }
+.realm-preview { display:flex; flex-direction:column; min-width:0; background:var(--carbon); border:1px solid var(--smoke) }
+.realm-preview img { width:100%; aspect-ratio:1.7; object-fit:cover; object-position:center }
+.realm-caption { display:flex; flex:1; flex-direction:column; gap:10px; padding:20px }
+.realm-caption .belt { font:14px var(--mono); color:var(--cyan) }
+.realm-caption h3 { font-size:clamp(24px,2.2vw,34px) }
+.realm-caption p, .join-page p { color:var(--text-2) }
+.realm-links { display:flex; flex-wrap:wrap; gap:8px 16px; padding-top:10px; margin-top:auto }
+.realm-links a, .atlas-related a, .manual-contact a { color:var(--cyan); text-underline-offset:3px }
+.atlas-related { margin-top:24px }
+.home-lab h2 { margin-top:12px }
+.join-page { padding:clamp(120px,14vw,180px) 0 75px; background:linear-gradient(130deg,#180d1a,var(--void) 46%) }
+.join-layout { display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(28px,7vw,110px) }
+.join-intro h1, .join-intro p, .manual-contact { margin:18px 0 }
+.join-intro h2 { font-size:clamp(24px,3vw,36px); margin-top:36px }
+.interest-form { display:grid; gap:16px; background:var(--carbon); border:1px solid var(--smoke); padding:clamp(18px,3vw,36px) }
+.interest-form label { display:block }
+.interest-form input:not([type="checkbox"]), .interest-form select, .interest-form textarea {
+  display:block; width:100%; padding:10px; margin-top:4px; border:1px solid #616371; border-radius:3px;
+  font:inherit; color:var(--white); background:var(--void)
+}
+.interest-form .contact-ok { display:flex; gap:10px; align-items:baseline }
+.interest-form [hidden], .interest-form[hidden] { display:none }
+.interest-form textarea { min-height:160px; margin-bottom:12px }
+:focus-visible { outline:2px solid var(--cyan); outline-offset:4px }
+@media(max-width:1040px) {
+  .nav-links { display:none; position:absolute; top:100%; left:0; right:0; padding:12px 24px; flex-direction:column; gap:0; background:var(--void) }
+  .nav-links.open { display:flex }
+  .nav-links a { display:block; padding:12px 0 }
+  .burger { display:block }
+}
+@media(max-width:720px) {
+  .join-layout { grid-template-columns:1fr }
+  .nav-inner { padding:12px; gap:8px }
+  .nav-logo { min-width:0; max-width:135px }
+  .nav-right { gap:6px; flex-shrink:0 }
+  .nav-right .nav-cta,.nav-right button { padding:9px; font-size:12px; letter-spacing:.04em }
+  .home-hero .hero-content { padding:110px 20px 42px }
+  .home-hero .hero-ctas .btn { padding:12px 16px }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto }
+  .ticker-track,.glitch::before,.glitch::after,.flicker { animation:none }
+}

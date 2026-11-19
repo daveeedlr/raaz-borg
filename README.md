@@ -1,12 +1,13 @@
 # RAAZ BORG — Combat Re-Coded
 
-Official website of **Ra'az Undergrounds** — an underground grappling platform from Guayaquil, EC, where traditional martial arts collide with neuro-interface fiction.
+Official website of **Ra'az Undergrounds** — an underground grappling platform from Quito, Ecuador, where traditional martial arts collide with neuro-interface fiction.
 
 ## Pages
 
 | Page | File |
 |---|---|
 | Universe (home) | `index.html` |
+| Athlete interest (email) | `competir.html` |
 | Fighters | `fighters.html` |
 | Clashes GP | `clashes.html` |
 | Labs & Media | `labs.html` |

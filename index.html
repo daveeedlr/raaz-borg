@@ -1,146 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RAAZ BORG — Combat Re-Coded</title>
-<meta name="description" content="Ra'az Undergrounds — underground grappling meets neuro-interface fiction. Personas born from the Grid. Guayaquil, EC.">
+<meta name="description" content="Grappling en Quito, Ecuador. Explora los siete reinos de RA’AZ BORG, su Grand Prix y cómo competir." data-en-content="Grappling in Quito, Ecuador. Explore the seven realms of RA’AZ BORG, the Grand Prix and how to compete.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-lang="en">
+<body data-lang="es">
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos" class="active"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
       <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
       <li><a href="clashes.html">CLASHES GP</a></li>
       <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link">SHOP</a></li>
+      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-acid nav-cta" href="clashes.html#enlist">ENLIST</a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-bg"><img src="assets/Neon Red-Cyan Cyberpunk Corridor.png" alt="The Raaz Borg squad under magenta light"></div>
-  <div class="scanlines"></div>
+<header class="hero home-hero">
+  <div class="hero-bg"><img src="assets/quito-corridor.webp" alt="" fetchpriority="high"></div>
+  <div class="scanlines" aria-hidden="true"></div>
   <div class="wrap hero-content">
-    <p class="sysline">&gt; <span class="type-target" data-lines='["BOOTING INTERFACE 3.0 ...","SCANNING FOR HEROES ...","GRID CONNECTION: STABLE","NEW PERSONA DETECTED IN THE YARD"]'></span><span class="cursor">▌</span></p>
-    <p class="kicker"><span class="lang-en">RA'AZ UNDERGROUNDS — Quito, EC</span><span class="lang-es">RA'AZ UNDERGROUNDS — GUAYAQUIL, EC</span></p>
-    <h1 class="hero-title">
-      <span class="glitch flicker" data-text="COMBAT">COMBAT</span><br>
-      <span class="row2 glitch" data-text="RE-CODED">RE-CODED</span>
-    </h1>
-    <p class="tagline"><span class="lang-en">Personas born from the Grid</span><span class="lang-es">Personas nacidas de la Red</span></p>
-    <p class="sub">
-      <span class="lang-en">An underground platform where traditional martial arts collide with neuro-interface fiction. Combatants are manifestations of code, data, and pure will.</span>
-      <span class="lang-es">Una plataforma underground donde las artes marciales tradicionales chocan con la ficción de neuro-interfaces. Los combatientes son manifestaciones de código, datos y pura voluntad.</span>
-    </p>
+    <p class="kicker">RA’AZ UNDERGROUNDS · QUITO, ECUADOR</p>
+    <h1 class="hero-title">COMBAT<br><span class="row2">RE-CODED</span></h1>
+    <p class="sub"><span class="lang-es">Grappling real en Quito, dentro de una saga cyberpunk. Explora los siete reinos, conoce a los peleadores del Grand Prix y descubre cómo competir.</span><span class="lang-en">Real grappling in Quito, Ecuador, inside a cyberpunk saga. Explore the seven realms, meet the Grand Prix fighters and find out how to compete.</span></p>
     <div class="hero-ctas">
-      <a class="btn btn-acid" href="fighters.html"><span class="lang-en">MEET THE UNITS</span><span class="lang-es">CONOCE LAS UNIDADES</span></a>
-      <a class="btn btn-ghost" href="shop.html"><span class="lang-en">SHOP THE DROP</span><span class="lang-es">COMPRA EL DROP</span></a>
-    </div>
-    <div class="hero-meta">
-      <span><b>136</b> TRANSMISSIONS</span>
-      <span><b>8</b> ACTIVE UNITS</span>
-      <span><b>5</b> GP EDITIONS</span>
-      <span>EST. 2020</span>
+      <a class="btn btn-acid" href="#reinos"><span class="lang-es">Explorar los reinos</span><span class="lang-en">Explore the realms</span></a>
+      <a class="btn btn-ghost" href="competir.html"><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span></a>
     </div>
   </div>
 </header>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>PRAETOREANS INTERFACE GP — LIVE</span><span>◈</span><span>SERPIENTE VS PRODIGIO</span><span>◈</span><span>NEW DROP: COMBAT SUITS 03</span><span>◈</span><span>THE GRID SELECTS ITS HEROES</span><span>◈</span>
-  </div>
-</div>
-
-<section id="universe">
+<section id="reinos" class="realm-atlas">
   <div class="wrap">
-    <div class="split">
-      <div class="img-frame reveal">
-        <img src="assets/squad-green.jpg" alt="Squad in the Börg Lab under green light">
-        <span class="frame-tag">THE BÖRG LAB — SECTOR GYE</span>
-      </div>
-      <div class="reveal reveal-d1">
-        <p class="kicker" style="color:var(--magenta);margin-bottom:16px">
-          <span class="lang-en">THE CAUSE</span>
-          <span class="lang-es">LA CAUSA</span>
-        </p>
-        <h2><span class="lang-en">Heroes saving a dystopian world.</span>
-          <span class="lang-es">Héroes salvando un mundo distópico.</span></h2>
-        <p>
-          <span class="lang-en">Raaz Borg is more than a tournament; it is a movement. Real grappling, real athletes — wrapped in a cyberpunk saga where every match is a transmission and every fighter is a persona written by the Grid.</span>
-          <span class="lang-es">Raaz Borg es más que un torneo; es un movimiento. Grappling real, atletas reales — envueltos en una saga cyberpunk donde cada combate es una transmisión y cada peleador es un personaje escrito por la Red.</span>
-        </p>
-        <p class="protocol">
-          <span class="lang-en">// PROTOCOL: every strike is calculated. every victory is transmitted.</span>
-          <span class="lang-es">// PROTOCOLO: cada golpe se calcula. cada victoria se transmite.</span>
-        </p>
-        <a class="btn btn-ghost" href="labs.html"><span class="lang-en">ENTER THE LAB</span><span class="lang-es">ENTRA AL LAB</span></a>
-      </div>
+    <h2><span class="lang-es">Los siete reinos</span><span class="lang-en">The seven realms</span></h2>
+    <p class="atlas-intro"><span class="lang-es">Cada reino representa un nivel de combate, desde cinturón blanco hasta el tercer grado de cinturón negro. El archivo del Grand Prix reúne las cinco ediciones históricas.</span><span class="lang-en">Each realm represents a competitive level, from white belt to third-degree black belt. The Grand Prix archive covers five past editions.</span></p>
+    <div class="atlas-grid">
+      <article class="realm-preview">
+        <img src="assets/realms/white-carbon.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón blanco</span><span class="lang-en">White belt</span></p>
+          <h3>White Carbon Combat</h3>
+          <p><span class="lang-es">El primer combate abre la puerta a la Red.</span><span class="lang-en">The first match opens the door to the Grid.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-white-carbon"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="clashes.html#gp-white-carbon">White Carbon Combat</a> <a href="assets/White_Carbon_Combat_VHS.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/zaphire.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón azul</span><span class="lang-en">Blue belt</span></p>
+          <h3>Zaphire Trials</h3>
+          <p><span class="lang-es">Quienes superan la iniciación ponen su técnica a prueba en el Protocolo Oblivion.</span><span class="lang-en">Fighters who pass initiation test their technique in the Oblivion Protocol.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-zaphire"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="clashes.html#gp-blue-oblivion">Blue Oblivion BJJ</a> <a href="labs.html#nimbol-media">Nimbol · Lab</a> <a href="assets/Zapphire_Trials_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/violet.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón morado</span><span class="lang-en">Purple belt</span></p>
+          <h3>Violet Combat Royale</h3>
+          <p><span class="lang-es">En el sector violeta, cada peleador traza su propia estrategia.</span><span class="lang-en">In the Violet sector, every fighter draws up their own strategy.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-violet"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="clashes.html#gp-violet-royale">Violet Combat Royale</a> <a href="assets/Violet_Combat_Royale_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/oxide.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón café</span><span class="lang-en">Brown belt</span></p>
+          <h3>Oxide Overdrive</h3>
+          <p><span class="lang-es">En el páramo de Oxide, sobrevivir exige adaptarse a cada rival.</span><span class="lang-en">In the Oxide wasteland, survival means adapting to each opponent.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-oxide"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="clashes.html#gp-oxide-overdrive">Oxide Overdrive</a> <a href="labs.html#oxide-media"><span class="lang-es">Ver en el Lab</span><span class="lang-en">See Lab media</span></a> <a href="assets/Oxide_Overdrive_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/praetoreans.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón negro · 1.er grado</span><span class="lang-en">Black belt · 1st degree</span></p>
+          <h3>Praetoreans Interface</h3>
+          <p><span class="lang-es">Los guardianes de la Red defienden su núcleo.</span><span class="lang-en">The guardians of the Grid defend its core.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-praetoreans"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="clashes.html#gp-praetoreans">Praetoreans Interface GP</a> <a href="assets/Praetorean_Forces_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/nexus.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón negro · 2.º grado</span><span class="lang-en">Black belt · 2nd degree</span></p>
+          <h3>Nexus Noir</h3>
+          <p><span class="lang-es">En Noir, los maestros leen al rival antes del siguiente movimiento.</span><span class="lang-en">In Noir, masters read their opponent before the next move.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-nexus"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="assets/Nexus_Noir_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
+      <article class="realm-preview">
+        <img src="assets/realms/eclipse.webp" alt="" loading="lazy" decoding="async">
+        <div class="realm-caption">
+          <p class="belt"><span class="lang-es">Cinturón negro · 3.er grado</span><span class="lang-en">Black belt · 3rd degree</span></p>
+          <h3>Eclipse Syndicate</h3>
+          <p><span class="lang-es">En la cima de la Red se encuentran generaciones de maestros.</span><span class="lang-en">At the summit of the Grid, generations of masters meet.</span></p>
+          <div class="realm-links"><a href="clashes.html#realm-eclipse"><span class="lang-es">Ver clasificación</span><span class="lang-en">View classification</span></a> <a href="assets/Eclipse_Syndicate_Animated.gif"><span class="lang-es">Ver animación</span><span class="lang-en">View animation</span></a></div>
+        </div>
+      </article>
     </div>
+    <p class="atlas-related"><a href="fighters.html"><span class="lang-es">Conocer a los peleadores</span><span class="lang-en">Meet the fighters</span></a> · <a href="realm-nexus.html"><span class="lang-es">Cómo funciona la clasificación</span><span class="lang-en">How qualification works</span></a></p>
   </div>
 </section>
 
 <section class="dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="ghost">UNITS</div>
-      <span class="kicker mag">PERSONNEL / DATABASE</span>
+      <div class="ghost" data-en="UNITS">UNIDADES</div>
+      <span class="kicker mag" data-en="PERSONNEL / DATABASE">PLANTEL / BASE DE DATOS</span>
       <h2><span class="lang-en">Featured Fighters</span><span class="lang-es">Peleadores Destacados</span></h2>
     </div>
     <div class="f-grid reveal">
-      <a class="f-card" href="fighters.html">
+      <a class="f-card" href="fighters.html#fighter-1">
         <span class="corner c-tl"></span><span class="corner c-br"></span>
         <span class="f-tag">UNIT_01</span>
         <div class="f-photo"><img src="assets/fighter-super-choque.jpg" alt="Super Choque"></div>
         <div class="f-info">
           <h3>SUPER CHOQUE</h3>
           <span class="arch"><span class="lang-en">Archetype: Command / Heavy</span><span class="lang-es">Arquetipo: Comando / Pesado</span></span>
-          <div class="stat"><div class="s-label"><span>POWER</span><span>92</span></div><div class="s-bar"><div class="s-fill" style="--w:92%;background:var(--acid)"></div></div></div>
-          <div class="stat"><div class="s-label"><span>UTILITY</span><span>70</span></div><div class="s-bar"><div class="s-fill" style="--w:70%;background:var(--acid)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="POWER">POTENCIA</span><span>92</span></div><div class="s-bar"><div class="s-fill" style="--w:92%;background:var(--acid)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="UTILITY">UTILIDAD</span><span>70</span></div><div class="s-bar"><div class="s-fill" style="--w:70%;background:var(--acid)"></div></div></div>
         </div>
       </a>
-      <a class="f-card" href="fighters.html">
+      <a class="f-card" href="fighters.html#fighter-2">
         <span class="corner c-tl"></span><span class="corner c-br"></span>
         <span class="f-tag">UNIT_02</span>
         <div class="f-photo"><img src="assets/fighter-vice-protocol.jpg" alt="Vice Protocol"></div>
         <div class="f-info">
           <h3>VICE PROTOCOL</h3>
           <span class="arch"><span class="lang-en">Archetype: Tech-Infiltrator</span><span class="lang-es">Arquetipo: Tec-Infiltrador</span></span>
-          <div class="stat"><div class="s-label"><span>POWER</span><span>74</span></div><div class="s-bar"><div class="s-fill" style="--w:74%;background:var(--cyan)"></div></div></div>
-          <div class="stat"><div class="s-label"><span>UTILITY</span><span>95</span></div><div class="s-bar"><div class="s-fill" style="--w:95%;background:var(--cyan)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="POWER">POTENCIA</span><span>74</span></div><div class="s-bar"><div class="s-fill" style="--w:74%;background:var(--cyan)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="UTILITY">UTILIDAD</span><span>95</span></div><div class="s-bar"><div class="s-fill" style="--w:95%;background:var(--cyan)"></div></div></div>
         </div>
       </a>
-      <a class="f-card" href="fighters.html">
+      <a class="f-card" href="fighters.html#fighter-3">
         <span class="corner c-tl"></span><span class="corner c-br"></span>
         <span class="f-tag">UNIT_03</span>
         <div class="f-photo"><img src="assets/fighter-interface-prime.jpg" alt="Interface Prime"></div>
         <div class="f-info">
           <h3>INTERFACE PRIME</h3>
           <span class="arch"><span class="lang-en">Archetype: Legend / Interface</span><span class="lang-es">Arquetipo: Leyenda / Interfaz</span></span>
-          <div class="stat"><div class="s-label"><span>POWER</span><span>88</span></div><div class="s-bar"><div class="s-fill" style="--w:88%;background:var(--magenta)"></div></div></div>
-          <div class="stat"><div class="s-label"><span>UTILITY</span><span>90</span></div><div class="s-bar"><div class="s-fill" style="--w:90%;background:var(--magenta)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="POWER">POTENCIA</span><span>88</span></div><div class="s-bar"><div class="s-fill" style="--w:88%;background:var(--magenta)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="UTILITY">UTILIDAD</span><span>90</span></div><div class="s-bar"><div class="s-fill" style="--w:90%;background:var(--magenta)"></div></div></div>
         </div>
       </a>
-      <a class="f-card" href="fighters.html">
+      <a class="f-card" href="fighters.html#fighter-4">
         <span class="corner c-tl"></span><span class="corner c-br"></span>
         <span class="f-tag">UNIT_04</span>
         <div class="f-photo"><img src="assets/fighter-alzate.jpg" alt="Alzâte"></div>
         <div class="f-info">
           <h3>ALZÂTE</h3>
           <span class="arch"><span class="lang-en">Archetype: Pressure / Matriz</span><span class="lang-es">Arquetipo: Presión / Matriz</span></span>
-          <div class="stat"><div class="s-label"><span>POWER</span><span>85</span></div><div class="s-bar"><div class="s-fill" style="--w:85%;background:var(--violet)"></div></div></div>
-          <div class="stat"><div class="s-label"><span>UTILITY</span><span>81</span></div><div class="s-bar"><div class="s-fill" style="--w:81%;background:var(--violet)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="POWER">POTENCIA</span><span>85</span></div><div class="s-bar"><div class="s-fill" style="--w:85%;background:var(--violet)"></div></div></div>
+          <div class="stat"><div class="s-label"><span data-en="UTILITY">UTILIDAD</span><span>81</span></div><div class="s-bar"><div class="s-fill" style="--w:81%;background:var(--violet)"></div></div></div>
         </div>
       </a>
     </div>
@@ -154,30 +179,30 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="ghost">KUMATES</div>
-      <span class="kicker">OFFICIAL PRO-LOG TIMELINE</span>
+      <span class="kicker" data-en="OFFICIAL PRO-LOG TIMELINE">CRONOLOGÍA OFICIAL DEL GRAND PRIX</span>
       <h2>KUMATES GP</h2>
     </div>
     <div class="timeline reveal">
       <a class="t-item" href="clashes.html" style="--tc:var(--text)"><div class="year">2020</div><div class="ev">White Carbon Combat</div><div class="st"><span class="lang-en">Initial deployment</span><span class="lang-es">Despliegue inicial</span></div></a>
-      <a class="t-item" href="clashes.html" style="--tc:var(--cyan)"><div class="year">2021</div><div class="ev">Blue Oblivion</div><div class="st"><span class="lang-en">System expansion</span><span class="lang-es">Expansión del sistema</span></div></a>
+      <a class="t-item" href="clashes.html" style="--tc:var(--cyan)"><div class="year">2021</div><div class="ev">Blue Oblivion BJJ</div><div class="st"><span class="lang-en">System expansion</span><span class="lang-es">Expansión del sistema</span></div></a>
       <a class="t-item" href="clashes.html" style="--tc:var(--violet)"><div class="year">2021</div><div class="ev">Violet Combat Royale</div><div class="st"><span class="lang-en">Royale protocol</span><span class="lang-es">Protocolo royale</span></div></a>
-      <a class="t-item" href="clashes.html" style="--tc:var(--orange)"><div class="year">2023</div><div class="ev">Oxide Overdrive</div><div class="st"><span class="lang-en">Overdrive patch</span><span class="lang-es">Parche overdrive</span></div></a>
+      <a class="t-item" href="clashes.html" style="--tc:var(--orange)"><div class="year">2022</div><div class="ev">Oxide Overdrive</div><div class="st"><span class="lang-en">Overdrive patch</span><span class="lang-es">Parche overdrive</span></div></a>
       <a class="t-item" href="clashes.html" style="--tc:var(--acid)"><div class="year">2024</div><div class="ev">Praetoreans Interface GP</div><div class="st"><span class="lang-en">The strongest till now</span><span class="lang-es">Los más fuertes hasta ahora</span></div></a>
     </div>
   </div>
 </section>
 
-<div class="ticker mag" aria-hidden="true">
-  <div class="ticker-track">
-    <span>COMBAT SUITS — DROP 03 AVAILABLE NOW</span><span>◈</span><span>PRAETOREANS JERSEY</span><span>◈</span><span>WORLDWIDE SHIPPING</span><span>◈</span>
-  </div>
-</div>
+<section class="home-lab"><div class="wrap split">
+  <div class="img-frame"><img src="assets/squad-green.jpg" loading="lazy" alt=""></div>
+  <div><h2>Börg Lab</h2><p><span class="lang-es">El espacio de entrenamiento y filmación de RA’AZ BORG en Quito. Conoce a los peleadores detrás de los personajes y mira los encuentros del Lab.</span><span class="lang-en">RA’AZ BORG’s training and filming space in Quito. Meet the athletes behind the personas and watch the Lab encounters.</span></p>
+  <a class="btn btn-ghost" href="labs.html"><span class="lang-es">Ver el archivo del Lab</span><span class="lang-en">Explore the Lab archive</span></a></div>
+</div></section>
 
 <section class="dark">
   <div class="wrap">
     <div class="split">
       <div class="reveal">
-        <p class="kicker" style="color:var(--acid);margin-bottom:16px">COMBAT SUITS / DROP 03</p>
+        <p class="kicker" style="color:var(--acid);margin-bottom:16px" data-en="COMBAT SUITS / DROP 03">INDUMENTARIA DE COMBATE / COLECCIÓN 03</p>
         <h2><span class="lang-en">Wear the uniform of the resistance.</span><span class="lang-es">Viste el uniforme de la resistencia.</span></h2>
         <p>
           <span class="lang-en">The same gear our units fight in. Circuit-print jerseys, gas mask tees, training kits — engineered for the mat, styled for the wasteland.</span>
@@ -186,34 +211,27 @@
         <a class="btn btn-mag" href="shop.html"><span class="lang-en">ENTER THE SHOP</span><span class="lang-es">ENTRA A LA TIENDA</span></a>
       </div>
       <div class="img-frame reveal reveal-d1">
-        <img src="assets/jersey-praetoreans.jpg" alt="Praetoreans Interface GP jersey">
-        <span class="frame-tag">PRAETOREANS JERSEY — 2024</span>
+        <img src="assets/jersey-praetoreans.jpg" alt="Camiseta de Praetoreans Interface GP" data-en-alt="Praetoreans Interface GP jersey">
+        <span class="frame-tag" data-en="PRAETOREANS JERSEY — 2024">CAMISETA PRAETOREANS — 2024</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-final" id="enlist">
-  <div class="scanlines"></div>
-  <div class="wrap">
-    <p class="kicker flicker"><span class="lang-en">CRITICAL UPDATE DETECTED</span><span class="lang-es">ACTUALIZACIÓN CRÍTICA DETECTADA</span></p>
-    <h2><span class="lang-en">THE NEXT INTERFACE<br><span class="accent glitch" data-text="IS COMING.">IS COMING.</span></span><span class="lang-es">LA PRÓXIMA INTERFAZ<br><span class="accent glitch" data-text="SE ACERCA.">SE ACERCA.</span></span></h2>
-    <p>
-      <span class="lang-en">We are rebuilding the neural pathways. The grid is evolving. Be ready to interface with the next generation of lethal avatars.</span>
-      <span class="lang-es">Estamos reconstruyendo las vías neuronales. La red evoluciona. Prepárate para la próxima generación de avatares letales.</span>
-    </p>
-    <a class="btn btn-acid" href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener"><span class="lang-en">ENLIST NOW</span><span class="lang-es">ALÍSTATE</span></a>
-  </div>
-</section>
+<section class="cta-final" id="enlist"><div class="wrap">
+  <h2><span class="lang-es">¿Quieres competir en Quito?</span><span class="lang-en">Want to compete in Quito?</span></h2>
+  <p><span class="lang-es">Cuéntanos en qué entrenas y qué te interesa. El equipo revisa cada solicitud.</span><span class="lang-en">Tell us what you train in and what interests you. The team reviews each inquiry.</span></p>
+  <a class="btn btn-acid" href="competir.html"><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span></a>
+</div></section>
 
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
-    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED , QUITO EC</span>
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>

@@ -1,28 +1,76 @@
 /* RAAZ BORG — shared interface logic */
 
-/* language toggle with persistence */
+/* duplicate ticker content for seamless loop */
 (function () {
-  const saved = localStorage.getItem("rb-lang") || "en";
-  document.body.dataset.lang = saved;
-  document.documentElement.lang = saved;
-  const t = document.getElementById("langToggle");
-  if (t) {
-    t.textContent = saved === "en" ? "ES" : "EN";
-    t.addEventListener("click", () => {
-      const next = document.body.dataset.lang === "en" ? "es" : "en";
-      document.body.dataset.lang = next;
-      document.documentElement.lang = next;
-      localStorage.setItem("rb-lang", next);
-      t.textContent = next === "en" ? "ES" : "EN";
-    });
-  }
+  document.querySelectorAll(".ticker-track").forEach((track) => {
+    track.innerHTML = "<span>" + track.innerHTML + "</span><span aria-hidden='true'>" + track.innerHTML + "</span>";
+  });
 })();
 
-/* mobile nav */
+/* Spanish is the default. Shared language links take precedence over a saved choice. */
 (function () {
-  const b = document.getElementById("burger");
+  const toggle = document.getElementById("langToggle");
+  const query = new URLSearchParams(location.search).get("lang");
+  let saved;
+  try { saved = localStorage.getItem("rb-lang"); } catch {}
+  const initial = ["es", "en"].includes(query) ? query : saved === "en" ? "en" : "es";
+
+  const translations = [];
+  for (const [key, attr] of [["en", null], ["enLabel", "aria-label"], ["enContent", "content"], ["enAlt", "alt"], ["enGlitch", "data-text"]]) {
+    const selector = "data-" + key.replace(/[A-Z]/g, c => "-" + c.toLowerCase());
+    document.querySelectorAll("[" + selector + "]").forEach(element => {
+      const spanish = attr ? element.getAttribute(attr) : element.textContent;
+      translations.push(lang => {
+        const value = lang === "es" ? spanish : element.dataset[key];
+        if (attr) element.setAttribute(attr, value);
+        else element.textContent = value;
+      });
+    });
+  }
+
+  function apply(lang) {
+    document.body.dataset.lang = document.documentElement.lang = lang;
+    translations.forEach(update => update(lang));
+    if (toggle) {
+      toggle.textContent = lang === "es" ? "EN" : "ES";
+      toggle.setAttribute("aria-label", lang === "es" ? "Cambiar a inglés" : "Switch to Spanish");
+    }
+  }
+
+  function remember(lang) {
+    try { localStorage.setItem("rb-lang", lang); } catch {}
+  }
+
+  apply(initial);
+  if (query === initial) remember(initial);
+  toggle?.addEventListener("click", () => {
+    const lang = document.body.dataset.lang === "es" ? "en" : "es";
+    remember(lang);
+    const url = new URL(location.href);
+    url.searchParams.set("lang", lang);
+    history.replaceState(null, "", url);
+    apply(lang);
+    document.dispatchEvent(new Event("languagechange"));
+  });
+})();
+
+/* Mobile navigation */
+(function () {
+  const button = document.getElementById("burger");
   const links = document.querySelector(".nav-links");
-  if (b && links) b.addEventListener("click", () => links.classList.toggle("open"));
+  if (!button || !links) return;
+  function setOpen(open) {
+    links.classList.toggle("open", open);
+    button.setAttribute("aria-expanded", String(open));
+  }
+  button.addEventListener("click", () => setOpen(!links.classList.contains("open")));
+  links.addEventListener("click", () => setOpen(false));
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && links.classList.contains("open")) {
+      setOpen(false);
+      button.focus();
+    }
+  });
 })();
 
 /* scroll reveal */
@@ -32,13 +80,6 @@
     { threshold: 0.12 }
   );
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-})();
-
-/* duplicate ticker content for seamless loop */
-(function () {
-  document.querySelectorAll(".ticker-track").forEach((track) => {
-    track.innerHTML = "<span>" + track.innerHTML + "</span><span aria-hidden='true'>" + track.innerHTML + "</span>";
-  });
 })();
 
 /* typed system line */
@@ -97,10 +138,10 @@ document.querySelectorAll(".order-product").forEach(button => {
     const method = button.dataset.method;
     const isSpanish = document.body.dataset.lang === "es";
 
-    const subject = `RAAZ BORG Order Inquiry - ${product}`;
+    const subject = isSpanish ? `RAAZ BORG — Consulta sobre ${product}` : `RAAZ BORG Order Inquiry - ${product}`;
 
     const message = isSpanish
-      ? `Hola RAAZ BORG, estoy interesado/a en comprar ${product}, talla ${size}. ¿Está disponible?`
+      ? `Hola RAAZ BORG, estoy interesado/a en comprar ${product}, talla ${size === "One Size" ? "única" : size}. ¿Está disponible?`
       : `Hello RAAZ BORG, I'm interested in ordering ${product}, size ${size}. Is it available?`;
 
     if (method === "email") {
@@ -112,7 +153,7 @@ document.querySelectorAll(".order-product").forEach(button => {
       try {
         await navigator.clipboard.writeText(message);
       } catch (error) {
-        window.prompt("Copy your message:", message);
+        window.prompt(isSpanish ? "Copia tu mensaje" : "Copy your message", message);
       }
 
       window.open(
@@ -355,6 +396,12 @@ document.querySelectorAll(".clashes-realm-card").forEach(card => {
     });
 
 
+  function openLinkedRealm() {
+    if (location.hash === "#" + card.id && !card.classList.contains("flipped")) flipCard();
+  }
+  openLinkedRealm();
+  window.addEventListener("hashchange", openLinkedRealm);
+
   card.addEventListener("click", flipCard);
 
   card.addEventListener("keydown", event => {
@@ -481,7 +528,7 @@ document.querySelectorAll(".clashes-realm-card").forEach(card => {
   fallback.hidden = false;
       };
 
-  img.alt = edition.name + " fighters";
+  img.alt = language() === "es" ? "Peleadores de " + edition.name : edition.name + " fighters";
   img.src = edition.image;
     }
 
@@ -516,6 +563,16 @@ document.querySelectorAll(".clashes-realm-card").forEach(card => {
       }
     });
   });
+
+  function openLinkedEdition() {
+    const trigger = triggers.find(item => "#" + item.id === location.hash);
+    if (trigger) {
+      openArchive(Number(trigger.dataset.gp));
+      previousFocus = trigger;
+    }
+  }
+  openLinkedEdition();
+  window.addEventListener("hashchange", openLinkedEdition);
 
   $("gpArchiveClose").addEventListener("click", closeArchive);
   $("gpArchivePrev").addEventListener("click", () => show(active - 1));
@@ -633,7 +690,7 @@ function renderProcess() {
   processTitle.textContent = stage[0];
   processDescription.textContent = stage[1];
   processNumber.textContent =
-    `PROTOCOL ${String(activeProcessStep + 1).padStart(2, "0")} / 06`;
+    `${lang === "es" ? "PROTOCOLO" : "PROTOCOL"} ${String(activeProcessStep + 1).padStart(2, "0")} / 06`;
 
   stepButtons.forEach((button, index) => {
     button.classList.toggle("active", index === activeProcessStep);
@@ -791,10 +848,10 @@ const previousRealm = document.getElementById('prev');
 const nextRealm = document.getElementById('next');
 const realmViewport = document.getElementById('viewport');
 const exploreRealm = document.getElementById('realmExplore');
-const realmNote = document.getElementById('realmNote');
+const realmIds = ["white-carbon", "zaphire", "violet", "oxide", "praetoreans", "nexus", "eclipse"];
 
 if (!track || !realmCounter || !realmTitle || !previousRealm || !nextRealm ||
-    !realmViewport || !exploreRealm || !realmNote) return;
+    !realmViewport || !exploreRealm) return;
 
 realms.forEach((realm, index) => {
   const card = document.createElement("article");
@@ -808,7 +865,7 @@ realms.forEach((realm, index) => {
 
       <div class="realm-card-face realm-card-front">
         <span class="realm-id">
-          REALM ${String(index + 1).padStart(2, "0")} / 07
+          <span class="lang-es">REINO</span><span class="lang-en">REALM</span> ${String(index + 1).padStart(2, "0")} / 07
         </span>
 
         <div class="realm-symbol">${realm.symbol}</div>
@@ -888,6 +945,7 @@ function render() {
     `${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
 
   realmTitle.textContent = realms[current].name;
+  exploreRealm.href = "clashes.html#realm-" + realmIds[current];
 }
 
 /* ============ NAVIGATION ============ */
@@ -941,15 +999,6 @@ realmViewport.addEventListener('touchend', event => {
     move(distance < 0 ? 1 : -1);
   }
 }, { passive: true });
-
-/* ============ EXPLORE REALM ============ */
-
-exploreRealm.addEventListener('click', () => {
-  realmNote.scrollIntoView({
-    behavior: 'smooth',
-    block: 'center'
-  });
-});
 
 /* ============ INITIALIZE ============ */
 

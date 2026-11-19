@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fighters — RAAZ BORG</title>
-<meta name="description" content="The Raaz Borg roster — personas born from the Grid.">
+<title data-en="Fighters — RAAZ BORG">Peleadores — RAAZ BORG</title>
+<meta name="description" content="Conoce a los peleadores de RA’AZ BORG en Quito." data-en-content="Meet the RA’AZ BORG fighters in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -61,22 +61,22 @@
 @media(max-width:600px){.gp-archive-controls{padding:16px}.gp-champion-panel{border-left:0;border-top:2px solid var(--magenta);padding:14px 0 0}}
 </style>
 </head>
-<body data-lang="en">
+<body data-lang="es">
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
       <li><a href="fighters.html" class="active"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
       <li><a href="clashes.html">CLASHES GP</a></li>
       <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link">SHOP</a></li>
+      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-acid nav-cta" href="clashes.html#enlist">ENLIST</a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
@@ -84,9 +84,9 @@
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost">DATABASE</div>
-    <span class="kicker">PERSONNEL / 8 ACTIVE UNITS</span>
-    <h1 class="glitch flicker" data-text="ELITE FIGHTERS"><span class="lang-en">ELITE FIGHTERS</span><span class="lang-es">PELEADORES ÉLITE</span></h1>
+    <div class="ghost" data-en="DATABASE">BASE DE DATOS</div>
+    <span class="kicker" data-en="PERSONNEL / 8 ACTIVE UNITS">PLANTEL / 8 UNIDADES ACTIVAS</span>
+    <h1 class="glitch flicker" data-en-glitch="ELITE FIGHTERS" data-text="PELEADORES ÉLITE"><span class="lang-en">ELITE FIGHTERS</span><span class="lang-es">PELEADORES ÉLITE</span></h1>
     <p class="lead">
       <span class="lang-en">Every athlete who enters the Grid receives a persona: a name, an archetype, and combat stats logged by the system. These are the active units of the Raaz Borg universe.</span>
       <span class="lang-es">Cada atleta que entra a la Red recibe un personaje: un nombre, un arquetipo y estadísticas de combate registradas por el sistema. Estas son las unidades activas del universo Raaz Borg.</span>
@@ -97,7 +97,7 @@
 <!-- ==== Ticker ==== -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>UNIT SCAN COMPLETE</span><span>◈</span><span>8 PERSONAS DETECTED</span><span>◈</span><span>ARCHETYPES LOADED</span><span>◈</span><span>THE GRID SELECTS ITS HEROES</span><span>◈</span>
+    <span data-en="UNIT SCAN COMPLETE">ESCANEO DE UNIDADES COMPLETO</span><span>◈</span><span data-en="8 PERSONAS DETECTED">8 PERSONAJES DETECTADOS</span><span>◈</span><span data-en="ARCHETYPES LOADED">ARQUETIPOS CARGADOS</span><span>◈</span><span data-en="THE GRID SELECTS ITS HEROES">LA RED ELIGE A SUS HÉROES</span><span>◈</span>
   </div>
 </div>
 
@@ -107,8 +107,8 @@
     <div class="split">
 
       <div class="img-frame reveal">
-        <img src="assets/alzate-raw.jpg" alt="RAAZ BORG fighter in action">
-        <span class="frame-tag">RAW FEED — THE YARD</span>
+        <img src="assets/alzate-raw.jpg" alt="Peleador de RAAZ BORG en acción" data-en-alt="RAAZ BORG fighter in action">
+        <span class="frame-tag" data-en="RAW FEED — THE YARD">SEÑAL EN DIRECTO — EL PATIO</span>
       </div>
 
       <div class="reveal reveal-d1">
@@ -150,7 +150,7 @@
   <div class="wrap">
 
     <div class="sec-head reveal">
-      <div class="ghost">FEATURED</div>
+      <div class="ghost" data-en="FEATURED">DESTACADO</div>
 
       <span class="kicker mag">
         <span class="lang-en">FIGHTER SPOTLIGHT</span>
@@ -166,7 +166,7 @@
     <div class="featured-fighter-card reveal">
 
       <div class="featured-fighter-image">
-        <img src="assets/fighter-super-choque.jpg" alt="Super Choque — RAAZ BORG fighter">
+        <img src="assets/fighter-super-choque.jpg" alt="Super Choque, peleador de RAAZ BORG" data-en-alt="Super Choque — RAAZ BORG fighter">
         <span class="featured-fighter-tag">UNIT_01</span>
       </div>
 
@@ -201,7 +201,7 @@
 
           <div class="featured-stat">
             <div class="featured-stat-label">
-              <span>POWER</span>
+              <span data-en="POWER">POTENCIA</span>
               <span>92</span>
             </div>
             <div class="featured-stat-bar">
@@ -211,7 +211,7 @@
 
           <div class="featured-stat">
             <div class="featured-stat-label">
-              <span>UTILITY</span>
+              <span data-en="UTILITY">UTILIDAD</span>
               <span>70</span>
             </div>
             <div class="featured-stat-bar">
@@ -238,7 +238,7 @@
   <div class="wrap">
 
     <div class="sec-head reveal">
-      <div class="ghost">ROSTER</div>
+      <div class="ghost" data-en="ROSTER">PLANTEL</div>
 
       <span class="kicker cy">
         <span class="lang-en">THE GRID DATABASE</span>
@@ -274,12 +274,12 @@
       <label class="gp-filter-field" for="gpRosterFilter">
         <span class="lang-en">SELECT GRAND PRIX</span><span class="lang-es">SELECCIONAR GRAND PRIX</span>
         <select id="gpRosterFilter">
-          <option value="all">All fighters / Todos los peleadores</option>
-          <option value="gp-1">Grand Prix 01 — roster pending</option>
-          <option value="gp-2">Grand Prix 02 — roster pending</option>
-          <option value="gp-3">Grand Prix 03 — roster pending</option>
-          <option value="gp-4">Grand Prix 04 — roster pending</option>
-          <option value="gp-5">Grand Prix 05 — roster pending</option>
+          <option value="all" data-en="All fighters">Todos los peleadores</option>
+          <option value="gp-1" data-en="Grand Prix 01 — roster pending">Grand Prix 01 — participantes por confirmar</option>
+          <option value="gp-2" data-en="Grand Prix 02 — roster pending">Grand Prix 02 — participantes por confirmar</option>
+          <option value="gp-3" data-en="Grand Prix 03 — roster pending">Grand Prix 03 — participantes por confirmar</option>
+          <option value="gp-4" data-en="Grand Prix 04 — roster pending">Grand Prix 04 — participantes por confirmar</option>
+          <option value="gp-5" data-en="Grand Prix 05 — roster pending">Grand Prix 05 — participantes por confirmar</option>
         </select>
       </label>
       <div class="gp-champion-panel" aria-live="polite">
@@ -290,7 +290,7 @@
     </div>
     <p class="gp-empty" id="gpRosterEmpty" hidden aria-live="polite"></p>
     <div class="realm-roster-grid reveal">
-      <button class="realm-flip-card" type="button" style="--card-accent:#c8f542" data-fighter="1" aria-pressed="false" aria-label="View SUPER CHOQUE competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#c8f542" data-fighter="1" id="fighter-1" aria-pressed="false" aria-label="Ver historial de SUPER CHOQUE" data-en-label="View SUPER CHOQUE competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-001</span></span>
@@ -298,7 +298,7 @@
             <span class="realm-front-footer"><strong>SUPER CHOQUE</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-001</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-001</span></span>
             <strong class="realm-back-name">SUPER CHOQUE</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -307,7 +307,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#00d8e2" data-fighter="2" aria-pressed="false" aria-label="View VICE PROTOCOL competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#00d8e2" data-fighter="2" id="fighter-2" aria-pressed="false" aria-label="Ver historial de VICE PROTOCOL" data-en-label="View VICE PROTOCOL competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-002</span></span>
@@ -315,7 +315,7 @@
             <span class="realm-front-footer"><strong>VICE PROTOCOL</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-002</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-002</span></span>
             <strong class="realm-back-name">VICE PROTOCOL</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -324,7 +324,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#e66cff" data-fighter="3" aria-pressed="false" aria-label="View INTERFACE PRIME competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#e66cff" data-fighter="3" id="fighter-3" aria-pressed="false" aria-label="Ver historial de INTERFACE PRIME" data-en-label="View INTERFACE PRIME competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-003</span></span>
@@ -332,7 +332,7 @@
             <span class="realm-front-footer"><strong>INTERFACE PRIME</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-003</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-003</span></span>
             <strong class="realm-back-name">INTERFACE PRIME</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -341,7 +341,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#9a7aff" data-fighter="4" aria-pressed="false" aria-label="View ALZÂTE competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#9a7aff" data-fighter="4" id="fighter-4" aria-pressed="false" aria-label="Ver historial de ALZÂTE" data-en-label="View ALZÂTE competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-004</span></span>
@@ -349,7 +349,7 @@
             <span class="realm-front-footer"><strong>ALZÂTE</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-004</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-004</span></span>
             <strong class="realm-back-name">ALZÂTE</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -358,7 +358,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#36e3d0" data-fighter="5" aria-pressed="false" aria-label="View CYBER ZEN competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#36e3d0" data-fighter="5" id="fighter-5" aria-pressed="false" aria-label="Ver historial de CYBER ZEN" data-en-label="View CYBER ZEN competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-005</span></span>
@@ -366,7 +366,7 @@
             <span class="realm-front-footer"><strong>CYBER ZEN</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-005</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-005</span></span>
             <strong class="realm-back-name">CYBER ZEN</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -375,7 +375,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#ff69b4" data-fighter="6" aria-pressed="false" aria-label="View NIMBOL BRUNÃO competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#ff69b4" data-fighter="6" id="fighter-6" aria-pressed="false" aria-label="Ver historial de NIMBOL BRUNÃO" data-en-label="View NIMBOL BRUNÃO competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-006</span></span>
@@ -383,7 +383,7 @@
             <span class="realm-front-footer"><strong>NIMBOL BRUNÃO</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-006</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-006</span></span>
             <strong class="realm-back-name">NIMBOL BRUNÃO</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -392,7 +392,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#ffad4d" data-fighter="7" aria-pressed="false" aria-label="View NEO STRIKER competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#ffad4d" data-fighter="7" id="fighter-7" aria-pressed="false" aria-label="Ver historial de NEO STRIKER" data-en-label="View NEO STRIKER competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-007</span></span>
@@ -400,7 +400,7 @@
             <span class="realm-front-footer"><strong>NEO STRIKER</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-007</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-007</span></span>
             <strong class="realm-back-name">NEO STRIKER</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -409,7 +409,7 @@
           </span>
         </span>
       </button>
-      <button class="realm-flip-card" type="button" style="--card-accent:#ff6577" data-fighter="8" aria-pressed="false" aria-label="View MOHICANO PARRA competitive record">
+      <button class="realm-flip-card" type="button" style="--card-accent:#ff6577" data-fighter="8" id="fighter-8" aria-pressed="false" aria-label="Ver historial de MOHICANO PARRA" data-en-label="View MOHICANO PARRA competitive record">
         <span class="realm-flip-inner">
           <span class="realm-face realm-front">
             <span class="realm-card-top"><span>RA'AZ BORG <em>COMBAT RECODED</em></span><span>RB-008</span></span>
@@ -417,7 +417,7 @@
             <span class="realm-front-footer"><strong>MOHICANO PARRA</strong><span class="realm-hint"><span class="lang-en">TAP TO REVEAL PROFILE ↻</span><span class="lang-es">TOCA PARA VER PERFIL ↻</span></span></span>
           </span>
           <span class="realm-face realm-back">
-            <span class="realm-card-top"><span>FIGHTER RECORD</span><span>RB-008</span></span>
+            <span class="realm-card-top"><span data-en="FIGHTER RECORD">HISTORIAL DEL PELEADOR</span><span>RB-008</span></span>
             <strong class="realm-back-name">MOHICANO PARRA</strong>
             <span class="realm-record"><span><b>—</b><small><span class="lang-en">WINS</span><span class="lang-es">VICTORIAS</span></small></span><span><b>—</b><small><span class="lang-en">LOSSES</span><span class="lang-es">DERROTAS</span></small></span></span>
             <span class="realm-champion"><span class="lang-en">CHAMPIONSHIP:</span><span class="lang-es">CAMPEONATO:</span> <span class="lang-en">PENDING</span><span class="lang-es">PENDIENTE</span></span>
@@ -432,7 +432,7 @@
       <h3><span class="lang-en">THE ROSTER KEEPS GROWING.</span><span class="lang-es">EL ROSTER SIGUE CRECIENDO.</span></h3>
       <p><span class="lang-en">Our featured fighters have helped shape the Ra’az Borg Grand Prix. As the story continues, we look forward to welcoming new talent and expanding the roster.</span><span class="lang-es">Nuestros peleadores destacados han ayudado a construir el Grand Prix de Ra’az Borg. Nuestra historia continúa y esperamos incorporar nuevos talentos y ampliar el roster.</span></p>
       <p class="roster-growth-end"><span class="lang-en">The next name could be yours.</span><span class="lang-es">El próximo nombre podría ser el tuyo.</span></p>
-      <a class="roster-enlist" href="clashes.html#enlist"><span class="lang-en">ENLIST NOW</span><span class="lang-es">INSCRÍBETE AHORA</span></a>
+      <a class="roster-enlist" href="competir.html"><span class="lang-en">ENLIST NOW</span><span class="lang-es">INSCRÍBETE AHORA</span></a>
     </div>
 
   </div>
@@ -444,11 +444,11 @@
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
-    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED , QUITO EC</span>
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>

@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clashes GP — RAAZ BORG</title>
-<meta name="description" content="Explore the history of RAAZ BORG tournaments. More fights coming soon.">
+<meta name="description" content="Explora la historia del Grand Prix de RA’AZ BORG en Quito." data-en-content="Explore the history of the RA’AZ BORG Grand Prix in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-lang="en">
+<body data-lang="es">
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
       <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
       <li><a href="clashes.html" class="active">CLASHES GP</a></li>
       <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link">SHOP</a></li>
+      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-acid nav-cta" href="#enlist">
-        <span class="lang-en">ENLIST</span>
-        <span class="lang-es">INSCRÍBETE</span>
-      </a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
@@ -36,7 +33,7 @@
   <div class="scanlines"></div>
   <div class="wrap">
     <div class="ghost">KUMATES</div>
-    <span class="kicker">OFFICIAL PRO-LOG</span>
+    <span class="kicker" data-en="OFFICIAL PRO-LOG">ARCHIVO OFICIAL</span>
     <h1 class="glitch flicker" data-text="CLASHES GP">CLASHES GP</h1>
     <p class="lead">
         <span class="lang-en">Seven editions. Seven colors. One grid. Each Kumates GP is a system update — a new protocol, new
@@ -57,13 +54,13 @@
 <!-- ==== Ticker ==== -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>MORE FIGHTS COMING SOON</span>
+    <span data-en="MORE FIGHTS COMING SOON">PRÓXIMAMENTE MÁS COMBATES</span>
     <span>◈</span>
-    <span>NEW TRANSMISSION PENDING</span>
+    <span data-en="NEW TRANSMISSION PENDING">PRÓXIMA TRANSMISIÓN PENDIENTE</span>
     <span>◈</span>
-    <span>THE GRID IS EVOLVING</span>
+    <span data-en="THE GRID IS EVOLVING">LA RED EVOLUCIONA</span>
     <span>◈</span>
-    <span>STAY CONNECTED</span>
+    <span data-en="STAY CONNECTED">SIGUE EN CONTACTO</span>
     <span>◈</span>
   </div>
 </div>
@@ -72,7 +69,7 @@
 <section class="dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="ghost">TIMELINE</div>
+      <div class="ghost" data-en="TIMELINE">CRONOLOGÍA</div>
       <span class="kicker cy"><span class="lang-en">SYSTEM CHANGELOG</span><span class="lang-es">HISTORIAL DEL
           SISTEMA</span></span>
       <h2>
@@ -99,8 +96,8 @@
     <div class="timeline reveal">
     
       <!-- WHITE CARBON COMBAT -->
-      <div class="t-item" style="--tc:var(--text)" data-gp="0" role="button" tabindex="0" aria-haspopup="dialog"
-        aria-label="View White Carbon Combat archive">
+      <div class="t-item" style="--tc:var(--text)" data-gp="0" id="gp-white-carbon" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de White Carbon Combat" data-en-label="View White Carbon Combat archive">
     
         <div class="year">2020</div>
         <div class="ev">White Carbon Combat</div>
@@ -117,8 +114,8 @@
       </div>
     
       <!-- BLUE OBLIVION -->
-      <div class="t-item" style="--tc:var(--cyan)" data-gp="1" role="button" tabindex="0" aria-haspopup="dialog"
-        aria-label="View Blue Oblivion archive">
+      <div class="t-item" style="--tc:var(--cyan)" data-gp="1" id="gp-blue-oblivion" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Blue Oblivion" data-en-label="View Blue Oblivion archive">
     
         <div class="year">2021</div>
         <div class="ev">Blue Oblivion BJJ</div>
@@ -135,8 +132,8 @@
       </div>
     
       <!-- VIOLET COMBAT ROYALE -->
-      <div class="t-item" style="--tc:var(--violet)" data-gp="2" role="button" tabindex="0" aria-haspopup="dialog"
-        aria-label="View Violet Combat Royale archive">
+      <div class="t-item" style="--tc:var(--violet)" data-gp="2" id="gp-violet-royale" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Violet Combat Royale" data-en-label="View Violet Combat Royale archive">
     
         <div class="year">2021</div>
         <div class="ev">Violet Combat Royale</div>
@@ -153,8 +150,8 @@
       </div>
     
       <!-- OXIDE OVERDRIVE -->
-      <div class="t-item" style="--tc:var(--orange)" data-gp="3" role="button" tabindex="0" aria-haspopup="dialog"
-        aria-label="View Oxide Overdrive archive">
+      <div class="t-item" style="--tc:var(--orange)" data-gp="3" id="gp-oxide-overdrive" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Oxide Overdrive" data-en-label="View Oxide Overdrive archive">
     
         <div class="year">2022</div>
         <div class="ev">Oxide Overdrive</div>
@@ -171,8 +168,8 @@
       </div>
     
       <!-- PRAETOREANS INTERFACE -->
-      <div class="t-item" style="--tc:var(--acid)" data-gp="4" role="button" tabindex="0" aria-haspopup="dialog"
-        aria-label="View Praetoreans Interface archive">
+      <div class="t-item" style="--tc:var(--acid)" data-gp="4" id="gp-praetoreans" role="button" tabindex="0" aria-haspopup="dialog"
+        aria-label="Ver archivo de Praetoreans Interface" data-en-label="View Praetoreans Interface archive">
     
         <div class="year">2024</div>
         <div class="ev">Praetoreans Interface GP</div>
@@ -198,13 +195,13 @@
 
   <div class="gp-archive-panel" role="dialog" aria-modal="true" aria-labelledby="gpArchiveTitle" tabindex="-1">
 
-    <button class="gp-archive-close" id="gpArchiveClose" type="button" aria-label="Close archive">
+    <button class="gp-archive-close" id="gpArchiveClose" type="button" aria-label="Cerrar archivo" data-en-label="Close archive">
       &times;
     </button>
 
     <div class="gp-archive-meta">
       <span id="gpArchiveYear"></span>
-      <span> // GP ARCHIVE</span>
+      <span data-en="// GP ARCHIVE">// ARCHIVO GP</span>
     </div>
 
     <h2 id="gpArchiveTitle"></h2>
@@ -251,11 +248,11 @@
     <!-- ARCHIVE NAVIGATION -->
     <div class="gp-archive-nav">
 
-      <button id="gpArchivePrev" type="button" aria-label="Previous edition">&#10094;</button>
+      <button id="gpArchivePrev" type="button" aria-label="Edición anterior" data-en-label="Previous edition">&#10094;</button>
 
       <span id="gpArchiveCount"></span>
 
-      <button id="gpArchiveNext" type="button" aria-label="Next edition">&#10095;</button>
+      <button id="gpArchiveNext" type="button" aria-label="Siguiente edición" data-en-label="Next edition">&#10095;</button>
 
     </div>
 
@@ -268,7 +265,7 @@
   <div class="wrap">
 
     <div class="sec-head reveal">
-      <div class="ghost">REALMS</div>
+      <div class="ghost" data-en="REALMS">REINOS</div>
 
       <span class="kicker mag">
         <span class="lang-en">THE GRAND PRIX UNIVERSE</span>
@@ -296,11 +293,11 @@
     <div class="clashes-realms-grid">
     
         <!-- ============ 01 WHITE CARBON COMBAT ============ -->
-        <article class="clashes-realm-card" style="--realm-color:#E9EDF0" tabindex="0" role="button"
-          aria-label="Flip White Carbon Combat card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-white-carbon" style="--realm-color:#E9EDF0" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de White Carbon Combat" data-en-label="Flip White Carbon Combat card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 01 / 07</span>
+              <span class="realm-index" data-en="REALM 01 / 07">REINO 01 / 07</span>
               <div class="realm-icon">◇</div>
               <h3>WHITE CARBON COMBAT</h3>
             </div>
@@ -320,11 +317,11 @@
         </article>
       
         <!-- ============ 02 BLUE OBLIVION ============ -->
-        <article class="clashes-realm-card" style="--realm-color:#00D8E2" tabindex="0" role="button"
-          aria-label="Flip Blue Oblivion card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-zaphire" style="--realm-color:#00D8E2" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Blue Oblivion" data-en-label="Flip Blue Oblivion card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 02 / 07</span>
+              <span class="realm-index" data-en="REALM 02 / 07">REINO 02 / 07</span>
               <div class="realm-icon">⬡</div>
               <h3>Zaphire Trials</h3>
               </div>
@@ -343,11 +340,11 @@
         </article>
       
         <!-- ============ 03 VIOLET COMBAT ROYALE ============ -->
-        <article class="clashes-realm-card" style="--realm-color:#B579F7" tabindex="0" role="button"
-          aria-label="Flip Violet Combat Royale card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-violet" style="--realm-color:#B579F7" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Violet Combat Royale" data-en-label="Flip Violet Combat Royale card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 03 / 07</span>
+              <span class="realm-index" data-en="REALM 03 / 07">REINO 03 / 07</span>
               <div class="realm-icon">✧</div>
               <h3>VIOLET COMBAT ROYALE</h3>
               </div>
@@ -366,11 +363,11 @@
         </article>
       
         <!-- ============ 04 OXIDE OVERDRIVE ============ -->
-        <article class="clashes-realm-card" style="--realm-color:var(--orange)" tabindex="0" role="button"
-          aria-label="Flip Oxide Overdrive card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-oxide" style="--realm-color:var(--orange)" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Oxide Overdrive" data-en-label="Flip Oxide Overdrive card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 04 / 07</span>
+              <span class="realm-index" data-en="REALM 04 / 07">REINO 04 / 07</span>
               <div class="realm-icon">⚙</div>
               <h3>OXIDE OVERDRIVE</h3>
             </div>
@@ -391,11 +388,11 @@
         </article>
       
         <!-- ============ 05 PRAETOREANS INTERFACE ============ -->
-        <article class="clashes-realm-card" style="--realm-color:var(--acid)" tabindex="0" role="button"
-          aria-label="Flip Praetoreans Interface card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-praetoreans" style="--realm-color:var(--acid)" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Praetoreans Interface" data-en-label="Flip Praetoreans Interface card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 05 / 07</span>
+              <span class="realm-index" data-en="REALM 05 / 07">REINO 05 / 07</span>
               <div class="realm-icon">♜</div>
               <h3>PRAETOREANS INTERFACE</h3>
               </div>
@@ -415,11 +412,11 @@
         </article>
       
         <!-- ============ 06 NEXUS NOIR ============ -->
-        <article class="clashes-realm-card" style="--realm-color:var(--magenta)" tabindex="0" role="button"
-          aria-label="Flip Nexus Noir card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-nexus" style="--realm-color:var(--magenta)" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Nexus Noir" data-en-label="Flip Nexus Noir card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 06 / 07</span>
+              <span class="realm-index" data-en="REALM 06 / 07">REINO 06 / 07</span>
               <div class="realm-icon">◈</div>
               <h3>NEXUS NOIR</h3>
             </div>
@@ -439,11 +436,11 @@
         </article>
       
         <!-- ============ 07 ECLIPSE SYNDICATE ============ -->
-        <article class="clashes-realm-card" style="--realm-color:#8681B9" tabindex="0" role="button"
-          aria-label="Flip Eclipse Syndicate card" aria-pressed="false">
+        <article class="clashes-realm-card" id="realm-eclipse" style="--realm-color:#8681B9" tabindex="0" role="button"
+          aria-label="Voltear tarjeta de Eclipse Syndicate" data-en-label="Flip Eclipse Syndicate card" aria-pressed="false">
           <div class="realm-flip-inner">
             <div class="realm-flip-face realm-flip-front">
-              <span class="realm-index">REALM 07 / 07</span>
+              <span class="realm-index" data-en="REALM 07 / 07">REINO 07 / 07</span>
               <div class="realm-icon">◉</div>
               <h3>ECLIPSE SYNDICATE</h3>
             </div>
@@ -525,7 +522,7 @@
       </div>
     </div>
     <div style="text-align:center;margin-top:52px" class="reveal">
-      <p class="kicker" style="color:var(--acid);margin-bottom:10px">THE BÖRG LAB — 21:00 — SECTOR GYE</p>
+      <p class="kicker" style="color:var(--acid);margin-bottom:10px">THE BÖRG LAB — 21:00 — QUITO</p>
       <p style="font-family:var(--mono);font-size:13px;color:var(--text-3);letter-spacing:.2em"><span class="lang-en">ONLY ONE LEAVES THE LAB.</span><span class="lang-es">SOLO UNO SALE DEL LAB.</span></p>
     </div>
   </div>
@@ -543,9 +540,7 @@
       <span class="lang-es">Tu camino hacia la Red comienza aquí. Entra a la arena, desafía tus límites y forma parte de la
         próxima generación de competidores de RAAZ BORG. Explora los reinos y prepárate para los próximos torneos.</span>
   </p>
-    <a class="btn btn-acid" href="realm-nexus.html">
-      <span class="lang-en">EXPLORE REALMS</span>
-      <span class="lang-es">EXPLORAR REINOS</span>
+    <a class="btn btn-acid" href="competir.html"><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span>
     </a>
   </div>
 </section>
@@ -553,11 +548,11 @@
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
-    <span class="fm">© 2026 — RA'AZ COMBAT RECODED, QUITO EC</span>
+    <span class="fm">© 2026 — RA'AZ COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-en="I want to compete — RAAZ BORG">Quiero competir — RAAZ BORG</title>
+<meta name="description" content="Envía tu solicitud de atleta a RA’AZ BORG en Quito." data-en-content="Send your athlete inquiry to RA’AZ BORG in Quito.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-lang="es">
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
+      <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
+      <li><a href="clashes.html">CLASHES GP</a></li>
+      <li><a href="labs.html">LABS</a></li>
+      <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
+    </div>
+  </div>
+</nav>
+
+<main class="join-page"><div class="wrap join-layout">
+  <div class="join-intro">
+    <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
+    <h1><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span></h1>
+    <p><span class="lang-es">¿Te interesa el Grand Prix o entrenar en el Börg Lab? Cuéntanos sobre tu práctica y qué buscas en Quito.</span><span class="lang-en">Interested in the Grand Prix or training at the Börg Lab? Tell us about your training and what you’d like to do in Quito.</span></p>
+    <h2><span class="lang-es">Después de enviar tu correo</span><span class="lang-en">After you send your email</span></h2>
+    <p><span class="lang-es">El equipo revisará tu solicitud y te responderá por correo si hay una convocatoria que se ajuste a tu nivel. Un cupo se confirma por separado.</span><span class="lang-en">The team will review your inquiry and reply by email if an opportunity matches your level. A place is confirmed separately.</span></p>
+    <p><span class="lang-es">Tu solicitud es privada. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your inquiry is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
+  </div>
+  <div>
+    <form class="interest-form" id="athlete-interest" hidden>
+      <label for="alias"><span class="lang-es">Nombre o alias</span><span class="lang-en">Name or alias</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
+      <label for="email"><span class="lang-es">Correo electrónico</span><span class="lang-en">Email address</span><input id="email" name="email" type="email" required maxlength="150" autocomplete="email"></label>
+      <label for="city"><span class="lang-es">Ciudad</span><span class="lang-en">City</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
+      <label for="academy"><span class="lang-es">Academia o equipo (opcional)</span><span class="lang-en">Academy or team (optional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
+      <label for="discipline"><span class="lang-es">Disciplina o cinturón</span><span class="lang-en">Discipline or belt</span><input id="discipline" name="discipline" type="text" required maxlength="100"></label>
+      <label for="interest"><span class="lang-es">Me interesa</span><span class="lang-en">I’m interested in</span><select id="interest" name="interest" required>
+        <option value="" data-en="Choose an option">Selecciona una opción</option>
+        <option value="gp" data-en="Competing in the Grand Prix">Competir en el Grand Prix</option>
+        <option value="lab" data-en="Training at the Börg Lab">Entrenar en el Börg Lab</option>
+        <option value="both" data-en="Both">Ambos</option>
+      </select></label>
+      <label for="footage"><span class="lang-es">Enlace a tu perfil o video (opcional)</span><span class="lang-en">Profile or footage link (optional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
+      <label class="contact-ok"><input type="checkbox" name="contact" required><span class="lang-es">Acepto que RA’AZ BORG me contacte sobre esta solicitud.</span><span class="lang-en">I agree to be contacted by RA’AZ BORG about this inquiry.</span></label>
+      <p><span class="lang-es">Prepararemos un correo con estos datos. Revísalo y envíalo desde tu aplicación de correo.</span><span class="lang-en">We’ll prepare an email with these details. Review and send it from your email app.</span></p>
+      <button class="btn btn-acid" type="submit"><span class="lang-es">Preparar correo</span><span class="lang-en">Prepare email</span></button>
+      <div id="email-preview" hidden>
+        <p role="status"><span class="lang-es">Tu borrador está listo. Abre tu correo para enviarlo o copia el texto a tu servicio de correo.</span><span class="lang-en">Your draft is ready. Open your email app to send it, or copy the text into your email service.</span></p>
+        <textarea id="email-body" readonly aria-label="Texto del correo" data-en-label="Email draft"></textarea>
+        <a id="send-inquiry" class="btn btn-ghost"><span class="lang-es">Abrir mi correo</span><span class="lang-en">Open email app</span></a>
+      </div>
+    </form>
+    <p class="manual-contact"><span class="lang-es">También puedes escribir directamente a</span><span class="lang-en">You can also email us directly at</span> <a href="mailto:raazborgstudios@gmail.com">raazborgstudios@gmail.com</a>.</p>
+  </div>
+</div></main>
+
+<footer>
+  <div class="wrap foot">
+    <img src="assets/Isotipo.png" alt="Raaz Borg">
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
+    <ul class="foot-links">
+      <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/interest.js"></script>
+</body>
+</html>

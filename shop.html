@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop — RAAZ BORG Combat Suits</title>
-<meta name="description" content="Combat Suits — official Raaz Borg apparel. Circuit jerseys, gas mask tees, training gear.">
+<title data-en="Shop — RAAZ BORG">Tienda — RAAZ BORG</title>
+<meta name="description" content="Indumentaria oficial de RA’AZ BORG en Quito, Ecuador." data-en-content="Official RA’AZ BORG combatwear in Quito, Ecuador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-lang="en">
+<body data-lang="es">
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="index.html"><img src="assets/No_Background.png" alt="Raaz Borg — Combat Re-Coded"></a>
-    <ul class="nav-links">
-      <li><a href="index.html"><span class="lang-en">UNIVERSE</span><span class="lang-es">UNIVERSO</span></a></li>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="index.html#reinos"><span class="lang-es">Reinos</span><span class="lang-en">Realms</span></a></li>
       <li><a href="fighters.html"><span class="lang-en">FIGHTERS</span><span class="lang-es">PELEADORES</span></a></li>
       <li><a href="clashes.html">CLASHES GP</a></li>
       <li><a href="labs.html">LABS</a></li>
-      <li><a href="shop.html" class="shop-link active">SHOP</a></li>
+      <li><a href="shop.html" class="shop-link active"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES</button>
-      <a class="btn btn-mag nav-cta" href="#drop">
-        <span class="lang-en">SHOP NOW</span>
-        <span class="lang-es">COMPRAR</span>
-      </a>
-      <button class="burger" id="burger" aria-label="Menu">MENU</button>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar a inglés">EN</button>
+      <a class="btn btn-acid nav-cta" href="competir.html"><span class="lang-es">Únete</span><span class="lang-en">Join</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Menú" data-en-label="Menu"><span class="lang-es">MENÚ</span><span class="lang-en">MENU</span></button>
     </div>
   </div>
 </nav>
@@ -35,9 +32,9 @@
 <header class="page-hero">
   <div class="scanlines"></div>
   <div class="wrap">
-    <div class="ghost">SUITS</div>
-    <span class="kicker">COMBAT SUITS — OFFICIAL GEAR</span>
-    <h1 class="glitch flicker" data-text="THE ARMORY"><span class="lang-en">THE ARMORY</span><span class="lang-es">LA ARMERÍA</span></h1>
+    <div class="ghost" data-en="SUITS">EQUIPO</div>
+    <span class="kicker" data-en="COMBAT SUITS — OFFICIAL GEAR">INDUMENTARIA OFICIAL DE COMBATE</span>
+    <h1 class="glitch flicker" data-en-glitch="THE ARMORY" data-text="LA ARMERÍA"><span class="lang-en">THE ARMORY</span><span class="lang-es">LA ARMERÍA</span></h1>
     <p class="lead">
       <span class="lang-en">The same gear our units fight in. Every piece is a fragment of the universe — circuit prints, gas mask glyphs, and edition colorways. Built for the mat. Styled for the wasteland.</span>
       <span class="lang-es">El mismo equipo con el que pelean nuestras unidades. Cada pieza es un fragmento del universo — circuitos, máscaras de gas y colores de edición. Hecho para el tatami. Estilo wasteland.</span>
@@ -47,7 +44,7 @@
 
 <div class="ticker mag" aria-hidden="true">
   <div class="ticker-track">
-    <span>DROP 03 — LIVE NOW</span><span>◈</span><span>LIMITED UNITS</span><span>◈</span><span>WEAR THE RESISTANCE</span><span>◈</span>
+    <span data-en="DROP 03 — LIVE NOW">COLECCIÓN 03 — YA DISPONIBLE</span><span>◈</span><span data-en="LIMITED UNITS">UNIDADES LIMITADAS</span><span>◈</span><span data-en="WEAR THE RESISTANCE">VISTE LA RESISTENCIA</span><span>◈</span>
   </div>
 </div>
 
@@ -101,29 +98,29 @@
 
       <!-- WHITE RASHGUARD SET -->
       <div class="p-card">
-        <span class="p-badge">COMBAT SET</span>
+        <span class="p-badge" data-en="COMBAT SET">CONJUNTO DE COMBATE</span>
 
         <div class="p-photo product-gallery">
-          <img id="white-main" src="assets/white-set.png" alt="RAAZ BORG white rashguard and shorts">
+          <img id="white-main" src="assets/white-set.png" alt="Rashguard blanco y pantaloneta de RAAZ BORG" data-en-alt="RAAZ BORG white rashguard and shorts">
         </div>
 
         <div class="product-thumbnails">
           <button type="button" class="thumb">
-            <img src="assets/white-set.png" alt="white set">
+            <img src="assets/white-set.png" alt="Conjunto blanco" data-en-alt="white set">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/white-right.png" alt="white rashguard back">
+            <img src="assets/white-right.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/white-left.png" alt="white rashguard back">
+            <img src="assets/white-left.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/white-back.png" alt="white rashguard back">
+            <img src="assets/white-back.png" alt="Espalda del rashguard blanco" data-en-alt="white rashguard back">
           </button>
         </div>
 
         <div class="p-info">
-          <h3>WHITE HONEYCOMB SET</h3>
+          <h3 data-en="WHITE HONEYCOMB SET">CONJUNTO HONEYCOMB BLANCO</h3>
           <span class="p-type">
             <span class="lang-en">Rashguard + matching shorts</span>
             <span class="lang-es">Rashguard + pantaloneta </span>
@@ -173,26 +170,26 @@
         </span>
 
         <div class="p-photo product-gallery">
-          <img id="orange-main" src="assets/orange-front.png" alt="RAAZ BORG orange honeycomb rashguard">
+          <img id="orange-main" src="assets/orange-front.png" alt="Rashguard naranja Honeycomb de RAAZ BORG" data-en-alt="RAAZ BORG orange honeycomb rashguard">
         </div>
 
         <div class="product-thumbnails">
           <button type="button" class="thumb">
-            <img src="assets/orange-front.png" alt="Front">
+            <img src="assets/orange-front.png" alt="Frente" data-en-alt="Front">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/orange-right.png" alt="Angle">
+            <img src="assets/orange-right.png" alt="Vista en ángulo" data-en-alt="Angle">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/orange-left.png" alt="Side">
+            <img src="assets/orange-left.png" alt="Costado" data-en-alt="Side">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/orange-back.png" alt="Back">
+            <img src="assets/orange-back.png" alt="Espalda" data-en-alt="Back">
           </button>
         </div>
 
         <div class="p-info">
-          <h3>ORANGE HONEYCOMB RASHGUARD</h3>
+          <h3 data-en="ORANGE HONEYCOMB RASHGUARD">RASHGUARD HONEYCOMB NARANJA</h3>
           <span class="p-type">
             <span class="lang-en">Compression training rashguard</span>
             <span class="lang-es">Rashguard de compresión</span>
@@ -237,20 +234,20 @@
         <span class="p-badge">UNISEX</span>
 
         <div class="p-photo product-gallery">
-          <img id="dragon-kimono" src="assets/dragon-kimono-front.png" alt="RAAZ BORG black dragon kimono">
+          <img id="dragon-kimono" src="assets/dragon-kimono-front.png" alt="Kimono negro Dragón de RAAZ BORG" data-en-alt="RAAZ BORG black dragon kimono">
         </div>
 
         <div class="product-thumbnails">
           <button type="button" class="thumb">
-            <img src="assets/dragon-kimono-front.png" alt="Front">
+            <img src="assets/dragon-kimono-front.png" alt="Frente" data-en-alt="Front">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/dragron-kimono-back.png" alt="Angle">
+            <img src="assets/dragron-kimono-back.png" alt="Vista en ángulo" data-en-alt="Angle">
           </button>
         </div>
 
         <div class="p-info">
-          <h3>DRAGON KIMONO</h3>
+          <h3 data-en="DRAGON KIMONO">KIMONO DRAGÓN</h3>
           <span class="p-type">
             <span class="lang-en">Unisex streetwear kimono</span>
             <span class="lang-es">Kimono urbano unisex</span>
@@ -262,9 +259,7 @@
           </p>
 
           <div class="size-row selectable-sizes" data-product="Dragon Kimono">
-            <button type="button" class="selected" data-size="One Size">
-              ONE SIZE
-            </button>
+            <button type="button" class="selected" data-size="One Size" data-en="ONE SIZE">TALLA ÚNICA</button>
           </div>
 
           <div class="p-row">
@@ -291,23 +286,23 @@
 
       <!-- TRACK SUIT -->
       <div class="p-card">
-        <span class="p-badge">TRACK SUIT</span>
+        <span class="p-badge" data-en="TRACK SUIT">CONJUNTO DEPORTIVO</span>
       
         <div class="p-photo product-gallery">
-          <img id="tracksuit" src="assets/tracksuit-front.png" alt="RAAZ BORG tracksuit">
+          <img id="tracksuit" src="assets/tracksuit-front.png" alt="Conjunto deportivo de RAAZ BORG" data-en-alt="RAAZ BORG tracksuit">
         </div>
       
         <div class="product-thumbnails">
           <button type="button" class="thumb">
-            <img src="assets/tracksuit-front.png" alt="Tracksuit front">
+            <img src="assets/tracksuit-front.png" alt="Conjunto deportivo de frente" data-en-alt="Tracksuit front">
           </button>
           <button type="button" class="thumb">
-            <img src="assets/tracksuit-back.png" alt="Tracksuit back">
+            <img src="assets/tracksuit-back.png" alt="Conjunto deportivo de espalda" data-en-alt="Tracksuit back">
           </button>
         </div>
       
         <div class="p-info">
-          <h3>URBANWEAR TRACKSUIT</h3>
+          <h3 data-en="URBANWEAR TRACKSUIT">CONJUNTO DEPORTIVO URBANO</h3>
           <span class="p-type">
             <span class="lang-en">HOODIE + MATCHING SWEATPANTS</span>
             <span class="lang-es">SUDADERA + PANTALON</span>
@@ -353,27 +348,27 @@
 <footer>
   <div class="wrap foot">
     <img src="assets/Isotipo.png" alt="Raaz Borg">
-    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED , QUITO EC</span>
+    <span class="fm">© 2026 — RA'AZ BORG COMBAT RECODED, QUITO, ECUADOR</span>
     <ul class="foot-links">
       <li><a href="https://www.instagram.com/raazborg/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="shop.html">SHOP</a></li>
-      <li><a href="index.html">SYSTEM RESET</a></li>
+      <li><a href="shop.html"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
+      <li><a href="index.html"><span class="lang-es">INICIO</span><span class="lang-en">HOME</span></a></li>
     </ul>
   </div>
 </footer>
 
 
 <!-- PRODUCT IMAGE CAROUSEL LIGHTBOX -->
-<div id="productLightbox" class="product-lightbox" role="dialog" aria-modal="true" aria-label="Product image gallery"
+<div id="productLightbox" class="product-lightbox" role="dialog" aria-modal="true" aria-label="Galería de productos" data-en-label="Product image gallery"
   hidden>
 
-  <button type="button" class="lightbox-close" aria-label="Close image preview">&times;</button>
+  <button type="button" class="lightbox-close" aria-label="Cerrar vista previa" data-en-label="Close image preview">&times;</button>
 
-  <button type="button" class="lightbox-arrow lightbox-prev" aria-label="Previous image">&#10094;</button>
+  <button type="button" class="lightbox-arrow lightbox-prev" aria-label="Imagen anterior" data-en-label="Previous image">&#10094;</button>
 
-  <img id="lightboxImage" src="" alt="Product preview">
+  <img id="lightboxImage" src="" alt="Vista previa del producto" data-en-alt="Product preview">
 
-  <button type="button" class="lightbox-arrow lightbox-next" aria-label="Next image">&#10095;</button>
+  <button type="button" class="lightbox-arrow lightbox-next" aria-label="Siguiente imagen" data-en-label="Next image">&#10095;</button>
 
   <span id="lightboxCounter" class="lightbox-counter"></span>
 

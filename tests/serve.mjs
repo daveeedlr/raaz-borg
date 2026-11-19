@@ -10,7 +10,7 @@ const types = { '.html':'text/html; charset=utf-8', '.css':'text/css; charset=ut
 http.createServer((req,res)=>{
   let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   if (prefix !== '/' && pathname.startsWith(prefix)) pathname = pathname.slice(prefix.length);
-  if (pathname === '/' || pathname === '') pathname = '/fighters.html';
+  if (pathname === '/' || pathname === '') pathname = '/index.html';
   const target = path.resolve(root, '.' + pathname);
   if (!target.startsWith(root + path.sep) && target !== root) { res.writeHead(403).end('Forbidden'); return; }
   fs.stat(target,(error,stat)=>{
