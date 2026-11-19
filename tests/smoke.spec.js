@@ -612,6 +612,7 @@ test('roster screen never flashes while checking an authenticated returning figh
     }
     if(path.endsWith('/rb_my_profile_v2'))return route.fulfill({json:[]});
     if(path.endsWith('/rb_queue_sign_in_alert'))return route.fulfill({json:true});
+    if(path.endsWith('/rb_my_acknowledgement'))return route.fulfill({json:null});
     if(path.endsWith('/rb_my_fighter_portal'))return route.fulfill({json:{
       email:user.email,username:'existing',name:'Existing Fighter',belt:'blue',
       application:{id:'00000000-0000-4000-8000-000000000082',status:'submitted',
