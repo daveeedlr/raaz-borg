@@ -15,7 +15,7 @@
   const transitions = {
     submitted:[['in_review','Marcar en revisión','Mark in review'],['closed','Cerrar registro','Close registration']],
     in_review:[['invited','Marcar invitación enviada','Mark invitation sent'],['closed','Cerrar registro','Close registration']],
-    invited:[['closed','Cerrar postulación','Close application']], closed:[]
+    invited:[['closed','Cerrar registro','Close registration']], closed:[]
   };
   let user = null, allowed = false, loading = false, rows = [], refreshNumber = 0;
   let message = [];
@@ -31,7 +31,7 @@
     $('team-denied').hidden=!user || allowed || loading;
     $('team-queue').hidden=!user || !allowed;
     $('team-identity').textContent=user?.email||'';
-    if(loading) $('team-feedback').textContent=tr('Cargando postulaciones…','Loading applications…');
+    if(loading) $('team-feedback').textContent=tr('Cargando registros del roster…','Loading roster registrations…');
     else $('team-feedback').textContent=message.length?tr(...message):'';
     renderRows();
   }
@@ -39,10 +39,10 @@
     const output=$('team-results');
     output.replaceChildren();
     if(!user||!allowed) return;
-    $('team-count').textContent=tr(rows.length+' postulaciones en total',rows.length+' total applications');
+    $('team-count').textContent=tr(rows.length+' registros en total',rows.length+' total roster registrations');
     const selected=$('team-filter').value;
     const visible=rows.filter(r=>selected==='all'||r.status===selected);
-    if(!visible.length) { output.append(el('p',tr('No hay postulaciones en este estado.','No applications in this status.'))); return; }
+    if(!visible.length) { output.append(el('p',tr('No hay registros en este estado.','No roster registrations in this status.'))); return; }
     for(const row of visible) {
       const card=el('article',null,'team-review');
       const title=el('h3',row.alias||tr('Atleta sin alias','Unnamed athlete'));
@@ -63,10 +63,34 @@
         profile.height ? profile.height+' '+(profile.height_unit||'') : null,
         profile.belt_stripes != null ? tr('Franjas: ','Stripes: ')+profile.belt_stripes : null
       ].filter(Boolean).join(' · '),'team-note');
+      const receipt=el('p',null,'team-ack-state');
+      receipt.dataset.state = row.acknowledged_at ? 'confirmed' : 'unconfirmed';
+      receipt.textContent = row.acknowledged_at
+        ? tr('Recepción confirmada por RA’AZ BORG · ',
+             'Receipt confirmed by RA’AZ BORG · ') +
+          new Date(row.acknowledged_at).toLocaleDateString(document.documentElement.lang==='en'?'en-US':'es-EC') +
+          ' · ' + (row.ack_email_state==='sent'
+            ? tr('Correo enviado','Email sent')
+            : tr('Correo aún pendiente','Email still queued'))
+        : tr('Pendiente de confirmación manual al atleta',
+             'Awaiting staff confirmation to athlete');
       const actions=el('div',null,'team-actions');
+      if (!row.acknowledged_at) {
+        const acknowledge=el('button',tr('Confirmar recepción y notificar','Confirm receipt & notify'));
+        acknowledge.type='button';
+        acknowledge.dataset.action='acknowledge';
+        acknowledge.addEventListener('click',()=>acknowledgeRegistration(row,acknowledge));
+        actions.append(acknowledge);
+      } else if(row.ack_email_state==='pending'||row.ack_email_state==='failed') {
+        const retry=el('button',tr('Enviar correo pendiente','Send queued email'));
+        retry.type='button';
+        retry.dataset.action='send-ack-email';
+        retry.addEventListener('click',()=>sendAcknowledgementEmail(row,retry));
+        actions.append(retry);
+      }
       if(row.contact_email) {
         const contact=el('a',tr('Escribir al atleta','Email athlete'));
-        contact.href='mailto:'+encodeURIComponent(row.contact_email)+'?subject='+encodeURIComponent('RA’AZ BORG — '+tr('Tu postulación','Your application'));
+        contact.href='mailto:'+encodeURIComponent(row.contact_email)+'?subject='+encodeURIComponent('RA’AZ BORG — '+tr('Tu registro al roster','Your roster registration'));
         actions.append(contact);
       }
       if(row.footage_url) {
@@ -86,7 +110,7 @@
         button.addEventListener('click',()=>changeStatus(row, next, button));
         actions.append(button);
       }
-      card.append(title,meta,email,details,actions);
+      card.append(title,meta,email,details,receipt,actions);
       output.append(card);
     }
   }
@@ -95,7 +119,7 @@
     const seq=++refreshNumber, owner=user.id;
     loading=true;allowed=false;render();
     try {
-      const {data,error}=await client.rpc('rb_review_queue_v2');
+      const {data,error}=await client.rpc('rb_review_queue_v3');
       if(seq!==refreshNumber||!user||user.id!==owner) return;
       loading=false;
       if(error) {
@@ -112,6 +136,46 @@
       notify('Error de conexión. Vuelve a intentar.','Connection error. Try again.');
     }
     render();
+  }
+  async function sendAcknowledgementEmail(row,button) {
+    if(!user||!allowed)return;
+    button.disabled=true;
+    try {
+      const {data,error}=await client.functions.invoke('roster-ack-email',{
+        body:{application_id:row.id}
+      });
+      await loadQueue();
+      if(error || data?.error) {
+        notify('Confirmación guardada en el portal. El correo no se pudo enviar todavía.',
+               'Acknowledgement saved in the portal. Email could not be delivered yet.');
+      } else if(data?.sent) {
+        notify('Recepción confirmada y correo enviado al atleta.',
+               'Receipt confirmed and email sent to the athlete.');
+      } else {
+        notify('Confirmación visible en el portal. El correo está pendiente de configurar el remitente o de envío.',
+               'Acknowledgement is visible in the portal. Email remains queued until delivery is configured.');
+      }
+    } catch {
+      await loadQueue();
+      notify('Confirmación guardada en el portal. No se confirmó el envío por correo.',
+             'Acknowledgement saved in the portal. Email delivery was not confirmed.');
+    } finally {button.disabled=false;}
+  }
+  async function acknowledgeRegistration(row,button) {
+    if(!user||!allowed||row.acknowledged_at)return;
+    button.disabled=true;
+    try {
+      const {data,error}=await client.rpc('rb_acknowledge_roster',{
+        p_application_id:row.id
+      });
+      if(error || !data?.acknowledged_at)throw error||new Error('No acknowledgement saved');
+      // Show the acknowledgement in the fighter portal even if email delivery fails.
+      await sendAcknowledgementEmail(row,button);
+    }catch{
+      await loadQueue();
+      notify('No pudimos guardar la confirmación. Comprueba tus permisos e inténtalo de nuevo.',
+             'Could not save the acknowledgement. Check reviewer permissions and retry.');
+    }finally {button.disabled=false;}
   }
   async function changeStatus(row,next,button) {
     if(!user||!allowed) return;

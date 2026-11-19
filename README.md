@@ -152,3 +152,20 @@ Technical identifiers `rb_intake.applications`, `rb_submit_application_v2`, and 
 ### Fight-record provenance
 
 The chart reads `public.fighter_fights` (fight-by-fight records) while `prior_competed/prior_won/prior_lost/prior_drawn` are athlete-declared totals. Existing RLS on `fighter_fights` allows athlete ownership-based changes; **do not describe those entries as independently verified** without an explicit staff verification workflow. Keep the two sources separate in all public or private presentations.
+
+## Staff acknowledgement of a roster registration
+
+A roster registration is not a scheduled bout. The staff dashboard at `equipo.html` now has **Confirmar recepción y notificar / Confirm receipt & notify** for each registration. This is an explicit reviewer action **after reading the details**; simply opening an email in Gmail is **not** treated as a reliable receipt confirmation.
+
+When an approved reviewer clicks the button:
+1. Authenticated RPC `rb_acknowledge_roster` creates exactly one `rb_intake.roster_acknowledgements` row; repeated clicks return the original acknowledgement.
+2. The athlete sees the new bilingual team message in their private fighter dashboard via `rb_my_acknowledgement`. The message confirms roster receipt and says that **if** a bout is scheduled, the opponent, date and location will be communicated later. It never guarantees a fight.
+3. The dashboard invokes the JWT-verified `roster-ack-email` Edge Function. It checks the reviewer account using the protected reviewer RPC and derives the recipient from the athlete's **confirmed Auth email**, never from browser input.
+4. If `RESEND_API_KEY` and `RAAZ_EMAIL_FROM` are configured with a verified sending domain, the email is delivered using an idempotency key. Successful sends update `email_state='sent'`. With no provider configuration, the database acknowledgement and in-app notice succeed, but the email remains `pending`.
+5. Staff can retry a queued email from the reviewer dashboard after configuring the sender. A pending email is never falsely displayed as sent.
+
+Protected database functions: `public.rb_review_queue_v3` (staff queue with acknowledgement status), `public.rb_acknowledge_roster`, `public.rb_claim_ack_email`, `public.rb_finish_ack_email` and `public.rb_my_acknowledgement` (athlete's own receipt). All use Supabase Auth, and reviewer actions require a row in `rb_intake.reviewers`.
+
+Configure sending secrets using the project Edge Function Secrets settings; do not commit the provider key or service-role key to GitHub. For replies, the transactional email specifies `raazborgstudios@gmail.com`.
+
+**QA**: SQL tests verify reviewer-only access, idempotence, recipient derivation, single-claim delivery, and athlete-scoped visibility; Playwright tests verify the review button and the fighter's acknowledgement in Spanish and English. Email deliverability still requires a real provider-configured end-to-end test.

@@ -62,6 +62,8 @@
           <p class="portal-kicker" data-en="01 / ROSTER REGISTRATION">01 / REGISTRO AL ROSTER</p>
           <h2 id="application-heading" data-en="My roster registration">Mi inscripción al roster</h2>
           <span id="application-status" class="portal-status" data-state="none" data-en="Not registered">Sin registro</span>
+          <p id="roster-acknowledged-status" class="portal-mail-note" role="status" hidden
+             data-en="The RA’AZ BORG team has personally confirmed receipt of your registration. This does not confirm a scheduled fight.">El equipo RA’AZ BORG ha confirmado personalmente que recibió tu registro. Esto no confirma un combate programado.</p>
           <p id="status-description" class="portal-status-description" aria-live="polite"></p>
           <div class="portal-steps" aria-label="Etapas del roster" data-en-label="Roster review stages">
             <span id="step-submitted" data-en="01 · Registered">01 · Registrado</span>
@@ -85,6 +87,14 @@
               <small id="welcome-date">—</small>
             </div>
             <p id="welcome-copy"></p>
+          </div>
+          <div id="acknowledgement-message" class="portal-mail portal-ack-mail" hidden>
+            <div class="portal-mail-header">
+              <strong data-en="Registration received · RA’AZ BORG team">Registro recibido · Equipo RA’AZ BORG</strong>
+              <small id="acknowledgement-date">—</small>
+            </div>
+            <p id="acknowledgement-copy"></p>
+            <p class="portal-mail-note" data-en="This confirms receipt of your registration, not a confirmed bout or fight date.">Esta es una confirmación de recepción de tu registro, no de un combate ni fecha asignados.</p>
           </div>
           <p id="message-empty" class="portal-empty-note" data-en="There are no messages yet. Your welcome note will appear after you submit your first application.">Todavía no hay mensajes. Tu bienvenida aparecerá al enviar tu primera postulación.</p>
           <p class="portal-mail-note" data-en="Roster updates appear here. Joining the roster does not confirm a fight; the team will contact you with verified details.">Aquí encontrarás las novedades de tu inscripción al roster. Registrarte no confirma un combate; el equipo te contactará con los detalles verificados.</p>
@@ -200,6 +210,6 @@
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
 <script src="js/roster-avatar.js?v=roster-v1"></script>
-<script src="js/fighter-dashboard.js?v=roster-v1"></script>
+<script src="js/fighter-dashboard.js?v=ack-receipt-v1"></script>
 </body>
 </html>

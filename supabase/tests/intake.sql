@@ -6,6 +6,8 @@ declare
   other_user uuid := gen_random_uuid();
   request uuid := gen_random_uuid();
   receipt uuid;
+  receipt_ack jsonb;
+  ack_email jsonb;
 begin
   insert into auth.users(id,email,email_confirmed_at) values
     (athlete, athlete::text || '@example.invalid',now()),
@@ -30,6 +32,11 @@ begin
   assert (select (public.rb_my_fighter_portal()#>>'{application,status}')='submitted');
   assert (select (public.rb_my_fighter_portal()#>>'{stats,total}')::int=0);
   assert (select jsonb_array_length(public.rb_my_fighter_portal()->'messages')=1);
+  assert public.rb_my_acknowledgement() is null;
+  begin
+    perform public.rb_acknowledge_roster(receipt);
+    raise exception 'Non-reviewer acknowledged a roster registration';
+  exception when insufficient_privilege then null; end;
   perform public.rb_submit_application_v2(gen_random_uuid(), 'Test', 'Quito', 'blue', 'gp', true,
     'Academy', null, null, '{"first_name":"Ana","last_name":"Test","country":"Ecuador","weight":58,"weight_unit":"kg","height":162,"height_unit":"cm","belt_stripes":2}'::jsonb);
   assert (select count(*)=1 from public.rb_my_profile_v2() where first_name='Ana' and weight=58 and belt_stripes=2);
@@ -60,6 +67,17 @@ begin
   assert (select count(*)=0 from public.rb_my_applications());
   assert (select count(*)=1 from public.rb_review_queue() where id=receipt);
   assert (select count(*)=1 from public.rb_review_queue_v2() where profile_snapshot->>'first_name'='Ana');
+  receipt_ack:=public.rb_acknowledge_roster(receipt);
+  assert receipt_ack->>'email_state'='pending';
+  assert public.rb_acknowledge_roster(receipt)=receipt_ack;
+  assert (select count(*)=1 from public.rb_review_queue_v3()
+    where id=receipt and acknowledged_at is not null and ack_email_state='pending');
+  ack_email:=public.rb_claim_ack_email(receipt);
+  assert ack_email->>'email'=athlete::text||'@example.invalid';
+  assert ack_email->>'realm'='White Carbon Combat';
+  assert public.rb_claim_ack_email(receipt) is null;
+  assert public.rb_finish_ack_email(receipt,true,null);
+  assert public.rb_claim_ack_email(receipt) is null;
   assert public.rb_review_application(receipt,'submitted','in_review')='in_review';
   -- The second confirmed user joins the roster exactly once, with self-reported history.
   declare
@@ -91,6 +109,8 @@ begin
   end;
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   assert (select status='in_review' from public.rb_my_applications() where id=receipt);
+  assert public.rb_my_acknowledgement()->>'email_state'='sent';
+  assert not has_function_privilege('anon','public.rb_acknowledge_roster(uuid)','execute');
   assert not has_function_privilege('anon','public.rb_my_applications()','execute');
   assert not has_function_privilege('anon','public.rb_my_fighter_portal()','execute');
   assert not has_function_privilege('authenticated','public.rb_claim_athlete_emails(uuid,integer)','execute');

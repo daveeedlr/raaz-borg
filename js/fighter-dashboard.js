@@ -102,6 +102,18 @@
       'Welcome to the Börg Realm, '+fighter+'! Your one-time fighter roster registration was received. The RA’AZ BORG team will review your details and contact you about the next steps. Your registration is pending and does not yet confirm a fight.'
     );
   }
+  function renderAcknowledgement(ack) {
+    const confirmed=!!ack?.acknowledged_at;
+    $('acknowledgement-message').hidden=!confirmed;
+    $('roster-acknowledged-status').hidden=!confirmed;
+    if(!confirmed) return;
+    put('acknowledgement-date',when(ack.acknowledged_at));
+    $('message-empty').hidden=true;
+    $('acknowledgement-copy').textContent=tr(
+      'El equipo de RA’AZ BORG confirma que ha recibido y revisado tu inscripción al roster. Te mantendremos informado sobre los siguientes pasos. Si se programa un combate para ti, te notificaremos el nombre de tu rival, la fecha y el lugar. Por ahora no tienes un combate confirmado.',
+      'The RA’AZ BORG team confirms that your roster registration has been received and reviewed. We will keep you informed of the next steps. If a fight is scheduled for you, we will notify you of your opponent, the date and the location. No fight is confirmed yet.'
+    );
+  }
   function renderRecord(stats) {
     const total=Math.max(0,Number(stats?.total)||0);
     const wins=Math.max(0,Number(stats?.wins)||0);
@@ -262,6 +274,7 @@
     $('portal-submitted-confirmation').hidden = new URLSearchParams(location.search).get('submitted') !== '1';
     renderStatus(p.application,p.realm);
     renderMessage(p.messages,p.application);
+    renderAcknowledgement(p.acknowledgement);
     renderRecord(p.stats);
     renderFights(p.recent_fights);
     visible('content');
@@ -271,8 +284,12 @@
     const seq=++loadSeq, owner=user.id;
     visible('loading');
     try {
-      const {data,error}=await client.rpc('rb_my_fighter_portal');
+      const [main,ack] = await Promise.all([
+        client.rpc('rb_my_fighter_portal'),
+        client.rpc('rb_my_acknowledgement')
+      ]);
       if (seq!==loadSeq || !user || user.id!==owner) return;
+      const {data,error}=main;
       if(error || !data) { visible('error'); return; }
       if(!data.application) {
         // An authenticated account without a roster registration must finish
@@ -280,7 +297,7 @@
         location.replace('competir.html?lang='+document.documentElement.lang);
         return;
       }
-      snapshot=data;
+      snapshot={...data,acknowledgement:ack.error ? null : (ack.data || null)};
       render();
       notifyEmailDelivery();
     } catch {

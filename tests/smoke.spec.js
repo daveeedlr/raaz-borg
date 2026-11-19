@@ -124,6 +124,7 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
     else if(path.endsWith('/rb_my_profile_v2')) data = [];
     else if(path.endsWith('/rb_my_applications')) data = rows;
     else if(path.endsWith('/rb_queue_sign_in_alert')) { signinAlertQueued = true; data = true; }
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
     else if(path.endsWith('/rb_my_fighter_portal')) data = {
       email:user.email,username:'Prueba',name:'Test',first_name:'Prueba',last_name:'Atleta',
       alias:'Test',city:'Quito',belt:'blue',realm:'Zaphire Trials',
@@ -201,6 +202,7 @@ test('fighter record donut shows real registered win/loss/draw proportions', asy
     const path=new URL(route.request().url()).pathname;
     let data;
     if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
     else if(path.endsWith('/rb_my_fighter_portal'))data={
       email:user.email,username:'iron_grappler',name:'Iron Grappler',
       realm:'Oxide Overdrive',belt:'brown',country:'Ecuador',
@@ -518,7 +520,7 @@ test('reviewer dashboard denies unauthorised users and only exposes a verified q
     let data;
     if(path.endsWith('/token')) data={user,access_token:token,refresh_token:'staff-session',token_type:'bearer',expires_in:3600};
     else if(path.endsWith('/user')) data=user;
-    else if(path.endsWith('/rb_review_queue_v2')) data=rows;
+    else if(path.endsWith('/rb_review_queue_v3')) data=rows;
     else if(path.endsWith('/rb_review_application')) {
       const body=route.request().postDataJSON();
       expect(body.p_expected_status).toBe(record.status);
@@ -568,6 +570,7 @@ test('roster members clicking Compete go to their portal without repeating fight
     else if(path.endsWith('/rb_my_profile_v2'))data=[{alias:'Returning',belt:'blue',city:'Quito'}];
     else if(path.endsWith('/rb_my_applications'))data=rows;
     else if(path.endsWith('/rb_queue_sign_in_alert'))data=true;
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
     else if(path.endsWith('/rb_my_fighter_portal'))data={
       email:user.email,username:'returning',name:'Returning',belt:'blue',
       application:{status:'submitted',id:rows[0].id,interest:'gp',realm:'Zaphire Trials'},
@@ -656,6 +659,7 @@ test('private portal updates self-reported totals without changing fight-by-figh
     const path=new URL(route.request().url()).pathname;
     let data;
     if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
     else if(path.endsWith('/rb_my_fighter_portal'))data={
       email:user.email,username:'prior',name:'Prior Athlete',belt:'white',prior_record:savedPrior,
       application:{id:'00000000-0000-4000-8000-000000000094',status:'submitted',interest:'gp'},
@@ -707,6 +711,7 @@ test('private fighter photo uploads to the owner folder and can be removed from 
     const u=new URL(route.request().url()),path=u.pathname,method=route.request().method();
     let data;
     if(path.endsWith('/user')) data=user;
+    else if(path.endsWith('/rb_my_acknowledgement'))data=null;
     else if(path.endsWith('/rb_my_fighter_portal')) data={
       email:user.email,username:'photo_athlete',name:'Photo Athlete',belt:'blue',
       avatar_path:stored,prior_record:null,
@@ -749,4 +754,98 @@ test('private fighter photo uploads to the owner folder and can be removed from 
   expect(stored).toBeNull();
   await expect(page.locator('#portal-photo-remove')).toBeHidden();
   await expect(page.locator('#fighter-avatar')).toBeVisible();
+});
+
+
+test('reviewer acknowledgement creates one receipt and reports email as queued if sender is unavailable', async ({page})=>{
+  const id='00000000-0000-4000-8000-000000000040';
+  const user={id,email:'staff@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[encode({alg:'HS256'}),encode({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'sig'].join('.');
+  const record={
+    id:'00000000-0000-4000-8000-000000000041',
+    alias:'Fighter QA',city:'Quito',belt:'blue',suggested_realm:'Zaphire Trials',
+    contact_email:'fighter@example.invalid',status:'submitted',interest:'gp',
+    acknowledged_at:null,ack_email_state:null,submitted_at:new Date().toISOString()
+  };
+  let acknowledgements=0,mailRequests=0;
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_review_queue_v3'))data=[record];
+    else if(path.endsWith('/rb_acknowledge_roster')){
+      expect(route.request().postDataJSON().p_application_id).toBe(record.id);
+      if(!record.acknowledged_at){
+        acknowledgements++;
+        record.acknowledged_at=new Date().toISOString();
+        record.ack_email_state='pending';
+      }
+      data={acknowledged_at:record.acknowledged_at,email_state:record.ack_email_state};
+    }
+    else if(path.endsWith('/roster-ack-email')){
+      mailRequests++;
+      expect(route.request().postDataJSON().application_id).toBe(record.id);
+      data={sent:false,queued:true,configured:false};
+    }
+    else throw Error('Unexpected route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user
+    }));
+  },{user,token});
+  await page.goto('/equipo.html?lang=es');
+  await expect(page.locator('#team-queue')).toBeVisible();
+  await expect(page.locator('#team-results')).toContainText('Fighter QA');
+  await page.locator('button[data-action="acknowledge"]').click();
+  await expect(page.locator('.team-ack-state')).toContainText('Recepción confirmada');
+  await expect(page.locator('#team-feedback')).toContainText('portal');
+  await expect(page.locator('button[data-action="acknowledge"]')).toHaveCount(0);
+  await expect(page.locator('button[data-action="send-ack-email"]')).toBeVisible();
+  expect(acknowledgements).toBe(1);
+  expect(mailRequests).toBe(1);
+  await page.locator('#team-refresh').click();
+  await expect(page.locator('button[data-action="acknowledge"]')).toHaveCount(0);
+});
+
+test('fighter sees a manual team receipt confirmation in the private portal', async ({page})=>{
+  const id='00000000-0000-4000-8000-000000000050';
+  const user={id,email:'fighter@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[encode({alg:'HS256'}),encode({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'sig'].join('.');
+  const now=new Date().toISOString();
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_acknowledgement'))data={acknowledged_at:now,email_state:'pending'};
+    else if(path.endsWith('/rb_my_fighter_portal'))data={
+      email:user.email,username:'fighter_qa',name:'Fighter QA',
+      application:{id:'00000000-0000-4000-8000-000000000051',status:'submitted',
+        interest:'gp',realm:'Zaphire Trials'},
+      messages:[{kind:'welcome',created_at:now}],
+      stats:{wins:0,losses:0,draws:0,total:0},recent_fights:[]
+    };
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user
+    }));
+  },{user,token});
+  await page.goto('/fighter-dashboard.html?lang=es');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await expect(page.locator('#acknowledgement-message')).toBeVisible();
+  await expect(page.locator('#roster-acknowledged-status')).toBeVisible();
+  await expect(page.locator('#acknowledgement-copy')).toContainText('Si se programa un combate');
+  await expect(page.locator('#application-status')).toContainText('pendiente');
+  await page.locator('#langToggle').click();
+  await expect(page.locator('#acknowledgement-copy')).toContainText('If a fight is scheduled');
+  await expect(page.locator('#winPercentage')).toHaveText('—');
 });
