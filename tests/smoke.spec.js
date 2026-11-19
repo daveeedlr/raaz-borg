@@ -98,7 +98,9 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   const oxide = page.locator('.realm-preview').nth(3);
   await oxide.locator('summary').click();
   await expect(oxide).toHaveAttribute('open', '');
-  await oxide.getByRole('link', { name: 'Grand Prix · Oxide Overdrive' }).click();
+  await expect(oxide.locator('.realm-rank')).toHaveText('Experto');
+  await expect(page.locator('#realm-deck a')).toHaveCount(0);
+  await page.goto('/clashes.html#gp-oxide-overdrive');
   await expect(page.locator('#gpArchiveTitle')).toHaveText('Oxide Overdrive');
   await expect(page.locator('#gpArchiveOverlay')).toBeVisible();
 });
@@ -130,13 +132,14 @@ test('realm cards retain the whole poster and open one accessible reverse at a t
   const first = cards.first();
   const second = cards.nth(1);
   await expect(first.locator('img')).toHaveCSS('object-fit', 'contain');
-  await expect(first.getByRole('link', { name: 'View classification' })).toBeHidden();
+  await expect(first.locator('.realm-rank')).toBeHidden();
   const artwork = await first.locator('img').boundingBox();
   expect(artwork.height).toBeGreaterThan(artwork.width);
   const front = await first.boundingBox();
   await first.locator('summary').focus();
   await page.keyboard.press('Enter');
-  await expect(first.getByRole('link', { name: 'View classification' })).toBeVisible();
+  await expect(first.locator('.realm-rank')).toBeVisible();
+  await expect(first.locator('.realm-rank')).toHaveText('Beginner');
   expect((await first.boundingBox()).height).toBeCloseTo(front.height, 0);
   await first.locator('.realm-reverse h3').click();
   await expect(first).not.toHaveAttribute('open', '');
@@ -145,7 +148,8 @@ test('realm cards retain the whole poster and open one accessible reverse at a t
   await second.locator('summary').press('Space');
   await expect(first).not.toHaveAttribute('open', '');
   await expect(second).toHaveAttribute('open', '');
-  await expect(second.getByRole('link', { name: 'Grand Prix · Blue Oblivion BJJ' })).toBeVisible();
+  await expect(second.locator('.realm-rank')).toHaveText('Intermediate');
+  await expect(second.locator('.realm-reverse p')).toContainText('basic positions');
   await second.locator('summary').press('Enter');
   await expect(second).not.toHaveAttribute('open', '');
 });
@@ -160,7 +164,6 @@ test.describe('mobile realm navigation', () => {
     await card.locator('summary').tap();
     await card.locator('.realm-reverse p').tap();
     await expect(card).not.toHaveAttribute('open', '');
-    await expect(page.locator('.realm-links a[href$=".gif"]')).toHaveCount(0);
     const routes = page.locator('.atlas-related');
     await expect(routes.getByRole('link', { name: 'Conocer a los peleadores' })).toHaveAttribute('href', 'fighters.html');
     await expect(routes.getByRole('link', { name: 'Cómo funciona la clasificación' })).toHaveAttribute('href', 'realm-nexus.html');
@@ -168,4 +171,19 @@ test.describe('mobile realm navigation', () => {
     await routes.getByRole('link', { name: 'How qualification works' }).tap();
     await expect(page).toHaveURL(/realm-nexus\.html$/);
   });
+});
+
+test('Clashes points to one bilingual set of realm cards and old realm bookmarks open the matching card', async ({ page }) => {
+  await page.goto('/clashes.html?lang=es');
+  await expect(page.locator('.clashes-realm-card')).toHaveCount(0);
+  await page.getByRole('link', { name: 'Encuentra tu reino según tu experiencia' }).click();
+  await expect(page).toHaveURL(/index\.html#reinos$/);
+  const ranks = page.locator('#realm-deck .realm-rank');
+  await expect(ranks).toHaveText(['Principiante', 'Intermedio', 'Avanzado', 'Experto', 'Élite', 'Maestro', 'Gran maestro']);
+  await page.locator('#langToggle').click();
+  await expect(ranks).toHaveText(['Beginner', 'Intermediate', 'Advanced', 'Expert', 'Elite', 'Master', 'Grandmaster']);
+  await page.goto('/clashes.html?lang=en#realm-oxide');
+  await expect(page).toHaveURL(/index\.html\?lang=en#realm-oxide$/);
+  await expect(page.locator('#realm-oxide')).toHaveAttribute('open', '');
+  await expect(page.locator('#realm-oxide .realm-reverse p')).toContainText('under pressure');
 });

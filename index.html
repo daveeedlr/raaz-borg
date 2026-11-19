@@ -7,7 +7,7 @@
 <meta name="description" content="Grappling en Quito, Ecuador. Explora los siete reinos de RA’AZ BORG, su Grand Prix y cómo competir." data-en-content="Grappling in Quito, Ecuador. Explore the seven realms of RA’AZ BORG, the Grand Prix and how to compete.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=realm-deck-3">
+<link rel="stylesheet" href="css/style.css?v=realm-guide-4">
 </head>
 <body data-lang="es">
 
@@ -47,10 +47,10 @@
   <div class="wrap">
     <div class="atlas-heading">
       <h2><span data-en="The seven realms">Los siete reinos</span></h2>
-      <p class="atlas-intro"><span data-en="From white belt to third-degree black belt. Turn a card over to explore its realm and see where it fits in the Grand Prix archive.">Del cinturón blanco al tercer grado de cinturón negro. Voltea una carta para conocer su reino y explorar el archivo del Grand Prix.</span></p>
+      <p class="atlas-intro"><span data-en="Turn a card over to find the realm that matches your grappling experience.">Voltea una carta para descubrir qué reino corresponde a tu experiencia en el grappling.</span></p>
     </div>
     <div class="atlas-grid" id="realm-deck">
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#e1e3e5">
+      <details id="realm-white-carbon" class="realm-preview" name="realm-cards" style="--realm-accent:#e1e3e5">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/white-carbon.webp" width="396" height="540" alt="White Carbon Combat" loading="lazy" decoding="async">
@@ -63,14 +63,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">◇</span>
           <h3>White Carbon Combat</h3>
-          <p><span data-en="The first match opens the door to the Grid.">El primer combate abre la puerta a la Red.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-white-carbon"><span data-en="View classification">Ver clasificación</span></a></li>
-              <li><a href="clashes.html#gp-white-carbon">Grand Prix · White Carbon Combat</a></li>
-          </ul>
+          <span class="realm-rank" data-en="Beginner">Principiante</span>
+          <p><span data-en="For grapplers just starting out and learning to hold a position or escape from one.">Para quienes empiezan en el grappling y están aprendiendo a mantener una posición o escapar de ella.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#58a4ff">
+      <details id="realm-zaphire" class="realm-preview" name="realm-cards" style="--realm-accent:#58a4ff">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/zaphire.webp" width="396" height="540" alt="Zaphire Trials" loading="lazy" decoding="async">
@@ -83,14 +80,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">⬡</span>
           <h3>Zaphire Trials</h3>
-          <p><span data-en="Fighters who pass initiation test their technique in the Oblivion Protocol.">Quienes superan la iniciación ponen su técnica a prueba en el Protocolo Oblivion.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-zaphire"><span data-en="View classification">Ver clasificación</span></a></li>
-              <li><a href="clashes.html#gp-blue-oblivion">Grand Prix · Blue Oblivion BJJ</a></li>
-          </ul>
+          <span class="realm-rank" data-en="Intermediate">Intermedio</span>
+          <p><span data-en="For grapplers who know the basic positions and are learning to connect techniques when an opponent defends.">Para quienes ya conocen las posiciones básicas y empiezan a encadenar técnicas cuando el rival se defiende.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#bb8afb">
+      <details id="realm-violet" class="realm-preview" name="realm-cards" style="--realm-accent:#bb8afb">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/violet.webp" width="396" height="540" alt="Violet Combat Royale" loading="lazy" decoding="async">
@@ -103,14 +97,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">✧</span>
           <h3>Violet Combat Royale</h3>
-          <p><span data-en="In the Violet sector, every fighter draws up their own strategy.">En el sector violeta, cada peleador traza su propia estrategia.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-violet"><span data-en="View classification">Ver clasificación</span></a></li>
-              <li><a href="clashes.html#gp-violet-royale">Grand Prix · Violet Combat Royale</a></li>
-          </ul>
+          <span class="realm-rank" data-en="Advanced">Avanzado</span>
+          <p><span data-en="For grapplers who have developed their own style and can adjust their game plan as an opponent reacts.">Para quienes ya tienen un estilo propio y saben cambiar su plan según la reacción del rival.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#d29258">
+      <details id="realm-oxide" class="realm-preview" name="realm-cards" style="--realm-accent:#d29258">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/oxide.webp" width="396" height="540" alt="Oxide Overdrive" loading="lazy" decoding="async">
@@ -123,15 +114,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">⚙︎</span>
           <h3>Oxide Overdrive</h3>
-          <p><span data-en="In the Oxide wasteland, survival means adapting to each opponent.">En el páramo de Oxide, sobrevivir exige adaptarse a cada rival.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-oxide"><span data-en="View classification">Ver clasificación</span></a></li>
-              <li><a href="clashes.html#gp-oxide-overdrive">Grand Prix · Oxide Overdrive</a></li>
-              <li><a href="labs.html#oxide-media"><span data-en="See Lab media">Ver en el Lab</span></a></li>
-          </ul>
+          <span class="realm-rank" data-en="Expert">Experto</span>
+          <p><span data-en="For seasoned grapplers who can keep their technique precise under pressure.">Para quienes han pulido su técnica y pueden mantener la precisión incluso bajo presión.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#dfb75f">
+      <details id="realm-praetoreans" class="realm-preview" name="realm-cards" style="--realm-accent:#dfb75f">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/praetoreans.webp" width="396" height="540" alt="Praetoreans Interface" loading="lazy" decoding="async">
@@ -144,14 +131,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">♜︎</span>
           <h3>Praetoreans Interface</h3>
-          <p><span data-en="The guardians of the Grid defend its core.">Los guardianes de la Red defienden su núcleo.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-praetoreans"><span data-en="View classification">Ver clasificación</span></a></li>
-              <li><a href="clashes.html#gp-praetoreans">Grand Prix · Praetoreans Interface GP</a></li>
-          </ul>
+          <span class="realm-rank" data-en="Elite">Élite</span>
+          <p><span data-en="For first-degree black belts who know how to steer a match toward their strongest positions.">Para cinturones negros de primer grado que saben llevar el combate a las posiciones que mejor dominan.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#bcaa79">
+      <details id="realm-nexus" class="realm-preview" name="realm-cards" style="--realm-accent:#bcaa79">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/nexus.webp" width="396" height="540" alt="Nexus Noir" loading="lazy" decoding="async">
@@ -164,13 +148,11 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">◈</span>
           <h3>Nexus Noir</h3>
-          <p><span data-en="In Noir, masters read their opponent before the next move.">En Noir, los maestros leen al rival antes del siguiente movimiento.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-nexus"><span data-en="View classification">Ver clasificación</span></a></li>
-          </ul>
+          <span class="realm-rank" data-en="Master">Maestro</span>
+          <p><span data-en="For second-degree black belts who can read an opponent’s intentions and anticipate the next move.">Para cinturones negros de segundo grado que leen las intenciones del rival y se adelantan a su siguiente movimiento.</span></p>
         </div>
       </details>
-      <details class="realm-preview" name="realm-cards" style="--realm-accent:#b5adc8">
+      <details id="realm-eclipse" class="realm-preview" name="realm-cards" style="--realm-accent:#b5adc8">
         <summary class="realm-toggle">
           <span class="realm-print">
             <img src="assets/realms/eclipse.webp" width="396" height="540" alt="Eclipse Syndicate" loading="lazy" decoding="async">
@@ -183,10 +165,8 @@
         <div class="realm-reverse">
           <span class="realm-seal" aria-hidden="true">◉</span>
           <h3>Eclipse Syndicate</h3>
-          <p><span data-en="At the summit of the Grid, generations of masters meet.">En la cima de la Red se encuentran generaciones de maestros.</span></p>
-          <ul class="realm-links">
-              <li><a href="clashes.html#realm-eclipse"><span data-en="View classification">Ver clasificación</span></a></li>
-          </ul>
+          <span class="realm-rank" data-en="Grandmaster">Gran maestro</span>
+          <p><span data-en="For third-degree black belts who put years of experience to the test against fellow masters.">Para cinturones negros de tercer grado que ponen años de experiencia a prueba frente a otros maestros.</span></p>
         </div>
       </details>
     </div>
@@ -327,6 +307,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=realm-deck-3"></script>
+<script src="js/main.js?v=realm-guide-4"></script>
 </body>
 </html>

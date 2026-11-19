@@ -363,55 +363,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/* Clashes Card Flip */
-document.querySelectorAll(".clashes-realm-card").forEach(card => {
-
-  const inner = card.querySelector(".realm-flip-inner");
-  const lore = card.querySelector(".realm-lore");
-
-  function flipCard() {
-    const wasFlipped = card.classList.contains("flipped");
-
-    // Close all cards before opening the selected one
-    document.querySelectorAll(".clashes-realm-card").forEach(other => {
-      other.classList.remove("flipped");
-      other.setAttribute("aria-pressed", "false");
-    });
-
-    if (!wasFlipped) {
-      card.classList.add("flipped");
-      card.setAttribute("aria-pressed", "true");
-    }
+/* Keep bookmarked Clashes realm cards pointing to their home in the deck. */
+(() => {
+  const guide = document.getElementById("experience-guide-link");
+  if (!guide) return;
+  function followRealmBookmark() {
+    if (!location.hash.startsWith("#realm-")) return;
+    const destination = new URL(guide.href);
+    destination.search = location.search;
+    destination.hash = location.hash;
+    location.replace(destination.href);
   }
-
-  // Reset scroll only after the flip animation completes
-  
-    inner.addEventListener("transitionend", event => {
-      if (event.target !== inner || event.propertyName !== "transform") return;
-
-      // Reset only after the card has finished closing
-      if (lore && !card.classList.contains("flipped")) {
-        lore.scrollTop = 0;
-      }
-    });
-
-
-  function openLinkedRealm() {
-    if (location.hash === "#" + card.id && !card.classList.contains("flipped")) flipCard();
-  }
-  openLinkedRealm();
-  window.addEventListener("hashchange", openLinkedRealm);
-
-  card.addEventListener("click", flipCard);
-
-  card.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      flipCard();
-    }
-  });
-
-});
+  followRealmBookmark();
+  window.addEventListener("hashchange", followRealmBookmark);
+})();
 
 /* ------- GRAND PRIX ARCHIVE ------ */
 (() => {
@@ -1042,6 +1007,16 @@ render();
     card.open = false;
     card.querySelector("summary").focus({ preventScroll: true });
   });
+
+  function openLinkedRealm() {
+    const card = cards.find(item => "#" + item.id === location.hash);
+    if (card) {
+      card.open = true;
+      card.scrollIntoView({ block: "start", inline: "center" });
+    }
+  }
+  openLinkedRealm();
+  window.addEventListener("hashchange", openLinkedRealm);
 
   function updatePager() {
     previous.disabled = deck.scrollLeft <= 1;
