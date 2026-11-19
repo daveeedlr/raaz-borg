@@ -274,6 +274,12 @@
       const {data,error}=await client.rpc('rb_my_fighter_portal');
       if (seq!==loadSeq || !user || user.id!==owner) return;
       if(error || !data) { visible('error'); return; }
+      if(!data.application) {
+        // An authenticated account without a roster registration must finish
+        // its first-time registration before entering the fighter portal.
+        location.replace('competir.html?lang='+document.documentElement.lang);
+        return;
+      }
       snapshot=data;
       render();
       notifyEmailDelivery();
@@ -309,7 +315,11 @@
     priorEditing=!priorEditing;
     $('portal-prior-form').hidden=!priorEditing;
     if(priorEditing) {
-      renderPrior(snapshot?.prior_record);
+      const record=snapshot?.prior_record || null;
+      for(const [id,key] of [['edit-prior-competed','competed'],['edit-prior-won','won'],
+                             ['edit-prior-lost','lost'],['edit-prior-drawn','drawn']]) {
+        $(id).value=record && record[key]!=null ? String(record[key]) : '';
+      }
       $('edit-prior-competed').focus();
     } else {
       feedback('portal-prior-feedback','','');
