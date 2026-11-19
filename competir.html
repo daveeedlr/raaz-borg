@@ -7,7 +7,7 @@
 <meta name="description" content="Envía tu solicitud de atleta a RA’AZ BORG en Quito." data-en-content="Send your athlete inquiry to RA’AZ BORG in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=belt-entry-1">
 </head>
 <body data-lang="es">
 
@@ -34,17 +34,36 @@
     <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
     <h1><span class="lang-es">Quiero competir</span><span class="lang-en">I want to compete</span></h1>
     <p><span class="lang-es">¿Te interesa el Grand Prix o entrenar en el Börg Lab? Cuéntanos sobre tu práctica y qué buscas en Quito.</span><span class="lang-en">Interested in the Grand Prix or training at the Börg Lab? Tell us about your training and what you’d like to do in Quito.</span></p>
-    <h2><span class="lang-es">Después de enviar tu correo</span><span class="lang-en">After you send your email</span></h2>
-    <p><span class="lang-es">El equipo revisará tu solicitud y te responderá por correo si hay una convocatoria que se ajuste a tu nivel. Un cupo se confirma por separado.</span><span class="lang-en">The team will review your inquiry and reply by email if an opportunity matches your level. A place is confirmed separately.</span></p>
-    <p><span class="lang-es">Tu solicitud es privada. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your inquiry is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
   </div>
-  <div>
+  <div class="join-form-panel">
     <form class="interest-form" id="athlete-interest" hidden>
+      <div class="belt-choice">
+        <label for="belt"><span data-en="Current belt">Cinturón actual</span>
+          <select id="belt" name="belt" required>
+            <option value="" data-en="Select your belt">Selecciona tu cinturón</option>
+            <option value="white" data-realm="White Carbon Combat" data-en="White belt">Cinturón blanco</option>
+            <option value="blue" data-realm="Zaphire Trials" data-en="Blue belt">Cinturón azul</option>
+            <option value="purple" data-realm="Violet Combat Royale" data-en="Purple belt">Cinturón morado</option>
+            <option value="brown" data-realm="Oxide Overdrive" data-en="Brown belt">Cinturón café</option>
+            <option value="black-0" data-en="Black belt · no degree">Cinturón negro · sin grado</option>
+            <option value="black-1" data-realm="Praetoreans Interface" data-en="Black belt · 1st degree">Cinturón negro · 1.er grado</option>
+            <option value="black-2" data-realm="Nexus Noir" data-en="Black belt · 2nd degree">Cinturón negro · 2.º grado</option>
+            <option value="black-3" data-realm="Eclipse Syndicate" data-en="Black belt · 3rd degree">Cinturón negro · 3.er grado</option>
+            <option value="black-4-plus" data-en="Black belt · 4th degree or higher">Cinturón negro · 4.º grado o superior</option>
+            <option value="other" data-en="Other belt or rank">Otro cinturón o graduación</option>
+            <option value="unranked" data-en="I train without a belt">Entreno sin cinturón</option>
+          </select>
+        </label>
+        <div class="belt-match" aria-live="polite" aria-atomic="true">
+          <span id="belt-assigned" hidden><span data-en="Suggested realm">Reino sugerido</span> · <strong id="belt-realm"></strong></span>
+          <span id="belt-review" hidden data-en="The team will help you find the right division.">El equipo te ayudará a encontrar tu división.</span>
+        </div>
+      </div>
       <label for="alias"><span data-en="Name or alias">Nombre o alias</span><input id="alias" name="alias" type="text" required maxlength="80" autocomplete="nickname"></label>
       <label for="email"><span data-en="Email address">Correo electrónico</span><input id="email" name="email" type="email" required maxlength="150" autocomplete="email"></label>
       <label for="city"><span data-en="City">Ciudad</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
       <label for="academy"><span data-en="Academy or team (optional)">Academia o equipo (opcional)</span><input id="academy" name="academy" type="text" maxlength="100"></label>
-      <label for="discipline"><span data-en="Discipline or belt">Disciplina o cinturón</span><input id="discipline" name="discipline" type="text" required maxlength="100"></label>
+      <label for="discipline"><span data-en="Discipline (optional)">Disciplina (opcional)</span><input id="discipline" name="discipline" type="text" maxlength="100"></label>
       <label for="interest"><span data-en="I’m interested in">Me interesa</span><select id="interest" name="interest" required>
         <option value="" data-en="Choose an option">Selecciona una opción</option>
         <option value="gp" data-en="Competing in the Grand Prix">Competir en el Grand Prix</option>
@@ -63,6 +82,11 @@
     </form>
     <p class="manual-contact"><span class="lang-es">También puedes escribir directamente a</span><span class="lang-en">You can also email us directly at</span> <a href="mailto:raazborgstudios@gmail.com">raazborgstudios@gmail.com</a>.</p>
   </div>
+  <section class="join-followup">
+    <h2><span class="lang-es">Después de enviar tu correo</span><span class="lang-en">After you send your email</span></h2>
+    <p><span class="lang-es">El equipo revisará tu solicitud y te responderá por correo si hay una convocatoria que se ajuste a tu nivel. Un cupo se confirma por separado.</span><span class="lang-en">The team will review your inquiry and reply by email if an opportunity matches your level. A place is confirmed separately.</span></p>
+    <p><span class="lang-es">Tu solicitud es privada. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your inquiry is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
+  </section>
 </div></main>
 
 <footer>
@@ -77,7 +101,7 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
-<script src="js/interest.js"></script>
+<script src="js/main.js?v=belt-entry-1"></script>
+<script src="js/interest.js?v=belt-entry-1"></script>
 </body>
 </html>

@@ -421,56 +421,14 @@ body.gp-archive-open { overflow:hidden }
 
 /* ============ REALM NEXUS ============ */
 .nexus { min-height:100vh; padding:165px 0 80px; background:radial-gradient(ellipse at 18% 30%,rgba(245,54,131,.13),transparent 50%),radial-gradient(ellipse at 82% 70%,rgba(0,216,226,.12),transparent 50%),var(--void); overflow:hidden }
-.nexus-head { text-align:center }
-.nexus-head h1 { font-size:clamp(65px,10vw,140px); margin:16px 0 }
-.nexus-head h1 span { background:var(--brand-gradient); background-clip:text; -webkit-background-clip:text; color:transparent }
-.nexus-head>p:last-child { color:var(--text-2) }
-.realm-section { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; gap:30px; padding:50px 10px 30px }
-.realm-viewport { width:min(1020px,calc(100vw - 130px)); height:470px; position:relative; overflow:hidden; touch-action:pan-y }
-.realm-track { position:absolute; left:50%; top:0; width:0; height:100% }
-/* ============ REALM CAROUSEL CARDS ============ */
-.realm-card { position:absolute; top:20px; left:0; width:300px; height:420px; padding:0; overflow:hidden; background:var(--carbon); border:1px solid var(--color); perspective:1200px; cursor:pointer; transform:translateX(calc(-50% + var(--offset)*245px)) scale(var(--scale)); opacity:var(--opacity); filter:brightness(var(--brightness)); transition:transform .45s,opacity .45s,filter .45s; box-shadow:0 0 25px #0008 }
-.realm-card-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.2,.7,.2,1) }
-.realm-card.flipped .realm-card-inner { transform:rotateY(180deg) }
-.realm-card-face { position:absolute; inset:0; padding:22px; display:flex; flex-direction:column; align-items:center; backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden }
-/* ============ FRONT FACE ============ */
-.realm-card-front { justify-content:center; background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--color) 25%,transparent),transparent 60%),linear-gradient(145deg,var(--dark),#101015 70%) }
-.realm-card-front .realm-id { position:absolute; top:22px; left:22px }
-.realm-card-front .realm-symbol { font-size:130px; line-height:1; text-align:center; margin:0; color:var(--color); text-shadow:0 0 35px var(--color) }
-/* ============ BACK FACE ============ */
-.realm-card-back { transform:rotateY(180deg); justify-content:center; background:linear-gradient(145deg,var(--dark),#080808 85%); border:1px solid var(--color); text-align:center }
-.realm-card-back>.realm-id { position:absolute; top:22px; left:0; right:0; text-align:center }
-.realm-back-heading { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:calc(100% - 44px); margin:0 }
-.realm-back-heading h2 { font-size:clamp(23px,3vw,32px); line-height:1.2; color:var(--color); margin:0 }
-.realm-back-heading .realm-level { font-family:var(--mono); font-size:13px; line-height:1.5; color:var(--text-2); margin:0 }
-/* ============ REALM LABELS ============ */
-.realm-id { font-family:var(--mono); font-size:11px; letter-spacing:.16em; color:var(--color); z-index:1 }
-/* ============ CAROUSEL NAVIGATION ============ */
-.realm-arrow { width:46px; height:60px; flex-shrink:0; border:1px solid var(--cyan); background:var(--carbon); color:var(--cyan); font-size:27px; cursor:pointer; z-index:5 }
-.realm-arrow:hover { background:var(--cyan); color:var(--void) }
-.realm-details { text-align:center }
-.realm-details>p:first-child { color:var(--cyan); font:12px var(--mono); letter-spacing:.2em }
-.realm-details h2 { font-size:32px; margin:15px 0 22px }
-.realm-note { font:11px var(--mono); color:var(--text-3); margin-top:18px }
-/* ============ MOBILE REALM NEXUS ============ */
+.nexus-head { text-align:center; padding-bottom:clamp(32px,5vw,64px) }
+.nexus-head h1 { font-size:clamp(44px,7vw,96px); margin:16px 0 }
+.nexus-head h1 em { font-style:normal; background:var(--brand-gradient); background-clip:text; -webkit-background-clip:text; color:transparent }
+.nexus-head .kicker { color:var(--magenta) }
+.nexus-head>p:not(.kicker) { max-width:54ch; margin:0 auto 22px; color:var(--text-2); line-height:1.6 }
 @media(max-width:720px) {
- .nexus { padding-top:130px }
-.realm-viewport { width:calc(100vw - 100px); height:385px }
-.realm-card { width:235px; height:345px; transform:translateX(calc(-50% + var(--offset)*195px)) scale(var(--scale)) }
-.realm-card-front .realm-symbol { font-size:95px }
-.realm-card-front .realm-id { top:16px; left:16px }
-.realm-card-back>.realm-id { top:16px }
-.realm-back-heading { width:calc(100% - 32px) }
-.realm-back-heading h2 { font-size:24px }
-.realm-back-heading .realm-level { font-size:11px }
-.realm-arrow { width:35px; height:48px; font-size:20px }
-.realm-section { gap:25px; padding-left:5px; padding-right:5px }
+  .nexus { padding-top:130px }
 }
-/* ============ REDUCED MOTION ============ */
-@media(prefers-reduced-motion:reduce) {
-.realm-card,.realm-card-inner { transition:none }
-}
-
 
 /* ============ INTERACTIVE SELECTION PROTOCOL ============ */
 .realm-process { padding:90px 0; background:linear-gradient(135deg,rgba(245,54,131,.06),transparent 50%,rgba(0,216,226,.06)),var(--void) }
@@ -667,28 +625,33 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   color:var(--realm-accent);
   font:500 .9rem/1.3 var(--mono);
 }
-.realm-video-link {
+.realm-actions {
   display:flex;
-  align-items:center;
-  gap:.6rem;
-  flex-shrink:0;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  column-gap:.75rem;
+  flex:none;
   margin-top:auto;
-  min-height:44px;
-  padding:.5rem .2rem;
   border-top:1px solid #ffffff27;
-  color:var(--text);
-  font:500 .9rem/1.35 var(--body);
-  text-decoration:underline;
-  text-decoration-color:var(--realm-accent);
-  text-underline-offset:.2em;
 }
+.realm-actions a {
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  min-height:44px;
+  color:var(--text);
+  font:500 .9rem/1.3 var(--body);
+  text-underline-offset:.2em;
+  text-decoration-color:var(--realm-accent);
+}
+.realm-actions .realm-enlist { color:var(--realm-accent) }
 .realm-video-link::before {
   content:"";
   flex:none;
   border-block:5px solid transparent;
   border-left:8px solid var(--realm-accent);
 }
-.realm-video-link:hover, .realm-video-link:focus-visible { color:var(--realm-accent) }
+.realm-actions a:hover, .realm-actions a:focus-visible { color:var(--realm-accent) }
 .atlas-related, .atlas-route { scroll-margin-block:144px 32px }
 .atlas-related {
   display:grid;
@@ -793,11 +756,28 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
 }
 .home-lab h2 { margin-top:12px }
 .join-page { padding:clamp(120px,14vw,180px) 0 75px; background:linear-gradient(130deg,#180d1a,var(--void) 46%) }
-.join-layout { display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(28px,7vw,110px) }
+.join-layout {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-areas:"intro form" "followup form";
+  grid-template-rows:auto 1fr;
+  align-items:start;
+  column-gap:clamp(28px,7vw,110px);
+  row-gap:24px;
+}
+.join-intro { grid-area:intro }
+.join-form-panel { grid-area:form }
+.join-followup { grid-area:followup; padding:0 }
+.join-followup p { margin:1rem 0 }
 .join-intro h1, .join-intro p, .manual-contact { margin:18px 0 }
-.join-intro h2 { font-size:clamp(24px,3vw,36px); margin-top:36px }
+.join-followup h2 { font-size:clamp(24px,3vw,36px) }
 .interest-form { display:grid; gap:16px; background:var(--carbon); border:1px solid var(--smoke); padding:clamp(18px,3vw,36px) }
 .interest-form label { display:block }
+#athlete-interest { scroll-margin-top:144px }
+.belt-choice { padding-bottom:1rem; border-bottom:1px solid var(--smoke) }
+.belt-match { margin:.65rem 0 0; font-size:1rem; line-height:1.4 }
+.belt-match strong { color:var(--cyan) }
+.interest-form select { min-width:0; max-width:100% }
 .interest-form input:not([type="checkbox"]), .interest-form select, .interest-form textarea {
   display:block; width:100%; padding:10px; margin-top:4px; border:1px solid #616371; border-radius:3px;
   font:inherit; color:var(--white); background:var(--void)
@@ -813,7 +793,7 @@ body[data-lang="en"] .lang-es, body[data-lang="es"] .lang-en { display:none !imp
   .burger { display:block }
 }
 @media(max-width:720px) {
-  .join-layout { grid-template-columns:1fr }
+  .join-layout { grid-template-columns:minmax(0,1fr); grid-template-rows:auto; grid-template-areas:"intro" "form" "followup" }
   .sec-head h2, .roster-growth h3 { overflow-wrap:anywhere }
   .page-hero h1 { font-size:clamp(42px,11vw,60px) }
   .fighter-roster .wrap, .featured-fighter .wrap { padding-inline:20px }

@@ -49,12 +49,8 @@ test('fighter page fits a mobile viewport', async ({ page }) => {
 test('Realm Nexus process navigation works without page-script exceptions', async ({ page }) => {
   const errors = captureRuntimeErrors(page);
   await page.goto('/realm-nexus.html?lang=en');
-  await expect(page.locator('#track .realm-card')).toHaveCount(7);
-  await expect(page.locator('#realmTitle')).toHaveText('WHITE CARBON COMBAT');
-  await page.locator('#next').click();
-  await expect(page.locator('#realmTitle')).toHaveText('ZAPHIRE TRIALS');
-  await page.locator('#prev').click();
-  await expect(page.locator('#realmTitle')).toHaveText('WHITE CARBON COMBAT');
+  await expect(page.locator('#track, .realm-preview')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Apply to compete' })).toHaveAttribute('href', 'competir.html#athlete-interest');
   await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 01 / 06');
   await page.locator('#processNext').click();
   await expect(page.locator('#processNumber')).toHaveText('PROTOCOL 02 / 06');
@@ -99,13 +95,13 @@ test('Spanish-first realm map, English links and saved preference work on mobile
   await oxide.locator('summary').click();
   await expect(oxide).toHaveAttribute('open', '');
   await expect(oxide.locator('.realm-rank')).toHaveText('Experto');
-  await expect(page.locator('#realm-deck a')).toHaveCount(7);
+  await expect(page.locator('#realm-deck .realm-video-link')).toHaveCount(7);
   const channel = 'https://www.youtube.com/@raazborg2020/featured';
   const video = 'https://www.youtube.com/watch?v=QzLvQCTzAXY&list=PLbhNwfZ6E0sGrxPPlNdXm1gRO0bnbgAMg';
-  await expect(oxide.getByRole('link', { name: 'Ver Oxide en YouTube' })).toHaveAttribute('href', video);
+  await expect(oxide.getByRole('link', { name: 'Explorar reino' })).toHaveAttribute('href', video);
   const otherCards = page.locator('.realm-preview:not(#realm-oxide)');
   for (const card of await otherCards.all()) {
-    await expect(card.locator('.realm-reverse a')).toHaveAttribute('href', channel);
+    await expect(card.locator('.realm-video-link')).toHaveAttribute('href', channel);
   }
   await page.goto('/clashes.html#gp-oxide-overdrive');
   await expect(page.locator('#gpArchiveTitle')).toHaveText('Oxide Overdrive');
@@ -120,14 +116,24 @@ test('athlete inquiry validates, prepares a private email draft and supports bot
   await page.getByLabel('Nombre o alias').fill('Atleta de prueba');
   await page.getByLabel('Correo electrónico').fill('test@example.com');
   await page.getByLabel('Ciudad', { exact: true }).fill('Quito');
-  await page.getByLabel('Disciplina o cinturón').fill('BJJ');
+  await expect(page.locator('#belt')).toHaveValue('');
+  await page.getByLabel('Cinturón actual').selectOption('blue');
+  await expect(page.locator('#belt-realm')).toHaveText('Zaphire Trials');
+  await page.getByLabel('Disciplina (opcional)').fill('BJJ');
   await page.getByLabel('Me interesa').selectOption('gp');
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Preparar correo' }).click();
   await expect(page.locator('#send-inquiry')).toHaveAttribute('href', /^mailto:raazborgstudios@gmail\.com\?/);
+  await expect(page.locator('#email-body')).toHaveValue(/Cinturón: Cinturón azul\nReino sugerido: Zaphire Trials/);
   await expect(page.locator('#email-body')).toHaveValue(/Interés: Competir en el Grand Prix/);
   await page.locator('#langToggle').click();
+  await expect(page.locator('#email-body')).toHaveValue(/Belt: Blue belt\nSuggested realm: Zaphire Trials/);
   await expect(page.locator('#email-body')).toHaveValue(/Interest: Competing in the Grand Prix/);
+  await page.getByLabel('Current belt').selectOption('unranked');
+  await expect(page.locator('#belt-review')).toBeVisible();
+  await expect(page.locator('#email-preview')).toBeHidden();
+  await page.getByRole('button', { name: 'Prepare email' }).click();
+  await expect(page.locator('#email-body')).toHaveValue(/Suggested realm: To be reviewed by the team/);
   await page.getByLabel('City', { exact: true }).fill('Tumbaco');
   await expect(page.locator('#email-preview')).toBeHidden();
 });
@@ -172,7 +178,7 @@ test.describe('mobile realm navigation', () => {
     await page.goto('/?lang=es#reinos');
     const card = page.locator('.realm-preview').first();
     await card.locator('summary').tap();
-    const channelLink = card.getByRole('link', { name: 'Ver el canal de YouTube' });
+    const channelLink = card.getByRole('link', { name: 'Explorar reino' });
     await page.context().route('https://www.youtube.com/**', route => route.fulfill({ contentType: 'text/html', body: '' }));
     const popupPromise = page.waitForEvent('popup');
     await channelLink.tap();
@@ -203,9 +209,32 @@ test('Clashes points to one bilingual set of realm cards and old realm bookmarks
   await page.goto('/clashes.html?lang=en#realm-oxide');
   await expect(page).toHaveURL(/index\.html\?lang=en#realm-oxide$/);
   await expect(page.locator('#realm-oxide')).toHaveAttribute('open', '');
-  await expect(page.locator('#realm-oxide').getByRole('link', { name: 'Watch Oxide on YouTube' })).toBeVisible();
+  await expect(page.locator('#realm-oxide').getByRole('link', { name: 'Explore Realm' })).toBeVisible();
   const oxideSummary = page.locator('#realm-oxide .realm-reverse p [data-en]');
   await expect(oxideSummary).toBeVisible();
   await expect(oxideSummary).toHaveAttribute('data-en', /\S/);
   await expect(oxideSummary).toHaveText(await oxideSummary.getAttribute('data-en'));
+});
+
+test('each enlist link prefills the belt and realm shown on that card', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const realms = ['white-carbon', 'zaphire', 'violet', 'oxide', 'praetoreans', 'nexus', 'eclipse'];
+  for (const id of realms) {
+    await page.goto('/?lang=en#realm-' + id);
+    const card = page.locator('#realm-' + id);
+    const realm = await card.getByRole('heading').innerText();
+    const belt = await card.locator('.realm-strip [data-en]').innerText();
+    await card.getByRole('link', { name: 'Enlist', exact: true }).click();
+    await expect(page.locator('#belt option:checked')).toHaveText(belt, { ignoreCase: true });
+    await expect(page.locator('#belt-realm')).toHaveText(realm, { ignoreCase: true });
+    await expect(page.getByLabel('Current belt')).toBeInViewport();
+  }
+  await page.getByLabel('Current belt').selectOption('brown');
+  await expect(page.locator('#belt-realm')).toHaveText('Oxide Overdrive');
+  await page.reload();
+  await expect(page.locator('#belt')).toHaveValue('brown');
+  await page.goto('/competir.html?belt=unknown');
+  await expect(page.locator('#belt')).toHaveValue('');
+  await expect(page.locator('#belt-assigned')).toBeHidden();
 });

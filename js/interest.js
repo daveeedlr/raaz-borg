@@ -5,6 +5,23 @@
   const draft = document.getElementById("email-body");
   const send = document.getElementById("send-inquiry");
   const recipient = "raazborgstudios@gmail.com";
+  const belt = form.elements.belt;
+  const realmName = document.getElementById("belt-realm");
+  const assigned = document.getElementById("belt-assigned");
+  const review = document.getElementById("belt-review");
+  const requestedBelt = new URLSearchParams(location.search).get("belt");
+  if (requestedBelt && Array.from(belt.options).some(option => option.value === requestedBelt)) {
+    belt.value = requestedBelt;
+  }
+
+  function updateRealm() {
+    const realm = belt.selectedOptions[0].dataset.realm || "";
+    realmName.textContent = realm;
+    assigned.hidden = !realm;
+    review.hidden = !belt.value || Boolean(realm);
+  }
+
+  updateRealm();
   form.hidden = false;
 
   function writeDraft() {
@@ -15,7 +32,9 @@
       [es ? "Correo" : "Email", data.get("email")],
       [es ? "Ciudad" : "City", data.get("city")],
       [es ? "Academia o equipo" : "Academy or team", data.get("academy")],
-      [es ? "Disciplina o cinturón" : "Discipline or belt", data.get("discipline")],
+      [es ? "Cinturón" : "Belt", belt.selectedOptions[0].textContent],
+      [es ? "Reino sugerido" : "Suggested realm", realmName.textContent || (es ? "Por definir con el equipo" : "To be reviewed by the team")],
+      [es ? "Disciplina" : "Discipline", data.get("discipline")],
       [es ? "Interés" : "Interest", form.elements.interest.selectedOptions[0].textContent],
       [es ? "Enlace" : "Link", data.get("footage")]
     ];
@@ -30,6 +49,15 @@
     draft.value = "";
     send.removeAttribute("href");
   }
+  belt.addEventListener("change", () => {
+    updateRealm();
+    clearDraft();
+    const url = new URL(location.href);
+    if (belt.value) url.searchParams.set("belt", belt.value);
+    else url.searchParams.delete("belt");
+    history.replaceState(null, "", url);
+  });
+  window.addEventListener("pageshow", updateRealm);
   form.addEventListener("input", clearDraft);
   form.addEventListener("submit", event => {
     event.preventDefault();

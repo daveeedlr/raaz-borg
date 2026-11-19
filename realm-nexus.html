@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realm Nexus — RAAZ BORG</title>
-    <meta name="description" content="Conoce la clasificación y los siete reinos de RA’AZ BORG en Quito." data-en-content="Explore qualification and the seven realms of RA’AZ BORG in Quito.">
+    <meta name="description" content="Conoce el proceso de selección del Grand Prix de RA’AZ BORG en Quito y solicita un cupo según tu cinturón." data-en-content="Learn how Grand Prix qualification works in Quito and apply to compete at your belt level.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter&family=JetBrains+Mono&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=belt-entry-1">
 </head>
 
 <body data-lang="es">
@@ -32,7 +32,7 @@
                         <span class="lang-es">PELEADORES</span>
                     </a></li>
 
-                <li><a href="clashes.html" class="active">CLASHES GP</a></li>
+                <li><a href="clashes.html">CLASHES GP</a></li>
                 <li><a href="labs.html">LABS</a></li>
                 <li><a href="shop.html" class="shop-link"><span class="lang-es">TIENDA</span><span class="lang-en">SHOP</span></a></li>
             </ul>
@@ -51,45 +51,21 @@
     <!-- ============ REALM NEXUS ============ -->
     <main class="nexus">
 
-        <div class="wrap nexus-head">
-            <p class="kicker" style="color:var(--magenta)">
-                <span class="lang-en">THE GRID</span>
-                <span class="lang-es">LA RED</span>
-            </p>
-
-            <h1>
-                REALM <span>NEXUS</span>
-            </h1>
-
-            <p>
-                <span class="lang-en">
-                    Choose a realm. Explore the worlds of RAAZ BORG and enter for a chance to compete in the Grand Prix.
-                </span>
-                <span class="lang-es">
-                    Elige un reino. Explora los mundos de RAAZ BORG y entra para tener la oportunidad de competir en el Grand Prix.
-                </span>
-            </p>
-        </div>
+        <header class="wrap nexus-head">
+            <p class="kicker">Realm Nexus</p>
+            <h1><span class="lang-es">Clasificación al</span><span class="lang-en">Qualifying for the</span> <em>Grand Prix</em></h1>
+            <p data-en="Your belt points you to a realm. Follow the six steps from your first inquiry to a place in the Grand Prix.">Tu cinturón te orienta hacia un reino. Conoce los seis pasos desde tu primera solicitud hasta un cupo en el Grand Prix.</p>
+            <a class="btn btn-acid" href="competir.html#athlete-interest" data-en="Apply to compete">Solicitar un cupo</a>
+        </header>
 
         <!-- ============ FIGHTER PROGRESSION ============ -->
         <section class="realm-process" id="how-it-works">
             <div class="wrap">
         
                 <div class="realm-process-head">
-                    <p class="kicker">
-                        <span class="lang-en">THE SELECTION PROTOCOL</span>
-                        <span class="lang-es">EL PROTOCOLO DE SELECCIÓN</span>
-                    </p>
-                    <h2>
-                        <span class="lang-en">HOW IT <span class="accent">WORKS.</span></span>
-                        <span class="lang-es">CÓMO <span class="accent">FUNCIONA.</span></span>
-                    </h2>
-                    <p>
-                        <span class="lang-en">Discover your path from registration to Grand Prix championship.</span>
-                        <span class="lang-es">Descubre tu camino desde la inscripción hasta el Grand Prix.</span>
-                    </p>
+                    <h2 data-en="Selection process">Proceso de selección</h2>
                 </div>
-        
+
                 <div class="process-steps" id="processSteps">
                     <button class="process-step active" data-step="0">01 <span class="lang-en">SIGN UP</span><span
                             class="lang-es">INSCRIPCIÓN</span></button>
@@ -142,49 +118,6 @@
             </div>
         </section>
 
-    <!-- ============ CAROUSEL ============ -->
-    <section class="realm-section">
-    
-        <div class="realm-section-header">
-            <p class="kicker">
-                <span class="lang-en">THE GRID AWAITS</span>
-                <span class="lang-es">LA RED TE ESPERA</span>
-            </p>
-    
-            <h2>
-                <span class="lang-en">SELECT A <span class="accent">REALM.</span></span>
-                <span class="lang-es">ELIGE UN <span class="accent">REINO.</span></span>
-            </h2>
-        </div>
-    
-        <div class="realm-carousel">
-            <button class="realm-arrow" id="prev" aria-label="Reino anterior" data-en-label="Previous realm">
-                &#10094;
-            </button>
-    
-            <div class="realm-viewport" id="viewport">
-                <div class="realm-track" id="track"></div>
-            </div>
-    
-            <button class="realm-arrow" id="next" aria-label="Siguiente reino" data-en-label="Next realm">
-                &#10095;
-            </button>
-        </div>
-    
-    </section>
-
-
-        <!-- ============ REALM DETAILS ============ -->
-        <div class="realm-details">
-
-            <p id="realmCounter">01 / 07</p>
-
-            <h2 id="realmTitle"></h2>
-
-            <a class="btn btn-acid" id="realmExplore" href="clashes.html#realm-white-carbon"><span class="lang-es">Explorar reino</span><span class="lang-en">Explore realm</span></a>
-
-        </div>
-
     </main>
 
     <!-- ============ FOOTER ============ -->
@@ -211,7 +144,7 @@
     </footer>
 
     <!-- ============ JAVASCRIPT ============ -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=belt-entry-1"></script>
 </body>
 
 </html>
