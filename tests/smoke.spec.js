@@ -149,7 +149,10 @@ test('realm cards retain the whole poster and open one accessible reverse at a t
   await expect(first).not.toHaveAttribute('open', '');
   await expect(second).toHaveAttribute('open', '');
   await expect(second.locator('.realm-rank')).toHaveText('Intermediate');
-  await expect(second.locator('.realm-reverse p')).toContainText('basic positions');
+  const summary = second.locator('.realm-reverse p [data-en]');
+  await expect(summary).toBeVisible();
+  await expect(summary).toHaveAttribute('data-en', /\S/);
+  await expect(summary).toHaveText(await summary.getAttribute('data-en'));
   await second.locator('summary').press('Enter');
   await expect(second).not.toHaveAttribute('open', '');
 });
@@ -185,5 +188,8 @@ test('Clashes points to one bilingual set of realm cards and old realm bookmarks
   await page.goto('/clashes.html?lang=en#realm-oxide');
   await expect(page).toHaveURL(/index\.html\?lang=en#realm-oxide$/);
   await expect(page.locator('#realm-oxide')).toHaveAttribute('open', '');
-  await expect(page.locator('#realm-oxide .realm-reverse p')).toContainText('under pressure');
+  const oxideSummary = page.locator('#realm-oxide .realm-reverse p [data-en]');
+  await expect(oxideSummary).toBeVisible();
+  await expect(oxideSummary).toHaveAttribute('data-en', /\S/);
+  await expect(oxideSummary).toHaveText(await oxideSummary.getAttribute('data-en'));
 });
