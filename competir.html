@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-en="I want to compete — RAAZ BORG">Quiero competir — RAAZ BORG</title>
-<meta name="description" content="Envía tu postulación de atleta a RA’AZ BORG en Quito." data-en-content="Send your athlete application to RA’AZ BORG in Quito.">
+<title data-en="Join the fighter roster — RA’AZ BORG">Inscripción al roster de peleadores — RA’AZ BORG</title>
+<meta name="description" content="Regístrate una sola vez para entrar al roster de RA’AZ BORG en Quito." data-en-content="Register once to join the RA’AZ BORG fighter roster in Quito.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=profile-v2">
@@ -49,6 +49,12 @@
 .athlete-fields .measure-row select { width:auto; min-width:76px; flex:none; }
 .athlete-fields p { font-size:.85rem; color:var(--grey); margin:0 }
 @media(max-width:520px) { .athlete-fields .field-grid { grid-template-columns:1fr } }
+.record-validation {border-left:4px solid #ff8aa7;padding:11px 14px;background:#2f2028;color:#fff;font-weight:700;}
+.record-validation[hidden]{display:none}
+#roster-photo {cursor:pointer;color:#fff;font-weight:700}
+#roster-photo::file-selector-button {background:#c8f542;color:#171717;font:700 12px/1.4 var(--mono);border:none;padding:11px 15px;margin-right:13px;cursor:pointer}
+#previous-record-fields input {min-height:44px}
+
 
 </style>
 </head>
@@ -76,9 +82,9 @@
 <main id="contenido" tabindex="-1" class="join-page"><div class="wrap join-layout">
   <div class="join-intro">
     <p class="kicker">RA’AZ BORG · QUITO, ECUADOR</p>
-    <h1 data-heading-outline="ATLETAS" data-heading-outline-en="ATHLETES" data-en="Athlete application">Postulación de atleta</h1>
-    <p data-en="Tell us your belt and whether you want to compete in a Grand Prix qualifier or train at the Börg Lab.">Indica tu cinturón y si quieres disputar una clasificatoria del Grand Prix o entrenar en el Börg Lab.</p>
-    <p class="join-progress" data-en="1. Choose your belt and interest · 2. Create an account or sign in · 3. Submit your application">1. Elige tu cinturón y tu interés · 2. Crea tu cuenta o inicia sesión · 3. Envía tu postulación</p>
+    <h1 data-heading-outline="ATLETAS" data-heading-outline-en="ATHLETES" data-en="Join the fighter roster">Registro de peleadores</h1>
+    <p data-en="Register once for our fighter roster. Choose your belt and whether you want to compete in a Grand Prix qualifier, train at the Börg Lab, or both.">Inscríbete una sola vez en el roster de peleadores. Elige tu cinturón y si quieres competir en una clasificatoria del Grand Prix, entrenar en el Börg Lab o ambos.</p>
+    <p class="join-progress" data-en="1. Choose your belt · 2. Create your account · 3. Join the roster · 4. Open your fighter portal">1. Elige tu cinturón · 2. Crea tu cuenta · 3. Inscríbete al roster · 4. Abre tu portal</p>
     <a class="text-link" href="realm-nexus.html" data-en="How Grand Prix qualification works">Cómo se clasifica al Grand Prix</a>
   </div>
   <div class="join-form-panel">
@@ -122,7 +128,7 @@
       <label for="email"><span data-en="Email address">Correo electrónico</span> <span class="required-indicator" aria-hidden="true">*</span><input id="email" type="email" autocomplete="email" required></label>
       <label for="password"><span data-en="Password">Contraseña</span> <span class="required-indicator" aria-hidden="true">*</span><input id="password" type="password" autocomplete="new-password" minlength="8" required></label>
       <button class="btn btn-acid" type="submit" id="primary-auth" data-en="Create account">Crear cuenta</button>
-      <p class="auth-explainer" data-en="Already registered this email? Choose 'I have an account' above. Creating an account does not submit a fighter application; complete the athlete form after signing in.">¿Ya registraste este correo? Elige «Ya tengo cuenta» arriba. Crear una cuenta no envía una postulación; completa el formulario de atleta al iniciar sesión.</p>
+      <p class="auth-explainer" data-en="Already registered? Select I have an account. If you have completed the roster registration, you will return directly to your fighter portal without repeating the form.">¿Ya te registraste? Elige «Ya tengo cuenta». Si completaste la inscripción al roster, entrarás directamente a tu portal sin repetir el formulario.</p>
       <button class="text-link" type="button" id="recover" hidden data-en="Forgot your password?">¿Olvidaste tu contraseña?</button>
     </form>
     <form class="interest-form" id="reset-password" hidden>
@@ -131,15 +137,15 @@
     </form>
     <div class="interest-form" id="member" hidden>
       <strong id="identity"></strong><button type="button" class="text-link" id="logout" data-en="Sign out">Cerrar sesión</button>
-      <h2 data-en="My applications">Mis postulaciones</h2>
+      <h2 data-en="My roster">Mi registro al roster</h2>
       <a class="btn btn-acid" href="fighter-dashboard.html" data-en="Open my fighter realm">Abrir mi reino de peleador</a>
       <div id="receipts"></div>
       <button class="text-link" type="button" id="refresh" data-en="Refresh status">Actualizar estado</button>
     </div>
     <p class="account-message" id="feedback" role="status" aria-live="polite"></p>
     <form class="interest-form" id="application" hidden>
-      <h2 data-en="Athlete details">Datos del atleta</h2>
-      <p class="application-note" data-en="Complete your athlete profile once. On future applications, your saved details will be prefilled. Your email comes from your verified account.">Completa tu perfil una sola vez. En futuras postulaciones, tus datos aparecerán automáticamente. Tu correo se obtiene de tu cuenta verificada.</p>
+      <h2 data-en="Your roster details">Tus datos para el roster</h2>
+      <p class="application-note" data-en="Enter your fighter details once. After registering you will go directly to your personal portal. Your contact email comes from your verified account.">Ingresa tus datos de peleador una sola vez. Al terminar, entrarás directamente a tu portal personal. Tu correo se obtiene de la cuenta verificada.</p>
       <fieldset class="athlete-fields">
         <legend data-en="Identity">Identidad</legend>
         <div class="field-grid">
@@ -173,17 +179,33 @@
         </div>
         <label for="city"><span data-en="City">Ciudad</span> <span class="required-indicator" aria-hidden="true">*</span><input id="city" name="city" type="text" required maxlength="80" autocomplete="address-level2"></label>
       </fieldset>
+      <fieldset class="athlete-fields" id="previous-record-fields">
+        <legend data-en="Previous fight record (optional)">Historial de combates anterior (opcional)</legend>
+        <p data-en="Self-reported experience from before joining RA’AZ BORG. Leave all four blanks if you have no previous record to report. Your results will be labeled as self-reported until verified.">Experiencia declarada antes de ingresar a RA’AZ BORG. Deja los cuatro campos vacíos si no tienes historial que reportar. Se identificará como información declarada hasta ser verificada.</p>
+        <div class="field-grid">
+          <label for="prior_competed"><span data-en="Fights competed">Combates disputados</span><input id="prior_competed" name="prior_competed" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_won"><span data-en="Won">Ganados</span><input id="prior_won" name="prior_won" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_lost"><span data-en="Lost">Perdidos</span><input id="prior_lost" name="prior_lost" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+          <label for="prior_drawn"><span data-en="Draws">Empates</span><input id="prior_drawn" name="prior_drawn" type="number" min="0" max="5000" step="1" inputmode="numeric" placeholder="—"></label>
+        </div>
+        <p id="prior-validation" class="record-validation" role="alert" hidden></p>
+      </fieldset>
+      <fieldset class="athlete-fields" id="roster-photo-fields">
+        <legend data-en="Fighter photo (optional)">Fotografía del peleador (opcional)</legend>
+        <label for="roster-photo"><span data-en="Choose a portrait, JPG / PNG / WebP, maximum 2 MB">Selecciona tu retrato, JPG / PNG / WebP, máximo 2 MB</span><input id="roster-photo" name="roster_photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <p data-en="Your photo will be stored privately. Uploading does not grant permission for us to publish it on the public roster. You can also add or change it later in your fighter portal.">Tu foto se guardará de forma privada. Subirla no autoriza su publicación en el roster público. También podrás agregarla o cambiarla desde tu portal de peleador.</p>
+      </fieldset>
       <label for="footage"><span data-en="Profile or footage link (optional)">Enlace a tu perfil o video (opcional)</span><input id="footage" name="footage" type="url" maxlength="320" placeholder="https://…"></label>
-      <label class="contact-ok"><input type="checkbox" name="contact" required><span data-en="I agree to be contacted by RA’AZ BORG about this application.">Acepto que RA’AZ BORG me contacte sobre esta postulación.</span></label>
-      <p class="application-note" data-en="Applying shows your interest; it does not guarantee a Grand Prix spot or confirm a fight. Our team will contact you by email.">Tu postulación expresa interés; no garantiza un cupo en el Grand Prix ni confirma un combate. Te contactaremos por correo.</p>
-      <button id="submit-application" class="btn btn-acid" data-en="Submit application">Enviar postulación</button>
+      <label class="contact-ok"><input type="checkbox" name="contact" required><span data-en="I agree that RA’AZ BORG may contact me about my roster registration and potential participation.">Acepto que RA’AZ BORG me contacte sobre mi inscripción al roster y posible participación.</span></label>
+      <p class="application-note" data-en="Registering joins the roster review process; it does not guarantee a Grand Prix place or a confirmed fight. You will get a personal portal to follow your status.">Inscribirte te incorpora al proceso de revisión del roster; no garantiza un cupo en el Grand Prix ni un combate confirmado. Tendrás un portal personal para consultar tu estado.</p>
+      <button id="submit-application" class="btn btn-acid" data-en="Complete roster registration">Completar inscripción al roster</button>
     </form>
     <p class="manual-contact"><span class="lang-es">También puedes escribir directamente a</span><span class="lang-en">You can also email us directly at</span> <a href="mailto:raazborgstudios@gmail.com">raazborgstudios@gmail.com</a>.</p>
   </div>
   <section class="join-followup">
-    <h2 data-heading-outline="PRÓXIMOS PASOS" data-heading-outline-en="NEXT STEPS"><span class="lang-es">Después de enviar tu postulación</span><span class="lang-en">After you apply</span></h2>
-    <p><span class="lang-es">El equipo revisará tu postulación y te escribirá al correo de tu cuenta. Si quieres competir, podemos invitarte primero a una ronda clasificatoria. Cuando se confirme tu combate, te enviaremos el nombre de tu rival, la fecha y el lugar.</span><span class="lang-en">Our team will review your application and email you directly. If you want to compete, we may invite you to a qualifying round first. Once your bout is confirmed, we’ll send you your opponent’s name, the date and the venue.</span></p>
-    <p><span class="lang-es">Tu postulación es privada. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your application is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
+    <h2 data-heading-outline="PRÓXIMOS PASOS" data-heading-outline-en="NEXT STEPS"><span class="lang-es">Después de registrarte al roster</span><span class="lang-en">After joining the roster</span></h2>
+    <p><span class="lang-es">El equipo revisará tu inscripción al roster y te escribirá al correo de tu cuenta. Si quieres competir, podemos invitarte primero a una ronda clasificatoria. Cuando se confirme tu combate, te enviaremos el nombre de tu rival, la fecha y el lugar.</span><span class="lang-en">Our team will review your roster registration and email you directly. If you want to compete, we may invite you to a qualifying round first. Once your bout is confirmed, we’ll send you your opponent’s name, the date and the venue.</span></p>
+    <p><span class="lang-es">Tu registro es privado. Para publicar tu perfil, fotos o videos, te pediremos permiso por separado.</span><span class="lang-en">Your registration is private. We’ll ask for separate permission before publishing a profile, photo or video.</span></p>
   </section>
 </div></main>
 
@@ -201,6 +223,7 @@
 
 <script src="js/main.js?v=archive-1"></script>
 <script src="js/vendor/supabase-2.49.8.js"></script>
-<script src="js/interest.js?v=fighter-portal-20261119"></script>
+<script src="js/roster-avatar.js?v=roster-v1"></script>
+<script src="js/interest.js?v=roster-v1"></script>
 </body>
 </html>

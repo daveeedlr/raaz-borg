@@ -136,3 +136,14 @@ Important: The in-app welcome is saved automatically. Successful-sign-in and wel
 ### Quality gates
 
 Browser tests exercise the auth-to-dashboard redirect, message visibility, grey zero-data donut, and populated win/loss/draw chart. SQL regression tests use rollback-only test accounts and verify authenticated portal isolation and email queue permissions. Supabase Auth's Site URL and redirect allowlist must also point at the deployed production domain.
+
+
+## Fighter roster registration (November 2026)
+
+The website treats the first intake as a **one-time registration for review of the fighter roster**, not a job application. The historical database table `rb_intake.applications` retains its name and status columns for backward compatibility with staff-review RPCs and prior users; the UI uses roster-specific copy. After the first completed registration the browser redirects to `fighter-dashboard.html`. Reopening any existing **Compete / Competir** navigation item checks `rb_my_applications` before rendering the form; if a registration exists, the user is routed to their personal portal without being asked to re-enter details.
+
+Optional previous fight record (total competed, won, lost, drawn) is stored in four typed `rb_intake.profiles` columns and synchronized to `public.fighter_registrations`. The protected one-time `rb_register_roster` RPC saves it with the initial roster registration; `rb_update_roster_prior` lets the athlete correct it later in the private portal. SQL rejects incomplete, negative and impossible totals. Prior results remain explicitly **self-reported** and do not change the verified RA'AZ BORG `fighter_fights` table. The verified donut remains grey with dashes when there are no recorded bouts, even when self-reported totals exist.
+
+Private optional fighter photos are stored in a separate **non-public** `roster-avatars` Storage bucket (2 MB max; JPEG, PNG or WebP). RLS restricts file paths to the authenticated athlete's UUID prefix. The server validates ownership before storing `avatar_path` in the private profile; the client renders it through a short-lived signed URL. Uploads during registration are optional and, on a failed upload, the completed registration still routes to the portal for retry. Photos can also be changed or removed there. Uploading a photo does not authorize RA'AZ BORG to publish it publicly. The original public `fighter-avatars` bucket is left unchanged for backward compatibility and is not used by the new flow.
+
+Technical identifiers `rb_intake.applications`, `rb_submit_application_v2`, and the existing reviewer status machine are retained for compatibility; new registrations must use `rb_register_roster` and must not re-submit a second application.

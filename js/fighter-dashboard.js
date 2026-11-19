@@ -8,18 +8,19 @@
   );
   const tr = (es,en) => document.documentElement.lang === 'en' ? en : es;
   let user = null, snapshot = null, loadSeq = 0, initialized = false;
+  let photoSeq = 0, priorEditing = false, uploadingPhoto = false;
 
   const statuses = {
     submitted: {
-      label:['Postulación pendiente','Application pending'],
-      message:['Recibimos tu solicitud. El equipo RA’AZ BORG revisará tu perfil y te contactará directamente con los siguientes pasos. Aún no tienes un combate confirmado.',
-               'We received your application. The RA’AZ BORG team will review your profile and contact you directly with the next steps. You do not have a confirmed fight yet.'],
+      label:['Registro pendiente de revisión','Roster registration pending review'],
+      message:['Ya perteneces al registro de peleadores. El equipo RA’AZ BORG revisará tus datos para considerar tu incorporación al roster activo. Aún no tienes un combate confirmado.',
+               'Your one-time fighter registration has been saved. The RA’AZ BORG team will review your details for the active roster. You do not have a confirmed fight yet.'],
       step:1
     },
     in_review: {
-      label:['En revisión','Under review'],
-      message:['Tu postulación está siendo revisada. Te contactaremos por correo cuando haya novedades.',
-               'Your application is being reviewed. We will email you when there is an update.'],
+      label:['Registro en revisión','Registration under review'],
+      message:['Tu registro está siendo revisado. Te contactaremos por correo cuando haya novedades.',
+               'Your roster registration is being reviewed. We will email you when there is an update.'],
       step:2
     },
     invited: {
@@ -29,15 +30,15 @@
       step:3
     },
     closed: {
-      label:['Postulación cerrada','Application closed'],
-      message:['Esta postulación está cerrada. Contacta al equipo si necesitas aclaraciones o deseas postularte nuevamente.',
-               'This application is closed. Contact the team with any questions or to submit another application.'],
+      label:['Registro cerrado','Registration closed'],
+      message:['La revisión de tu registro está cerrada. Tu perfil personal sigue disponible. Contacta al equipo si necesitas aclaraciones.',
+               'The review of this roster registration is closed. Your personal portal remains available; contact the team with questions.'],
       step:0
     },
     none: {
-      label:['Sin postulación','No application yet'],
-      message:['Tu cuenta está lista, pero aún debes enviar una postulación para que el equipo pueda revisarte.',
-               'Your account is ready, but you still need to submit an application for the team to review.'],
+      label:['Registro incompleto','Registration incomplete'],
+      message:['Tu cuenta está activa. Debes completar tu inscripción al roster una sola vez.',
+               'Your account is active. Complete the one-time roster registration to join the review process.'],
       step:0
     }
   };
@@ -97,8 +98,8 @@
     if (!first) return;
     const fighter = snapshot?.username || tr('atleta','fighter');
     $('welcome-copy').textContent = tr(
-      '¡Bienvenido al universo Börg, '+fighter+'! Recibimos tu postulación. El equipo de RA’AZ BORG está revisando tu perfil y se pondrá en contacto contigo por correo con información sobre los próximos pasos. Tu postulación está pendiente y todavía no representa una confirmación de combate.',
-      'Welcome to the Börg Realm, '+fighter+'! We received your application. The RA’AZ BORG team is reviewing your profile and will contact you by email with information about the next steps. Your application is pending and does not yet confirm a fight.'
+      '¡Bienvenido al universo Börg, '+fighter+'! Recibimos tu inscripción al roster de peleadores. El equipo de RA’AZ BORG revisará tus datos y se pondrá en contacto contigo con los próximos pasos. Tu registro está pendiente y todavía no confirma un combate.',
+      'Welcome to the Börg Realm, '+fighter+'! Your one-time fighter roster registration was received. The RA’AZ BORG team will review your details and contact you about the next steps. Your registration is pending and does not yet confirm a fight.'
     );
   }
   function renderRecord(stats) {
@@ -116,8 +117,8 @@
       put('winPercentage','—');
       donut.setAttribute('aria-label',tr('No hay combates registrados','No fights recorded'));
       $('record-caption').textContent=tr(
-        'Aún no tienes combates registrados. El gráfico se mantiene gris hasta contar con resultados reales.',
-        'No fights recorded yet. The chart stays grey until there are actual results.'
+        'Todavía no se han registrado resultados de combates aquí. El gráfico permanece gris; tu historial previo declarado aparece en Identidad del atleta.',
+        'No confirmed fight results have been recorded here yet. The donut remains grey; your self-reported previous record appears under Athlete Identity.'
       );
       return;
     }
@@ -158,6 +159,76 @@
       list.append(row);
     }
   }
+  function renderPrior(prior) {
+    for (const [id,key] of [['priorCompeted','competed'],['priorWon','won'],['priorLost','lost'],['priorDrawn','drawn']]) {
+      put(id,prior && prior[key] != null ? prior[key] : null);
+    }
+    if (!priorEditing) {
+      for (const [id,key] of [['edit-prior-competed','competed'],['edit-prior-won','won'],
+                               ['edit-prior-lost','lost'],['edit-prior-drawn','drawn']]) {
+        $(id).value=prior && prior[key]!=null ? String(prior[key]) : '';
+      }
+    }
+  }
+  function parsePriorForm() {
+    const keys=[['competed','edit-prior-competed'],['won','edit-prior-won'],
+                ['lost','edit-prior-lost'],['drawn','edit-prior-drawn']];
+    const values=keys.map(([,id])=>$(id).value.trim());
+    if(values.every(v=>v==='')) return null;
+    if(values.some(v=>!/^[0-9]{1,4}$/.test(v) || Number(v)>5000)) throw Error('Invalid totals');
+    const record=Object.fromEntries(keys.map(([key],i)=>[key,Number(values[i])]));
+    if(record.won+record.lost+record.drawn>record.competed)throw Error('Outcomes exceed total');
+    return record;
+  }
+  function feedback(id,es,en){$(id).textContent=tr(es,en);}
+  async function renderAvatar(path){
+    const seq=++photoSeq, owner=user?.id;
+    $('fighter-photo').hidden=true;
+    $('fighter-avatar').hidden=false;
+    $('portal-photo-remove').hidden=!path;
+    if(!path)return;
+    try{
+      const url=await window.RaazAvatar.display(client,path);
+      if(seq!==photoSeq || !user || user.id!==owner || snapshot?.avatar_path!==path)return;
+      const image=$('fighter-photo');
+      image.onload=()=>{if(seq===photoSeq){image.hidden=false;$('fighter-avatar').hidden=true;}};
+      image.onerror=()=>{image.hidden=true;$('fighter-avatar').hidden=false;};
+      image.src=url;
+    }catch{
+      if(seq===photoSeq)feedback('portal-photo-feedback',
+        'No pudimos cargar la foto. Actualiza el estado o intenta subirla de nuevo.',
+        'Could not load the photo. Refresh or upload a new image.');
+    }
+  }
+  async function savePhoto() {
+    if(uploadingPhoto || !user || !snapshot?.application)return;
+    const file=$('portal-photo-input').files?.[0];
+    if(!file) {
+      feedback('portal-photo-feedback','Selecciona primero una foto.','Choose a photo first.');
+      return;
+    }
+    try{ window.RaazAvatar.validate(file); }
+    catch {
+      feedback('portal-photo-feedback','Usa JPG, PNG o WebP de menos de 2 MB.','Use JPG, PNG or WebP under 2 MB.');
+      return;
+    }
+    uploadingPhoto=true;
+    $('portal-photo-save').disabled=true;
+    feedback('portal-photo-feedback','Guardando tu foto privada…','Saving your private photo…');
+    const owner=user.id,original=snapshot.avatar_path;
+    try{
+      const path=await window.RaazAvatar.upload(client,user,file,original);
+      if(!user || user.id!==owner)return;
+      snapshot.avatar_path=path;
+      $('portal-photo-input').value='';
+      feedback('portal-photo-feedback','Foto guardada de forma privada. No se publicará automáticamente.',
+        'Photo saved privately. It will not be published automatically.');
+      renderAvatar(path);
+    }catch{
+      feedback('portal-photo-feedback','No se pudo guardar la foto. Inténtalo de nuevo.',
+        'Could not save your photo. Try again.');
+    }finally{uploadingPhoto=false;$('portal-photo-save').disabled=false;}
+  }
   function render() {
     if (!snapshot || !user) return;
     const p=snapshot;
@@ -165,13 +236,29 @@
     put('fighterDisplayName',display);
     put('fighterName',p.name);
     put('fighterUsername',p.username?'@'+p.username:null);
+    put('fighterFirstName',p.first_name);
+    put('fighterLastName',p.last_name);
+    put('fighterAlias',p.alias);
+    put('fighterBirthDate',p.date_of_birth ? p.date_of_birth : null);
     put('fighterRealm',p.realm);
     put('fighterCountry',p.country);
+    put('fighterProvince',p.state_province);
+    put('fighterCity',p.city);
+    put('fighterDiscipline',p.discipline);
     put('fighterGym',p.gym);
     put('fighterRank',p.belt);
+    put('fighterStripes',p.belt_stripes != null ? p.belt_stripes : null);
     put('fighterWeight',p.weight ? p.weight+' '+(p.weight_unit||'') : null);
+    put('fighterHeight',p.height ? p.height+' '+(p.height_unit||'') : null);
     const letters=display.trim().split(/\s+/).map(s=>s.charAt(0)).slice(0,2).join('');
     put('fighter-avatar',(letters||'RB').toUpperCase());
+    renderAvatar(p.avatar_path);
+    renderPrior(p.prior_record);
+    if (new URLSearchParams(location.search).get('photo')==='retry') {
+      feedback('portal-photo-feedback',
+        'Tu registro se guardó, pero la foto no pudo subirse. Puedes intentarlo aquí.',
+        'Your roster registration was saved, but the photo did not upload. Retry here.');
+    }
     $('portal-submitted-confirmation').hidden = new URLSearchParams(location.search).get('submitted') !== '1';
     renderStatus(p.application,p.realm);
     renderMessage(p.messages,p.application);
@@ -199,10 +286,61 @@
     const changed=!initialized || next?.id!==user?.id;
     initialized=true;
     user=next;
-    if(!next){snapshot=null;++loadSeq;visible('signin');return;}
+    if(!next){snapshot=null;++loadSeq;++photoSeq;visible('signin');return;}
     if(changed)load();
   }
   $('portal-refresh').onclick=load;
+  $('portal-photo-save').onclick=savePhoto;
+  $('portal-photo-remove').onclick=async()=>{
+    if(!user || !snapshot || uploadingPhoto || !snapshot.avatar_path)return;
+    const old=snapshot.avatar_path;
+    $('portal-photo-remove').disabled=true;
+    try {
+      await window.RaazAvatar.remove(client,user,old);
+      snapshot.avatar_path=null;
+      $('fighter-photo').removeAttribute('src');
+      renderAvatar(null);
+      feedback('portal-photo-feedback','Foto eliminada del perfil privado.','Private photo removed.');
+    }catch {
+      feedback('portal-photo-feedback','No se pudo eliminar la foto.','Could not remove the photo.');
+    }finally{$('portal-photo-remove').disabled=false;}
+  };
+  $('portal-prior-edit-toggle').onclick=()=>{
+    priorEditing=!priorEditing;
+    $('portal-prior-form').hidden=!priorEditing;
+    if(priorEditing) {
+      renderPrior(snapshot?.prior_record);
+      $('edit-prior-competed').focus();
+    } else {
+      feedback('portal-prior-feedback','','');
+    }
+  };
+  $('portal-prior-form').onsubmit=async e=>{
+    e.preventDefault();
+    if(!user || !snapshot?.application)return;
+    let prior;
+    try{prior=parsePriorForm();}
+    catch{
+      feedback('portal-prior-feedback',
+        'Completa los cuatro números o deja todos vacíos. Los resultados no pueden superar los combates.',
+        'Enter all four numbers or leave all blank. Results cannot exceed fights competed.');
+      return;
+    }
+    $('portal-prior-save').disabled=true;
+    feedback('portal-prior-feedback','Guardando…','Saving…');
+    try {
+      const owner=user.id;
+      const {data,error}=await client.rpc('rb_update_roster_prior',{p_prior:prior});
+      if(error)throw error;
+      if(!user || owner!==user.id)return;
+      snapshot.prior_record=data ?? null;
+      priorEditing=false;
+      $('portal-prior-form').hidden=true;
+      renderPrior(snapshot.prior_record);
+    }catch {
+      feedback('portal-prior-feedback','No pudimos guardar el historial anterior.','Could not save the previous record.');
+    }finally{$('portal-prior-save').disabled=false;}
+  };
   $('portal-logout').onclick=async()=>{
     try { await client.auth.signOut({scope:'local'}); }
     finally {location.assign('competir.html?lang='+document.documentElement.lang);}

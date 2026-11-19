@@ -125,19 +125,22 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
     else if(path.endsWith('/rb_my_applications')) data = rows;
     else if(path.endsWith('/rb_queue_sign_in_alert')) { signinAlertQueued = true; data = true; }
     else if(path.endsWith('/rb_my_fighter_portal')) data = {
-      email:user.email,username:'Prueba',name:'Test',belt:'blue',
-      realm:'Zaphire Trials',gym:'Test Academy',country:'Ecuador',
+      email:user.email,username:'Prueba',name:'Test',first_name:'Prueba',last_name:'Atleta',
+      alias:'Test',city:'Quito',belt:'blue',realm:'Zaphire Trials',
+      gym:'Test Academy',country:'Ecuador',prior_record:{competed:8,won:5,lost:2,drawn:1},
+      avatar_path:null,
       application:rows.length ? {id,interest:'gp',status:'submitted',realm:'Zaphire Trials',submitted_at:new Date().toISOString()} : null,
       messages:rows.length ? [{kind:'welcome',created_at:new Date().toISOString()}] : [],
       stats:{total:0,wins:0,losses:0,draws:0},recent_fights:[]
     };
-    else if(path.endsWith('/rb_submit_application_v2')) {
+    else if(path.endsWith('/rb_register_roster')) {
       const body=route.request().postDataJSON();
       expect(body.p_belt).toBe('blue');
       expect(body.p_interest).toBe('gp');
       expect(body.p_contact_consent).toBe(true);
       expect(body.p_profile.first_name).toBe('Prueba');
       expect(body.p_profile.last_name).toBe('Atleta');
+      expect(body.p_prior).toEqual({competed:8,won:5,lost:2,drawn:1});
       rows.push({id,interest:'gp',suggested_realm:'Zaphire Trials',status:'submitted',submitted_at:new Date().toISOString()});
       data=id;
     }
@@ -158,19 +161,29 @@ test('athletes sign in, apply, open their private realm, and see grey empty figh
   await page.locator('#last_name').fill('Atleta');
   await page.locator('#alias').fill('Test');
   await page.locator('#city').fill('Quito');
+  await page.locator('#prior_competed').fill('8');
+  await page.locator('#prior_won').fill('5');
+  await page.locator('#prior_lost').fill('2');
+  await page.locator('#prior_drawn').fill('1');
   await page.locator('#application input[name="contact"]').check();
   await page.locator('#submit-application').click();
   await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=es&submitted=1$/);
   await expect(page.locator('#portal-content')).toBeVisible();
   await expect(page.locator('#fighterDisplayName')).toHaveText('Prueba');
-  await expect(page.locator('#application-status')).toHaveText('Postulación pendiente');
+  await expect(page.locator('#application-status')).toHaveText('Registro pendiente de revisión');
   await expect(page.locator('#welcome-copy')).toContainText('¡Bienvenido al universo Börg');
   await expect(page.locator('#winPercentage')).toHaveText('—');
   await expect(page.locator('#fightWins')).toHaveText('—');
+  await expect(page.locator('#priorCompeted')).toHaveText('8');
+  await expect(page.locator('#priorWon')).toHaveText('5');
+  await expect(page.locator('#priorLost')).toHaveText('2');
+  await expect(page.locator('#priorDrawn')).toHaveText('1');
+  await expect(page.locator('#fighterFirstName')).toHaveText('Prueba');
+  await expect(page.locator('#fighterLastName')).toHaveText('Atleta');
   await expect(page.locator('#fightLosses')).toHaveText('—');
   await expect(page.locator('#fightDonut')).toHaveCSS('background-image',/conic-gradient/);
   await page.locator('#langToggle').click();
-  await expect(page.locator('#application-status')).toHaveText('Application pending');
+  await expect(page.locator('#application-status')).toHaveText('Roster registration pending review');
   await expect(page.locator('#welcome-copy')).toContainText('Welcome to the Börg Realm');
   await page.reload();
   await expect(page.locator('#portal-content')).toBeVisible();
@@ -209,7 +222,7 @@ test('fighter record donut shows real registered win/loss/draw proportions', asy
   await page.goto('/fighter-dashboard.html?lang=en');
   await expect(page.locator('#portal-content')).toBeVisible();
   await expect(page.locator('#fighterDisplayName')).toHaveText('iron_grappler');
-  await expect(page.locator('#application-status')).toHaveText('Under review');
+  await expect(page.locator('#application-status')).toHaveText('Registration under review');
   await expect(page.locator('#winPercentage')).toHaveText('60%');
   await expect(page.locator('#totalFights')).toHaveText('5');
   await expect(page.locator('#fightWins')).toHaveText('3');
@@ -461,8 +474,8 @@ test('new athletes see clear account creation and existing members can switch to
   await page.goto('/competir.html?lang=es&belt=blue&interest=gp');
   await expect(page.locator('#auth-create')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#primary-auth')).toHaveText('Crear cuenta');
-  await expect(page.locator('#auth-explainer')).toContainText('confirmación');
-  await expect(page.locator('#account')).toContainText('Crear una cuenta no envía una postulación');
+  await expect(page.locator('#auth-explainer')).toContainText('Confírmalo');
+  await expect(page.locator('#account')).toContainText('entrarás directamente a tu portal');
   await expect(page.locator('#recover')).toBeHidden();
   await page.locator('#auth-signin').click();
   await expect(page.locator('#primary-auth')).toHaveText('Iniciar sesión');
@@ -539,4 +552,91 @@ test('expanded athlete profile keeps typed values and shows selected measurement
   await expect(page.locator('#country')).toHaveAttribute('required','');
   await expect(page.locator('#weight_unit')).toHaveValue('kg');
   await expect(page.locator('#height_unit')).toHaveValue('cm');
+});
+
+
+test('roster members clicking Compete go to their portal without repeating fighter details', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000091';
+  const user={id,email:'roster@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
+  const rows=[{id:'00000000-0000-4000-8000-000000000092',status:'submitted',interest:'gp',belt:'blue',submitted_at:new Date().toISOString()}];
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_profile_v2'))data=[{alias:'Returning',belt:'blue',city:'Quito'}];
+    else if(path.endsWith('/rb_my_applications'))data=rows;
+    else if(path.endsWith('/rb_queue_sign_in_alert'))data=true;
+    else if(path.endsWith('/rb_my_fighter_portal'))data={
+      email:user.email,username:'returning',name:'Returning',belt:'blue',
+      application:{status:'submitted',id:rows[0].id,interest:'gp',realm:'Zaphire Trials'},
+      messages:[{kind:'welcome',created_at:new Date().toISOString()}],
+      stats:{wins:0,losses:0,draws:0,total:0},prior_record:null,recent_fights:[]
+    };
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user}));
+  },{user,token});
+  await page.goto('/competir.html?lang=es');
+  await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=es$/);
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await page.goto('/competir.html?lang=en');
+  await expect(page).toHaveURL(/fighter-dashboard\.html\?lang=en$/);
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await expect(page.locator('#priorCompeted')).toHaveText('—');
+});
+
+test('private portal updates self-reported record without changing verified fight donut', async ({page}) => {
+  const id='00000000-0000-4000-8000-000000000093';
+  const user={id,email:'prior@example.invalid',aud:'authenticated',role:'authenticated',identities:[]};
+  const jwtPart=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
+  const token=[jwtPart({alg:'HS256'}),jwtPart({sub:id,exp:Math.floor(Date.now()/1000)+3600}),'c2ln'].join('.');
+  let savedPrior=null;
+  await page.route('https://*.supabase.co/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    let data;
+    if(path.endsWith('/user'))data=user;
+    else if(path.endsWith('/rb_my_fighter_portal'))data={
+      email:user.email,username:'prior',name:'Prior Athlete',belt:'white',prior_record:savedPrior,
+      application:{id:'00000000-0000-4000-8000-000000000094',status:'submitted',interest:'gp'},
+      messages:[],stats:{total:0,wins:0,losses:0,draws:0},recent_fights:[]
+    };
+    else if(path.endsWith('/rb_update_roster_prior')) {savedPrior=route.request().postDataJSON().p_prior;data=savedPrior;}
+    else if(path.endsWith('/athlete-notify'))data={configured:false,delivered:0};
+    else throw Error('Unexpected route '+path);
+    await route.fulfill({json:data});
+  });
+  await page.addInitScript(({user,token})=>{
+    localStorage.setItem('raaz-athlete-session',JSON.stringify({
+      access_token:token,token_type:'bearer',refresh_token:'fake',
+      expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user}));
+  },{user,token});
+  await page.goto('/fighter-dashboard.html?lang=en');
+  await expect(page.locator('#portal-content')).toBeVisible();
+  await page.locator('#portal-prior-edit-toggle').click();
+  await page.locator('#edit-prior-competed').fill('10');
+  await page.locator('#edit-prior-won').fill('6');
+  await page.locator('#edit-prior-lost').fill('3');
+  await page.locator('#edit-prior-drawn').fill('1');
+  await page.locator('#portal-prior-save').click();
+  await expect(page.locator('#priorCompeted')).toHaveText('10');
+  await expect(page.locator('#priorWon')).toHaveText('6');
+  await expect(page.locator('#priorLost')).toHaveText('3');
+  await expect(page.locator('#priorDrawn')).toHaveText('1');
+  await expect(page.locator('#winPercentage')).toHaveText('—');
+  await expect(page.locator('#fightWins')).toHaveText('—');
+  await page.locator('#portal-prior-edit-toggle').click();
+  await page.locator('#edit-prior-competed').fill('1');
+  await page.locator('#edit-prior-won').fill('2');
+  await page.locator('#edit-prior-lost').fill('0');
+  await page.locator('#edit-prior-drawn').fill('0');
+  await page.locator('#portal-prior-save').click();
+  await expect(page.locator('#portal-prior-feedback')).toContainText('Results cannot exceed');
+  await expect(page.locator('#priorCompeted')).toHaveText('10');
 });

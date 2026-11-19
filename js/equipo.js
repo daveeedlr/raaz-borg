@@ -6,15 +6,15 @@
   });
   const tr = (es,en) => document.documentElement.lang === 'en' ? en : es;
   const statusLabels = {
-    submitted:['Recibida','Received'],
-    in_review:['En revisión','In review'],
+    submitted:['Registro recibido','Registration received'],
+    in_review:['En revisión de roster','Under roster review'],
     invited:['Invitación enviada','Invitation sent'],
-    closed:['Cerrada','Closed']
+    closed:['Registro cerrado','Registration closed']
   };
   const interests = {gp:['Grand Prix','Grand Prix'],lab:['Börg Lab','Börg Lab'],both:['Grand Prix y Börg Lab','Grand Prix and Börg Lab']};
   const transitions = {
-    submitted:[['in_review','Marcar en revisión','Mark in review'],['closed','Cerrar postulación','Close application']],
-    in_review:[['invited','Marcar invitación enviada','Mark invitation sent'],['closed','Cerrar postulación','Close application']],
+    submitted:[['in_review','Marcar en revisión','Mark in review'],['closed','Cerrar registro','Close registration']],
+    in_review:[['invited','Marcar invitación enviada','Mark invitation sent'],['closed','Cerrar registro','Close registration']],
     invited:[['closed','Cerrar postulación','Close application']], closed:[]
   };
   let user = null, allowed = false, loading = false, rows = [], refreshNumber = 0;
@@ -54,7 +54,10 @@
       const profile=row.profile_snapshot||{};
       const fullName=[profile.first_name,profile.last_name].filter(Boolean).join(' ');
       if(fullName) card.append(el('p',fullName));
+      const prior=profile.prior_record||null;
       const details=el('p',[row.academy,row.discipline,profile.country,profile.state_province,
+        prior ? tr('Historial anterior declarado: ','Self-reported prior record: ')+
+          [prior.competed,prior.won,prior.lost,prior.drawn].join(' / ') : null,
         profile.date_of_birth ? tr('Nacimiento: ','Born: ')+profile.date_of_birth : null,
         profile.weight ? profile.weight+' '+(profile.weight_unit||'') : null,
         profile.height ? profile.height+' '+(profile.height_unit||'') : null,

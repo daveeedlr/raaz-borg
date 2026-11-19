@@ -16,8 +16,8 @@ const emailContent=(kind:string,username:string)=>{
   const accent="#c8f542";
   const heading=kind==="welcome"?"¡Bienvenido al universo Börg! / Welcome to the Börg Realm":"Inicio de sesión confirmado / Successful sign-in";
   const copy=kind==="welcome"
-    ? "<p>¡Bienvenido, "+athlete+"! Hemos recibido tu postulación. El equipo RA’AZ BORG está revisando tu solicitud y se pondrá en contacto contigo por correo con más detalles. Todavía no tienes un combate confirmado.</p>"+
-      "<p>Welcome, "+athlete+"! Your application has been received. The RA’AZ BORG team is reviewing it and will contact you by email with further details. Your bout has not been confirmed.</p>"
+    ? "<p>¡Bienvenido, "+athlete+"! Hemos recibido tu inscripción al roster de peleadores. El equipo RA’AZ BORG está revisando tu registro y se pondrá en contacto contigo por correo con más detalles. Todavía no tienes un combate confirmado.</p>"+
+      "<p>Welcome, "+athlete+"! Your fighter roster registration has been received. The RA’AZ BORG team is reviewing your registration and will contact you by email with further details. Your roster registration does not confirm a fight.</p>"
     : "<p>Se inició sesión correctamente en tu cuenta de atleta RA’AZ BORG. Si no fuiste tú, cambia tu contraseña desde el portal.</p>"+
       "<p>Your RA’AZ BORG athlete account was signed into successfully. If this was not you, reset your password on our website.</p>";
   const html='<!doctype html><html><body style="margin:0;background:#101015;color:#fff;font-family:Arial,sans-serif;padding:30px 12px;">'+

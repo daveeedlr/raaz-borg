@@ -14,6 +14,7 @@
   let message = [];
   let messageKind = 'info';
   let historyRows = null;
+  let checkingRoster = false;
   let loadNumber = 0;
   let requestKey = null;
   const initial = new URL(location.href);
@@ -53,17 +54,19 @@
   }
   function render() {
     $('account').hidden = !!user;
-    $('member').hidden = form.hidden = !user || recovering;
+    $('member').hidden = !user || recovering || checkingRoster;
+    form.hidden = !user || recovering || checkingRoster || historyRows === null || historyRows.length > 0;
+    $('athlete-interest').hidden = !!user && (checkingRoster || (Array.isArray(historyRows) && historyRows.length > 0));
     $('reset-password').hidden = !recovering || !user;
     $('identity').textContent = user?.email || '';
     $('primary-auth').textContent = signingUp ? tr('Crear cuenta','Create account') : tr('Iniciar sesión','Sign in');
     $('auth-create').setAttribute('aria-pressed', String(signingUp));
     $('auth-signin').setAttribute('aria-pressed', String(!signingUp));
     $('auth-explainer').textContent = signingUp
-      ? tr('Usa un correo al que tengas acceso. Te enviaremos un enlace de confirmación antes de que puedas postularte.',
-           'Use an email address you can access. We will send a confirmation link before you can apply.')
-      : tr('Ingresa para completar tu postulación o consultar el estado de tus solicitudes.',
-           'Sign in to finish an application or check the status of previous applications.');
+      ? tr('Usa un correo al que tengas acceso. Confírmalo para completar tu inscripción al roster una sola vez.',
+           'Use an email address you can access. Confirm it to complete your one-time roster registration.')
+      : tr('Ingresa para terminar tu inscripción al roster o abrir tu portal de peleador.',
+           'Sign in to finish joining the roster or open your fighter portal.');
     $('recover').hidden = signingUp;
     $('password').autocomplete = signingUp ? 'new-password' : 'current-password';
     $('password').minLength = signingUp ? 8 : 1;
@@ -71,12 +74,12 @@
     $('feedback').textContent = message.length ? tr(...message) : '';
     drawHistory();
   }
-  const statuses = {submitted:['Postulación recibida','Application received'],in_review:['En revisión','In review'],invited:['Invitación enviada','Invited'],closed:['Cerrada','Closed']};
+  const statuses = {submitted:['Registro recibido','Registration received'],in_review:['Roster en revisión','Roster under review'],invited:['Invitación enviada','Invitation sent'],closed:['Registro cerrado','Registration closed']};
   function drawHistory() {
     const box = $('receipts');
     box.replaceChildren();
     if (!user || !historyRows) return;
-    if (!historyRows.length) box.textContent = tr('Tu cuenta ya existe, pero todavía no has enviado una postulación. Completa los datos de atleta más abajo y pulsa Enviar postulación para registrarla.','Your account already exists, but you have not submitted an athlete application yet. Complete the athlete details below and press Submit application to save one.');
+    if (!historyRows.length) box.textContent = tr('Tu cuenta está activa. Completa los datos del roster una sola vez y entrarás a tu portal de peleador.','Your account is active. Complete the one-time roster details to open your fighter portal.');
     for (const row of historyRows) {
       const entry = document.createElement('article');
       const option = Array.from(interest.options).find(o => o.value === row.interest);
@@ -94,8 +97,21 @@
     const seq = ++loadNumber;
     const [rows, info] = await Promise.all([client.rpc('rb_my_applications'), profile ? client.rpc('rb_my_profile_v2') : null]);
     if (seq !== loadNumber || !user) return;
-    if (rows.error || info?.error) say('No pudimos cargar todos tus datos. Vuelve a actualizar el estado.','Could not load all your details. Try refreshing your status.','error');
-    if (!rows.error) historyRows = rows.data;
+    if (rows.error) {
+      checkingRoster = false;
+      historyRows = null;
+      say('No pudimos comprobar tu registro. Actualiza el estado antes de continuar.','Could not verify your roster registration. Refresh your status before continuing.','error');
+      render();
+      return;
+    }
+    historyRows = Array.isArray(rows.data) ? rows.data : [];
+    if (historyRows.length) {
+      checkingRoster = false;
+      // Existing roster members must never see the new-registration form again.
+      location.replace(fighterDashboardUrl());
+      return;
+    }
+    if (info?.error) say('No pudimos cargar todo tu perfil.','Could not load all profile details.','error');
     if (info?.data?.[0]) {
       const saved = info.data[0];
       for (const name of ['alias','city','academy','discipline','first_name','last_name','date_of_birth','weight','height','belt_stripes','country','state_province','username']) {
@@ -107,6 +123,8 @@
       if (!belt.value && !initial.searchParams.has('belt')) belt.value = saved.belt;
       showRealm();
     }
+    checkingRoster = false;
+    render();
     drawHistory();
   }
   client.auth.onAuthStateChange((event, session) => {
@@ -121,6 +139,7 @@
       [belt.value, interest.value] = choices;
       showRealm();
       historyRows = requestKey = null;
+      checkingRoster = !!next;
       message = [];
       messageKind = 'info';
       $('password').value = '';
@@ -180,13 +199,13 @@
         // One security notification per genuine Auth session, queued on the server.
         // An email is only delivered when a verified email provider is configured.
         await client.rpc('rb_queue_sign_in_alert').catch(() => {});
-        say('¡Sesión iniciada! Estamos comprobando tus postulaciones.','Signed in! Checking your applications.','success');
+        say('¡Sesión iniciada! Verificando tu inscripción al roster.','Signed in! Checking your roster registration.','success');
         const {data:applications,error:applicationsError} = await client.rpc('rb_my_applications');
         if (!applicationsError && Array.isArray(applications) && applications.length) {
-          location.assign(fighterDashboardUrl());
+          location.replace(fighterDashboardUrl());
         } else {
-          say('¡Bienvenido! Tu sesión está activa. Completa tus datos de atleta y envía la postulación para ingresar a tu portal personal.',
-              'Welcome! You are signed in. Complete your athlete details and submit an application to open your personal portal.','success');
+          say('¡Bienvenido! Completa tu inscripción al roster una sola vez para abrir tu portal personal.',
+              'Welcome! Complete your one-time roster registration to open your personal portal.','success');
         }
       }
     });
@@ -216,9 +235,9 @@
   $('refresh').onclick = () => action($('refresh'), () => load(true));
   form.onsubmit = event => {
     event.preventDefault();
-    if (!user || recovering) return;
+    if (!user || recovering || checkingRoster || historyRows === null || historyRows.length > 0) return;
     if (!belt.reportValidity() || !interest.reportValidity()) {
-      say('Selecciona tu cinturón y el tipo de postulación antes de continuar.','Select your belt and application type before continuing.','error');
+      say('Selecciona tu cinturón y cómo deseas participar antes de continuar.','Choose your belt and how you want to participate before continuing.','error');
       return;
     }
     action($('submit-application'), async () => {
@@ -242,25 +261,62 @@
         }
       }
       payload.p_profile = profile;
+      const priorNames = ['prior_competed','prior_won','prior_lost','prior_drawn'];
+      const priorValues = priorNames.map(name => form.elements[name].value.trim());
+      $('prior-validation').hidden = true;
+      if (priorValues.some(v => v !== '')) {
+        if (priorValues.some(v => v === '') ||
+            priorValues.some(v => !/^\d{1,4}$/.test(v) || Number(v) > 5000) ||
+            Number(priorValues[1]) + Number(priorValues[2]) + Number(priorValues[3]) > Number(priorValues[0])) {
+          const warning = $('prior-validation');
+          warning.hidden = false;
+          warning.textContent = tr(
+            'Completa los cuatro valores (usa 0 si corresponde) y asegúrate de que ganados + perdidos + empates no superen los combates disputados.',
+            'Complete all four totals (use 0 when appropriate). Wins + losses + draws cannot exceed fights competed.'
+          );
+          warning.scrollIntoView({block:'center'});
+          return;
+        }
+        payload.p_prior = {
+          competed:Number(priorValues[0]),won:Number(priorValues[1]),
+          lost:Number(priorValues[2]),drawn:Number(priorValues[3])
+        };
+      } else payload.p_prior = null;
+      const photo = form.elements.roster_photo.files?.[0] || null;
+      if (photo) {
+        try { window.RaazAvatar.validate(photo); }
+        catch {
+          say('La foto debe ser JPG, PNG o WebP y pesar menos de 2 MB.',
+              'Photo must be JPG, PNG or WebP and smaller than 2 MB.','error');
+          return;
+        }
+      }
       const fingerprint = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(payload))))).join('.');
       const storage = 'rb-application-retry-'+owner;
       try { requestKey = JSON.parse(sessionStorage.getItem(storage)) || requestKey; } catch {}
       if (requestKey?.fingerprint !== fingerprint) requestKey = {fingerprint,id:crypto.randomUUID()};
       try { sessionStorage.setItem(storage,JSON.stringify(requestKey)); } catch {}
-      const {data:id,error} = await client.rpc('rb_submit_application_v2',{...payload,p_request_id:requestKey.id});
+      const {data:id,error} = await client.rpc('rb_register_roster',{...payload,p_request_id:requestKey.id});
       if (user?.id !== owner) return;
       if (error || !id) throw error || new Error('Missing receipt');
       form.elements.contact.checked = false;
-      await load(false);
+      checkingRoster = false;
+      historyRows = [{id}];
+      let photoFailed = false;
+      if (photo && user?.id === owner) {
+        say('Registro guardado. Guardando tu foto privada…','Roster saved. Uploading your private photo…','success');
+        try { await window.RaazAvatar.upload(client,user,photo); }
+        catch { photoFailed = true; }
+      }
       if (user?.id !== owner) return;
       say(
-        '¡Postulación recibida! Abriendo tu portal personal para consultar el estado y el mensaje del equipo.',
-        'Application received! Opening your personal portal to view your status and the team message.',
+        '¡Registro al roster completado! Abriendo tu portal personal.',
+        'Roster registration complete! Opening your personal fighter portal.',
         'success'
       );
-      // The welcome notification is created by the database trigger. The portal will
-      // attempt email delivery when configured, without claiming premature success.
-      location.assign(fighterDashboardUrl(true));
+      const target = new URL(fighterDashboardUrl(true));
+      if (photoFailed) target.searchParams.set('photo','retry');
+      location.replace(target.href);
     });
   };
   document.addEventListener('languagechange', render);

@@ -61,6 +61,34 @@ begin
   assert (select count(*)=1 from public.rb_review_queue() where id=receipt);
   assert (select count(*)=1 from public.rb_review_queue_v2() where profile_snapshot->>'first_name'='Ana');
   assert public.rb_review_application(receipt,'submitted','in_review')='in_review';
+  -- The second confirmed user joins the roster exactly once, with self-reported history.
+  declare
+    v_roster_id uuid;
+  begin
+    v_roster_id := public.rb_register_roster(gen_random_uuid(),'QA Fighter','Quito','blue','gp',true,
+      'Test Academy',null,null,
+      '{"first_name":"Q","last_name":"Fighter","username":"roster_qa","country":"Ecuador"}'::jsonb,
+      '{"competed":8,"won":5,"lost":2,"drawn":1}'::jsonb);
+    assert v_roster_id=public.rb_register_roster(gen_random_uuid(),'Different','Quito','white','lab',true,
+      null,null,null,'{"first_name":"Different","last_name":"Fighter","country":"Ecuador"}'::jsonb,null);
+    assert (select (public.rb_my_fighter_portal()#>>'{prior_record,competed}')::int=8);
+    assert (select (public.rb_my_fighter_portal()#>>'{prior_record,won}')::int=5);
+    assert (select prior_competed=8 and prior_won=5 and prior_lost=2 and prior_drawn=1
+      from public.fighter_registrations where user_id=other_user);
+    begin
+      perform public.rb_update_roster_prior('{"competed":3,"won":2,"lost":2,"drawn":0}'::jsonb);
+      raise exception 'Invalid previous fight record accepted';
+    exception when invalid_parameter_value then null; end;
+    perform public.rb_update_roster_prior('{"competed":2,"won":2,"lost":0,"drawn":0}'::jsonb);
+    assert (select (public.rb_my_fighter_portal()#>>'{prior_record,competed}')::int=2);
+    begin
+      perform public.rb_set_roster_avatar('someone-else/avatar.webp');
+      raise exception 'Unowned avatar accepted';
+    exception when insufficient_privilege then null; end;
+    assert not has_function_privilege('anon',
+      'public.rb_register_roster(uuid,text,text,text,text,boolean,text,text,text,jsonb,jsonb)','execute');
+    assert not has_function_privilege('anon','public.rb_set_roster_avatar(text)','execute');
+  end;
   perform set_config('request.jwt.claim.sub',athlete::text,true);
   assert (select status='in_review' from public.rb_my_applications() where id=receipt);
   assert not has_function_privilege('anon','public.rb_my_applications()','execute');
